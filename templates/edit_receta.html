@@ -1,0 +1,300 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/receta.css')}}">
+{% endblock %}
+
+{% block title %}Editar Receta: {{ data.nombre_receta }} {% endblock %}
+
+{% block volver_button %}
+    <a href="/perfil/{{ user_uid }}" class="volver-button">Volver</a>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper-main">
+    <div class="content-inner">
+        <form method="POST" enctype="multipart/form-data" class="form-edit-recipe">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <section class="comon__info">
+                <div class="cell">
+                        <div class="img__box">
+                            <img
+                                src="{{ data.portada or [
+                                    url_for('static', filename='assets/images/shopping.jpg'),
+                                    url_for('static', filename='assets/images/pattern2.jpg'),
+                                    url_for('static', filename='assets/images/pattern3.jpg'),
+                                    url_for('static', filename='assets/images/pattern_boo_1.jpg'),
+                                    url_for('static', filename='assets/images/iconPimpkinIdea.jpg')
+                                ] | random }}"
+                                alt="{{ data.nombre_receta }}"
+                                id="current-image"
+                            >
+                            <input type="file" name="portada" accept="image/*" id="portada-input" style="display: none;">
+                            <button type="button" onclick="document.getElementById('portada-input').click()">Cambiar imagen</button>
+                        </div>
+
+                        <div class="title__box">
+                            <div class="edit_title_box">
+                                <div class="edit__container">
+                                    
+                                    <h1 id="nombre_receta_display">{{ data.nombre_receta }}</h1>
+                                    <input type="text" name="nombre_receta" id="nombre_receta_input" value="{{ data.nombre_receta }}" required style="font-size: 1.5em; width: 100%; margin-bottom: 10px; display: none;">
+                                    
+
+                                </div>
+                                <div class="edit__container"> 
+                                    
+                                    <p id="descripcion_display">{{ data.descripcion }}</p>
+                                    <textarea name="descripcion" id="descripcion_input" rows="3" style="width: 100%; display: none;">{{ data.descripcion }}</textarea>
+                                    
+                                </div>
+                                <button type="button" onclick="toggleEdit('nombre_receta', this); toggleEdit('descripcion');" class="outline-button-neutral editar-btn">Editar</button>
+                                
+                                
+                                
+                            </div>
+                        </div>
+                </div>
+                <div class="edit__container border__box">
+                    <div class="preparation__info ">
+                        <div>
+                        
+                            <h3 class="label">Cocinando:</h3>
+                            <p id="tiempo_preparacion_display">{{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
+                            <input type="number" name="tiempo_preparacion" id="tiempo_preparacion_input" value="{{ data.tiempo_preparacion }}" min="1" required style="display: none;">
+                        </div>
+                        <hr>
+                        <div>
+                            
+                            <h3 class="label">Raciones:</h3>
+                            <p id="cantidad_porciones_display">{{ data.cantidad_porciones }}</p>
+                            <input type="number" name="cantidad_porciones" id="cantidad_porciones_input" value="{{ data.cantidad_porciones }}" min="1" required style="display: none;">
+                        </div>
+
+                    </div>
+                    <button type="button" onclick="toggleEdit('tiempo_preparacion', this); toggleEdit('cantidad_porciones');" class="outline-button-neutral editar-btn">Editar</button>
+                    
+                    
+                </div>
+                
+                <div class="edit__container border__box">
+                    
+                    <label for="video" id="video_label" style="display: none;" class="label">YouTube link del video (opcional):</label>
+                    <p class="label" id="video_display">{{ data.video or 'No hay video' }}</p>
+                    <input type="url" name="video" id="video_input" value="{{ data.video or '' }}" style="width: 100%; display: none;">
+                    <button type="button" onclick="toggleEdit('video', this);" class="outline-button-neutral editar-btn">Editar</button>
+                </div>
+            </section>
+
+            <section class="ingredientes">
+                <div class="ingredientes__btns">
+                    <label class="theme-toggle" aria-label="Toggle for no shutdown display">
+                        <input type="checkbox" id="theme-toggle" role="switch" aria-checked="false">
+                        <span class="slider"> 
+                            <span class="icon">🎃</span>
+                        </span>
+                    </label>
+                    <p class="toggle_label">Modo cocinar</p>
+                    
+                </div>
+                <small class="hint_pantalla">(mantener la pantalla encendida en Chrome)</small>
+
+                
+                <div class="ingredientes__size">
+                    <h3 class="label">Ingredientes</h3>
+                    
+                    <div class="btns__box">
+                        <button data-factor="0.5">1/2</button>
+                        <hr>
+                        <button data-factor="1" class="active">1</button>
+                        <hr>
+                        <button data-factor="2">2</button>
+                    </div>
+                </div>
+                <div class="border__box edit__container">
+                    <ul class="ingredientes__list" id="ingredientes_display">
+                        {% for item in data.ingredientes %}
+                        <li 
+                            data-base="{{ item.cantidad }}"
+                            data-medida="{{ item.medida }}"
+                            data-nombre="{{ item.nombre_ingrediente_es }}"
+                            class="ingrediente-item"
+                        
+                        >{{ item.cantidad_str }} {{ item.medida }} - {{ item.nombre_ingrediente_es }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div id="ingredientes_edit" style="display: none;">
+                        <div id="ingredientes-container">
+                            {% for item in data.ingredientes %}
+                            <div class="ingrediente-item" >
+                                <input type="text" name="ingrediente_nombre[]" value="{{ item.nombre_ingrediente_es }}" placeholder="Nombre del ingrediente" required class="ingrediente__edit__form">
+                                <input type="number" name="ingrediente_cantidad[]" value="{{ item.cantidad }}" step="0.01" min="0" placeholder="Cantidad"  class="cantidad__edit__form">
+                                <select name="ingrediente_medida[]" required class="measure_select text">
+                                    <option value="pieza" {% if item.medida == 'pieza' %}selected{% endif %}>pieza</option>
+                                    <option value="g" {% if item.medida == 'g' %}selected{% endif %}>g</option>
+                                    <option value="kg" {% if item.medida == 'kg' %}selected{% endif %}>kg</option>
+                                    <option value="cuchara" {% if item.medida == 'cuchara' %}selected{% endif %}>cuchara</option>
+                                    <option value="cucharadita" {% if item.medida == 'cucharadita' %}selected{% endif %}>cucharadita</option>
+                                    <option value="taza" {% if item.medida == 'taza' %}selected{% endif %}>taza</option>
+                                    <option value="ml" {% if item.medida == 'ml' %}selected{% endif %}>ml</option>
+                                    <option value="l" {% if item.medida == 'l' %}selected{% endif %}>l</option>
+                                    <option value="al gusto" {% if item.medida == 'al gusto' %}selected{% endif %}>al gusto</option>
+                                    <option value="pizca" {% if item.medida == 'pizca' %}selected{% endif %}>pizca</option>
+                                </select>
+                                <button type="button" onclick="removeIngrediente(this)" class="outline-button-danger">Eliminar</button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" onclick="addIngrediente()" class="outline-button-neutral">Agregar ingrediente</button>
+                    </div>
+                    <button type="button" onclick="toggleEditSection('ingredientes', this);" class="outline-button-neutral editar-btn">Editar</button>
+                </div>
+                
+            </section>
+
+            <section class="steps">
+                {% if data.pasos %}
+                <div class="player-box" id="player-box">
+                    <div class="player">
+                        <!-- <button id="back_play" type="button" class="change_step_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="change_play_step_svg" fill="currentColor" style="transform: rotate(180deg); transform-origin: center;">
+                                <path d="M21 36.8c12.9-7 28.7-6.3 41 1.8L320 208.1 320 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 384c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-144.1-258 169.6c-12.3 8.1-28 8.8-41 1.8S0 454.7 0 440L0 72C0 57.3 8.1 43.8 21 36.8z"/>
+                            </svg>
+                        
+                        </button> -->
+                        <button type="button" id="play_recepy" class="play">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="play_svg" fill="currentColor">
+                                <path d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72l0 368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/>
+                            </svg>          
+                            
+                        </button>
+                        <button type="button" id="resume_recepy" class="play hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="play_svg" fill="currentColor">
+                                <path d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72l0 368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/>
+                            </svg>          
+                            
+                        </button>
+                        <button type="button" id="pause_recepy" class="play hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="play_svg" fill="currentColor">
+                                <path d="M48 32C21.5 32 0 53.5 0 80L0 432c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48L48 32zm224 0c-26.5 0-48 21.5-48 48l0 352c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48l-64 0z"/>
+                            </svg>        
+                            
+                        </button>
+                        <!-- <button id="next_play" type="button" class="change_step_btn hidden" >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="change_play_step_svg" fill="currentColor">
+                                <path d="M21 36.8c12.9-7 28.7-6.3 41 1.8L320 208.1 320 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 384c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-144.1-258 169.6c-12.3 8.1-28 8.8-41 1.8S0 454.7 0 440L0 72C0 57.3 8.1 43.8 21 36.8z"/>
+                            </svg>
+                        </button>       --> 
+                    
+                    </div>
+                    <div class="step-box">
+                        {% for item in data.pasos %}
+                        <button class="player-by-step" type="button"> {{ item.numero_paso }} </button>
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+                
+                {% endif %}
+
+                <h3 class="label">Pasos de la receta</h3>
+                
+                <div class="border__box edit__container">
+                    <div id="pasos_display">
+                        {% for item in data.pasos %}
+                        <div class="step"
+                            data-base="{{ item.numero_paso }}"
+                            data-medida="{{ item.descripcion }}"    
+                        >
+                            <div class="step_num"><p>{{ item.numero_paso }}</p></div>    
+                            <p>{{ item.descripcion }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div id="pasos_edit" style="display: none;">
+                        <div id="pasos-container">
+                            {% for item in data.pasos %}
+                            <div class="step__edit" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc;">
+                                <div class="step_num">
+                                    <span>{{ item.numero_paso }}</span>
+                                </div>
+                                <textarea name="paso_descripcion[]" rows="3" style="width: 100%;">{{ item.descripcion }}</textarea>
+                                <button type="button" onclick="removePaso(this)" class="outline-button-danger">Eliminar paso</button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" onclick="addPaso()" class="outline-button-neutral">Agregar paso</button>
+                    </div>
+                    <button type="button" onclick="toggleEditSection('pasos', this);" class="outline-button-neutral editar-btn">Editar</button>
+                </div>
+                
+                <div class="edit__container border__box">
+                    {% if data.tips %}
+                    <div class="edit__container">
+                        <h3 class="label">Consejos</h3>
+                        
+                        
+                        <div id="tips_display">
+                            {% for item in data.tips %}
+                            <p class="tip-item">{{ item.descripcion }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div id="tips_edit" style="display: none;">
+                            <div id="tips-container">
+                                {% for item in data.tips %}
+                                <div class="tip-item" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
+                                    <textarea name="tips[]" rows="2" style="width: 100%;">{{ item.descripcion }}</textarea>
+                                    <button type="button" onclick="removeTip(this)" class="outline-button-danger">Eliminar consejo</button>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button type="button" onclick="addTip()" class="outline-button-neutral">Agregar consejo</button>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="edit__container">
+                        <h3 class="label">Consejos: no hay consejos disponibles</h3>
+                        <div id="tips_display">
+                            
+                        </div>                       
+
+                        <div id="tips_edit" style="display: none;">
+                            <div id="tips-container">
+                                <!-- No existing tips -->
+                            </div>
+                            <button type="button" onclick="addTip()" class="outline-button-neutral">Agregar consejo</button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <button type="button" onclick="toggleEditSection('tips', this);" class="outline-button-neutral editar-btn">Editar</button>
+                </div>
+            </section>
+            <button type="button" onclick="cancelarEdicion();" class="outline-button-neutral">Cancelar</button>
+
+            
+            <button type="submit" class="action-button">Guardar cambios</button>
+            
+                
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %} 
+
+<!-- <script src="https://js.puter.com/v2/"></script>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key={{secretapi}}"></script>  -->
+<script src="{{ url_for('static', filename='scripts/player.js')}}"></script>
+
+<script src="{{ url_for('static', filename='scripts/edit_receta_form.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='scripts/recepy_page.js')}}"></script>
+
+
+
+{% endblock %}

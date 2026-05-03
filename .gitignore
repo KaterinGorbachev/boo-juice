@@ -1,0 +1,14 @@
+venv/
+env/
+venev/
+entornosvirtuales/
+virtualenvironment/
+.virtualenvironment
+.venv
+.env
+.entornosvirtuales
+.claude
+
+
+.py[cad]
+__pycache__

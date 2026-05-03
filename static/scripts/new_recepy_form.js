@@ -1,0 +1,414 @@
+let stateTimeout;
+
+function statePopup(message, title="Error", icon="🐈‍⬛", duration=4000, colorElementsBorder="#cc3c3c", colorElementsBack="#ff4b4b"){
+
+    clearTimeout(stateTimeout); 
+
+    const overlay = document.getElementById("state-popup-overlay");
+    const timerBar = document.getElementById("state-timer");
+
+    document.getElementById("state-icon").innerText = icon;
+    document.getElementById("state-title").innerText = title;
+    document.getElementById("state-message").innerText = message;
+    const btn = document.getElementById("state-btn")
+    btn.style.background = colorElementsBack
+    btn.style.boxShadow = `0 4px 0 ${colorElementsBorder}`
+
+    
+
+    overlay.classList.remove("hidden");
+
+    timerBar.style.transition = "none";
+    timerBar.style.width = "100%";
+
+    setTimeout(()=>{
+        timerBar.style.transition = `width ${duration}ms linear`;
+        timerBar.style.width = "0%";
+    },50);
+
+    stateTimeout = setTimeout(()=>{
+        stateClose();
+    }, duration);
+}
+
+function stateClose(){
+    document.getElementById("state-popup-overlay").classList.add("hidden");
+    clearTimeout(stateTimeout);
+}
+
+
+
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+const sendRecipe = async (recipeData) => {
+  try {
+    const response = await fetch("/api/recipes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": csrfToken },
+      body: JSON.stringify(recipeData)
+    });
+
+    const data = await response.json();
+
+    
+
+    if (response.status === 400) {
+      
+      setTimeout(() => {
+        statePopup((data.error ? data.error : 'Invalid data'), '❕')
+      }, 500)
+      
+      return
+    }
+
+    if (!response.ok) {
+      setTimeout(() => {
+        statePopup((response.status ? response.status : 'HTTP error'), '❌')
+      }, 500)
+      
+      throw new Error(`HTTP error ${response.status}`);
+    }
+
+    if(response.status === 200){       
+      
+      document.querySelectorAll('input').forEach((input) => {
+        input.value = ''
+    
+      })
+      document.querySelectorAll('textarea').forEach(input => input.value = '')
+      document.querySelectorAll('select').forEach(input => input.value = '')
+      
+    }
+
+    setTimeout(() => {
+      statePopup('Receta creada con exito', '¡Yupi!','🫰', 1500, '#a1d44f','#036310' )
+    }, 1500)
+    
+    console.log("Saved recipe:", data);
+
+    
+
+
+  } catch (error) {
+    statePopup(error , 'Error sending recipe')
+    console.error("Error sending recipe:", error);
+  }
+};
+
+let num_paso = 1
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("recipeForm");
+
+   if (!form) {
+    console.error("❌ Form not found");
+    return;
+  }
+
+  const ingredientsFieldset = document.getElementById("ingredients_fieldset");
+  const addIngredients = document.getElementById("btn_add_ingredient");
+  
+  const pasosFieldset = document.getElementById("pasos_fieldset");
+  const addPasos = document.getElementById("btn_add_paso");
+
+  const tipsFieldset = document.getElementById("tips_fieldset");
+  const addTip = document.getElementById("btn_add_tip")
+
+  const pasos_btns = document.getElementById('pasos_btns')
+
+
+  // add tips
+  addTip.addEventListener("click", () => {
+
+    const container = document.createElement("div");
+    container.classList.add("tip"); 
+    container.classList.add("input-message-box");
+
+    
+    container.innerHTML = `
+      
+      <input type="text" name="tips[]" maxlength="200" placeholder="Tu secreto para cocinar delicioso y rápido" class="text">
+      <small class="small_input ">0/200 caracteres</small>
+      
+    `
+    // a remove button for this block
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("outline-button-danger")
+    removeButton.type = "button";
+    removeButton.textContent = "- Eliminar tip";
+    removeButton.addEventListener("click", () => {
+      container.remove();
+    });
+
+    container.appendChild(removeButton);
+
+    tipsFieldset.insertBefore(container, addTip);
+
+
+  })
+
+  // add steps
+  addPasos.addEventListener("click", () => {
+
+    num_paso ++    
+
+    // Create a container div for the new inputs
+    const container = document.createElement("div");
+    container.classList.add("step__input");
+    container.innerHTML = `
+
+        <label class="small-title">Paso ${num_paso}</label>
+        <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" required class="step_description"></textarea>
+            
+    `
+
+    pasosFieldset.insertBefore(container, pasos_btns);
+
+    const btn_remove_exists = document.getElementById('btn_remove_paso') 
+
+    if(!btn_remove_exists){
+        // remove the last step
+        const removeButton = document.createElement("button");
+        removeButton.classList.add("outline-button-danger")
+        removeButton.type = "button";
+        removeButton.id = "btn_remove_paso"
+        removeButton.textContent = "- Eliminar ultimo paso";
+        removeButton.addEventListener("click", () => {
+            const pasosBlocks = pasosFieldset.querySelectorAll(".step__input");
+            if (pasosBlocks.length === 0){
+                return
+            } 
+ 
+            const lastBlock = pasosBlocks[pasosBlocks.length - 1];
+            lastBlock.remove();  // remove the last step
+            num_paso--; 
+            
+            if (pasosFieldset.querySelectorAll(".pasos-block").length === 0) {
+                removeButton.remove();
+            }
+        });
+
+        pasos_btns.appendChild(removeButton)       
+
+    }
+
+  })
+
+  // add ingredients
+  addIngredients.addEventListener("click", () => {
+    // Create a container div for the new inputs
+    const container = document.createElement("div");
+    container.classList.add("ingredient__input"); 
+
+    container.innerHTML = `
+      <input type="text" name="ingredients[]" placeholder="Ingrediente" required class="ingredient" list="ingredientes-list">
+        
+        <div class="input__left_label">
+          <input type="number" name="amounts[]" step="0.125" min="0" placeholder="Cantidad"  class="num_input">
+          <select name="measures[]" required class="measure_select">
+            <option value="">Medida</option>
+            <option value="pieza">pieza</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="cuchara">cuchara</option>
+            <option value="cucharadita">cucharadita</option>
+            <option value="taza">taza</option>
+            <option value="ml">ml</option>
+            <option value="l">l</option>
+            <option value="al gusto">al gusto</option>
+            <option value="pizca">pizca</option>
+            
+          </select>
+
+        </div>   
+
+    
+    `
+    
+    // a remove button for this block
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("outline-button-danger"); 
+    removeButton.type = "button";
+    removeButton.textContent = "- Eliminar ingrediente";
+    removeButton.addEventListener("click", () => {
+      container.remove();
+    });
+
+    // Appendremove button to the container    
+    container.appendChild(removeButton);
+
+    // Insert the new container before the Add button
+    ingredientsFieldset.insertBefore(container, addIngredients);
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // ===== BASIC FIELDS =====
+    // add checks for input
+    const name = document.getElementById("recipe_name").value.trim();
+    const description = document.getElementById("recipe_description").value.trim();
+
+    const hours = Number(document.querySelector('input[name="hours"]')?.value || 0);
+    const minutes = Number(document.querySelector('input[name="minutes"]')?.value || 0);
+
+    const servings = Number(document.getElementById("servings").value.trim())
+    //const portada = document.getElementById("recipe_cover").value.trim()
+    const portada = ""
+    
+
+    // function to create video useful link 
+    function convertToYouTubeEmbed(url) {
+      if (!url || typeof url !== 'string') return ''
+
+      try {
+        const parsedUrl = new URL(url)
+        let videoId = null
+
+        // youtu.be/VIDEO_ID
+        if (parsedUrl.hostname === 'youtu.be') {
+          videoId = parsedUrl.pathname.slice(1)
+        }
+
+        // youtube.com/watch?v=VIDEO_ID
+        if (parsedUrl.hostname.includes('youtube.com') && parsedUrl.searchParams.has('v')) {
+          videoId = parsedUrl.searchParams.get('v')
+        }
+
+        // youtube.com/embed/VIDEO_ID (already embedded)
+        if (parsedUrl.hostname.includes('youtube.com') && parsedUrl.pathname.startsWith('/embed/')) {
+          videoId = parsedUrl.pathname.split('/embed/')[1]
+        }
+
+        // youtube.com/shorts/VIDEO_ID (YouTube Shorts)
+        if (parsedUrl.hostname.includes('youtube.com') && parsedUrl.pathname.startsWith('/shorts/')) {
+          videoId = parsedUrl.pathname.split('/shorts/')[1]
+        }
+
+        if (!videoId) return ''
+
+        return `https://www.youtube.com/embed/${videoId}`
+      } catch (error) {
+
+        console.error('Video link convert error:',error);
+        return ''
+      }
+    }
+
+    const video = convertToYouTubeEmbed(document.getElementById("recipe_video").value.trim())
+
+
+    const totalMinutes = hours * 60 + minutes;
+
+    // ===== INGREDIENTS =====
+    const ingredientNames = document.querySelectorAll('input[name="ingredients[]"]');
+    const ingredientAmounts = document.querySelectorAll('input[name="amounts[]"]');
+    const ingredientMeasures = document.querySelectorAll('select[name="measures[]"]');
+
+    const ingredients = [];
+
+    // add checks for input
+    ingredientNames.forEach((input, index) => {
+      const nombre = input.value.trim();
+      const cantidad = Number(ingredientAmounts[index]?.value) || 0;
+      const medida = ingredientMeasures[index]?.value;
+
+      if (nombre && !isNaN(cantidad) && medida) {
+        ingredients.push({
+          nombre,
+          cantidad,
+          medida
+        });
+      }
+    });
+
+    // ===== STEPS =====
+    const stepTexts = document.querySelectorAll('textarea[name="steps[]"]');
+    const stepPhotos = document.querySelectorAll('input[name="step_photos[]"]');
+
+    const steps = [];
+
+    // add checks for input
+    stepTexts.forEach((textarea, index) => {
+      const text = textarea.value.trim();
+      const photo = stepPhotos[index]?.files[0] || '';
+
+      if (text) {
+        steps.push({
+          id: index + 1,
+          text,
+          photo
+        });
+      }
+    });
+
+    // ===== TIPS =====
+
+    const recepyTips = document.querySelectorAll('input[name="tips[]"]');
+    const tips = [];
+
+    recepyTips.forEach(input => {
+        const tip = input.value.trim();
+
+        if (tip) {
+            tips.push(tip)
+        }
+    })
+
+
+    // ===== FINAL OBJECT =====
+    //==== checks NOT NULL data =====
+    if (!name) {
+        alert('Introduce el nombre de la receta')
+        return
+    }
+    else if (!description) {
+        alert('Cuentanos algo sobre la receta en descripción')
+        return
+    }
+    /* else if (totalMinutes == 0){
+        alert('Introduce el tiempo de preparación aproximadamente')
+        return
+    } */
+    else if (ingredients.length < 1){
+        alert('Introduce al menos un ingrediente')
+        return
+    }
+    else if (steps.length < 1){
+        alert('Introduce al menos un paso de prepaarción')
+        return
+    }
+    
+
+    const recipeData = {
+      name,
+      description,
+      portada,
+      video,
+      minutes: totalMinutes,
+      servings,
+      ingredients,
+      steps, 
+      tips
+    };
+
+    const test_receta = recipeData
+
+    console.log(recipeData);
+    
+
+    // ===== SEND TO BACKEND =====
+    try {
+      sendRecipe(recipeData)           
+    }
+    catch (error) {
+        console.error('After sending data', error);
+        
+    }
+    
+
+})
+
+    
+})
+

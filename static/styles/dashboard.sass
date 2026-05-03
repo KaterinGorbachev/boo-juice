@@ -1,0 +1,171 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+  
+.dashboard
+  width: 100%
+  @include mix.flexColumn($horizontal: stretch)
+  gap: variables.$gap-min
+  
+
+.logout
+  display: inline-block
+  margin-bottom: 1rem
+  color: #e63946
+  font-weight: 600
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+
+.table-controls
+  background: variables.$palyer-gradient
+  border: solid 2px variables.$violet-glow
+  padding: 1em
+  border-radius: 15px
+  @include mix.flexColumn($horizontal: start)
+  gap: variables.$gap-min
+  width: 100%
+  
+
+  
+  
+
+  form
+    @include mix.flexRow($horizontal: start, $vertical: stretch)
+    flex-wrap: wrap
+    gap: 0.5rem
+
+    .label
+      opacity: 0
+      width: 0
+
+    select
+      @include mix.inputForm()
+      display: flex
+      cursor: pointer
+      max-width: 200px
+      flex: 1 1
+
+    .outline-button-neutral
+      max-width: 150px
+      flex: 1 1
+
+
+
+
+.table
+  @include mix.flexColumn($horizontal: stretch)
+  width: 100%
+  border-collapse: collapse
+  background: transparent
+  border-radius: 15px
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05)
+  
+
+
+  .tbody
+    @include mix.flexColumn()
+    width: 100%
+    gap: variables.$gap-min
+
+  .tr
+    @include mix.flexColumn($horizontal: space-between)
+    background: white
+    padding: 1rem
+    border-radius: 15px
+    border: solid 2px variables.$violet-glow
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05)
+    width: 100%
+    
+
+    .td
+      @include mix.flexRow($horizontal: space-between)
+      border: none
+      padding: 0.5rem 0
+      width: 100%
+      &::before
+        content: attr(data-label)
+        font-weight: 600
+        color: #555
+        margin-right: 1rem
+        flex-shrink: 0
+
+    .td:last-child
+      justify-content: flex-end
+      margin-top: 2rem
+      form
+        width: 100%
+        display: flex
+        justify-content: center
+
+
+// ── Confirmation modal ────────────────────────────────────────────────────────
+
+.confirm-overlay
+  position: fixed
+  inset: 0
+  background: variables.$bg-overlay
+  display: flex
+  align-items: center
+  justify-content: center
+  z-index: 1000
+  opacity: 0
+  visibility: hidden
+  transition: opacity variables.$transition-smooth, visibility variables.$transition-smooth
+
+  &.active
+    opacity: 1
+    visibility: visible
+
+    .confirm-modal
+      transform: translateY(0) scale(1)
+      opacity: 1
+
+.confirm-modal
+  background: variables.$light-title-background-color
+  border-radius: variables.$radius
+  border: solid 2px variables.$violet-glow
+  box-shadow: 0 8px 32px rgba(80, 40, 120, 0.18)
+  padding: 2rem 2rem 1.5rem
+  width: variables.$popup-width
+  max-width: 90vw
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 0.75rem
+  text-align: center
+  transform: translateY(-16px) scale(0.97)
+  opacity: 0
+  transition: transform variables.$transition-smooth, opacity variables.$transition-smooth
+
+.confirm-icon
+  font-size: 2.25rem
+  color: variables.$light-title-h1-color
+  line-height: 1
+
+.confirm-title
+  font-family: variables.$font-h3
+  font-size: 1.15rem
+  font-weight: 700
+  color: variables.$light-buttons-text
+  margin: 0
+
+.confirm-body
+  font-family: variables.$font-text
+  font-size: 0.9rem
+  color: #666
+  margin: 0
+
+.confirm-actions
+  display: flex
+  flex-direction: row
+  gap: 0.75rem
+  margin-top: 0.5rem
+  width: 100%
+
+  .outline-button-neutral,
+  .outline-button-danger
+    flex: 1 1
+    margin-top: 0
+    

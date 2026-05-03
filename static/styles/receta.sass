@@ -1,0 +1,714 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+
+
+input
+  @include mix.inputForm($accent: variables.$violet-glow, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
+  background-color: variables.$edit-input-bg
+textarea
+  @include mix.inputForm($accent: variables.$light-buttons-color, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
+  background-color: variables.$edit-input-bg
+  resize: none
+  max-height: 200px
+  height: 150px
+  overflow-y: scroll
+
+.label
+  color: variables.$light-header-background-color !important
+
+
+.hidden 
+  display: none 
+  
+
+///======================================
+/// svg styles 
+
+.like__heart
+  
+  @include mix.transition-ease
+  cursor: pointer
+    
+  &:hover
+    transform: scale(1.2)
+
+  // path 
+  //   filter: drop-shadow(6px 6px 0px variables.$light-title-h1-color)
+    
+
+
+.play_svg
+  width: 22px
+  height: 20px
+  color: white
+
+.change_play_step_svg 
+  color: variables.$title-stroke
+  width: 20px
+  height: 20px
+
+
+///======================================
+
+.play
+  width: 42px
+  height: 42px
+  cursor: pointer
+  border-radius: 50% 
+  border: none
+  outline: none
+  padding: 0.5em
+  background-color: variables.$title-color
+  box-shadow: inset 0px -2px 0px 1.5px variables.$focus-color 
+  transition: background 0.3s ease, box-shadow 0.1s ease
+  
+  &:hover
+    background: variables.$magic-gradient
+    box-shadow: inset 0px -2px 0px 1.5px variables.$violet-glow
+
+.change_step_btn 
+  cursor: pointer
+  padding: 3px 
+  background-color: transparent 
+  border: none
+  outline: none
+  @include mix.transition-ease
+  
+  &:hover .change_play_step_svg 
+    color: variables.$dark-buttons-color
+
+
+
+
+    
+
+.outlined__link 
+  text-align: center
+  text-decoration: none
+  padding: 0.6rem 0.75rem 
+  background-color: transparent
+  cursor: pointer
+  border-radius: 15px
+  outline: none
+  border: solid 2px variables.$light-buttons-text
+  font-family: variables.$font-text
+  font-weight: 600
+  width: 100%
+  color: variables.$light-buttons-text
+  @include mix.transition-ease
+  &:hover
+    background-color:  variables.$light-buttons-color
+
+#ingredientes_edit
+  width: 100%
+  min-width: 0
+  @include mix.flexColumn($horizontal: start)
+  gap: variables.$gap-min
+  #ingredientes-container
+    @include mix.flexColumn($horizontal: start)
+    gap: variables.$gap-min
+    width: 100%
+    min-width: 0
+    .ingrediente-item
+      @include mix.flexColumn($horizontal: start, $vertical: start)
+      gap: variables.$gap-min
+      width: 100%
+      min-width: 0
+      border: 1px solid variables.$light-buttons-color
+      padding: 0.5em
+      border-radius: 15px
+      .ingrediente__edit__form
+        width: 100%
+        min-width: 0
+        @include mix.inputForm($accent: variables.$light-buttons-color, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
+        background-color: variables.$edit-input-bg
+      .cantidad__edit__form
+        width: 100%
+        background-color: variables.$edit-input-bg
+      @include mix.responsive ($size: 'lg')
+        @include mix.flexRow($horizontal: start, $vertical: center)
+        .ingrediente__edit__form
+          width: 45%
+        .cantidad__edit__form
+          width: 15%
+
+#pasos_edit
+  width: 100%
+  min-width: 0
+  @include mix.flexColumn($horizontal: start)
+  gap: variables.$gap-min
+  #pasos-container
+    @include mix.flexColumn($horizontal: start)
+    gap: variables.$gap-min
+    width: 100%
+    min-width: 0
+    .step__edit
+      @include mix.flexColumn($horizontal: start, $vertical: start)
+      gap: variables.$gap-min
+      width: 100%
+      min-width: 0
+      border: 1px solid variables.$light-buttons-color
+      padding: 0.5em
+      border-radius: 15px
+      .step__edit__form
+        width: 100%
+        min-width: 0
+        @include mix.inputForm($accent: variables.$light-buttons-color, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
+        background-color: variables.$edit-input-bg
+
+#tips_edit
+  width: 100%
+  min-width: 0
+  @include mix.flexColumn($horizontal: start)
+  gap: variables.$gap-min
+  #tips-container
+    @include mix.flexColumn($horizontal: start)
+    gap: variables.$gap-min
+    width: 100%
+    min-width: 0
+    .tip-item
+      @include mix.flexColumn($horizontal: start, $vertical: start)
+      gap: variables.$gap-min
+      width: 100%
+      min-width: 0
+      border: 1px solid variables.$light-buttons-color
+      padding: 0.5em
+      border-radius: 15px
+      .tip__edit__form
+        width: 100%
+        min-width: 0
+        @include mix.inputForm($accent: variables.$light-buttons-color, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
+        background-color: variables.$edit-input-bg
+.measure_select 
+  @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:20%, $shadow-color: variables.$violet-glow)
+  width: 100%
+  min-width: 0 
+  flex: 1 1 0
+  cursor: pointer
+  background-color: variables.$edit-input-bg
+
+.form-edit-recipe 
+  @include mix.flexColumn($horizontal: center)
+  gap: clamp(2.5rem, 2vw, 3rem)
+  width: 100%
+  min-width: 0
+  position: relative
+  padding-bottom: 4em
+
+.border__box
+  border: solid 1px variables.$outline-btn-color
+  width: 100%
+  min-width: 0
+  position: relative
+  border-radius: 15px
+  padding: 1.5em
+
+.edit__container
+  @include mix.flexColumn($horizontal: start, $vertical: start)
+  gap: variables.$gap-min
+  width: 100%
+  min-width: 0
+  position: relative
+  
+ 
+  .outline-button-neutral
+    width: 100%   
+    
+ 
+  
+  h1 
+    font-size: clamp(24px, 2.5rem, 40px)
+    text-transform: capitalize 
+    font-family: variables.$font-title            
+    font-weight: map.get(variables.$font-weights, 'regular')
+    letter-spacing: 0.03em
+    color: variables.$light-title-h1-color
+    width: 80%
+    max-width: 80%
+    flex: 1
+  
+
+  
+    
+
+
+.comon__info
+  @include mix.flexColumn()
+  gap: 1rem
+  width: 100% 
+
+  // recepy intro
+  .cell 
+    @include mix.flexColumn()
+    position: relative
+    height: 300px
+    max-height: 500px
+    flex: 0 1
+    border-radius: 5px
+    width: 100%
+    .img__box 
+      width: 100%
+      height: 100%
+      overflow: hidden
+      background-color: variables.$hint-color
+      border-radius: 15px
+      img 
+        width: 100%
+        object-fit: cover 
+        object-position: center      
+
+    .title__box 
+      @include mix.flexColumn($horizontal: start)
+      gap: variables.$gap-min
+      padding: 1rem 0.45rem
+      position: absolute
+      width: 100%
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 1          
+      border-radius: 15px
+      background-color: variables.$light-text-background-color
+      color: variables.$light-header-background-color
+      box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
+
+      .name__like_btn
+        @include mix.flexRow($horizontal: space-between)
+        width: 100%
+        h1 
+          font-size: clamp(24px, 2.5rem, 40px)
+          text-transform: capitalize 
+          font-family: variables.$font-title            
+          font-weight: map.get(variables.$font-weights, 'regular')
+          letter-spacing: 0.03em
+          color: variables.$light-title-h1-color
+          width: 80%
+          max-width: 80%
+        .save-receta-heart
+          outline: none
+          background-color: transparent 
+          border: none
+          cursor: pointer
+          padding: 5px
+
+      .edit_title_box
+        @include mix.flexColumn($horizontal: start)
+        gap: variables.$gap-min
+        width: 100%
+        
+
+  // recepy prep info 
+  .preparation__info
+    @include mix.flexRow($horizontal: center)
+    gap: variables.$gap-min
+    width: 100%
+    div
+      @include mix.flexColumn($horizontal: start)
+
+    hr
+      width: 0.7px
+      height: 40px
+      background-color: variables.$light-buttons-text
+      border: none
+
+.ingredientes
+  @include mix.flexColumn($horizontal: start)
+  gap: variables.$gap-min
+  padding: 1rem 0.45rem
+  width: 100%
+  position: relative
+  border-radius: 15px
+  background-color: variables.$light-text-background-color
+  color: variables.$light-header-background-color
+  box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
+
+  // modo cocinar radiobtn
+  .ingredientes__btns
+    @include mix.flexRow($horizontal: start)
+    width: 100%
+    gap: variables.$gap-min
+    @include mix.transition-ease
+    
+
+    .theme-toggle 
+      position: relative
+      width: 90px
+      height: 30px
+      display: inline-block  
+      
+      /* Hide checkbox */
+      input 
+        opacity: 0
+        width: 0
+        height: 0
+        position: absolute    
+
+      /* Slider background */
+      .slider 
+        position: absolute
+        inset: 0
+        cursor: pointer
+        border-radius: 80px
+        background: #d4d4d4      
+        box-shadow: inset -2px 4px 14px rgba(0, 0, 0, 0.30)
+        transition: background 0.4s ease
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        overflow: hidden
+
+        /* Icon */
+        .icon 
+          position: absolute
+          z-index: 4
+          font-size: 24px
+          left: 0px
+          transition: transform 0.3s ease
+      
+
+      /* Knob */
+      .slider::before 
+        content: ""
+        position: absolute
+        height: 20px
+        width: 24px
+        left: 4px
+        top: 4px
+        background: transparent
+        border-radius: 50%
+        transition: transform 0.3s ease
+        z-index: 2
+      
+    
+
+    /*  When checked */
+    .theme-toggle input:checked + .slider 
+      background: linear-gradient(82deg, #7780d0 10.28%, #e0402b 100%)
+      box-shadow: inset -2px 4px 14px rgba(0, 0, 0, 0.30)
+    
+
+    /* Move knob */
+    .theme-toggle input:checked + .slider::before 
+      transform: translateX(50px)
+
+    .theme-toggle input:checked + .slider .icon 
+      transform: translateX(55px)
+
+    .toggle_label
+      font-size: 14px
+      color: variables.$light-buttons-text
+      font-family: variables.$font-text
+      font-weight: 600
+
+  .hint_pantalla
+    
+    font-size: 12px
+    color: gray
+    transition: opacity 0.3s ease
+    pointer-events: none
+
+
+    
+
+    
+    
+    
+  // size btn to change ingredientes number
+  .ingredientes__size
+    @include mix.flexColumn($horizontal: start)
+    gap: calc( variables.$gap-min / 2 )
+    width: 100%
+
+    .btns__box
+      @include mix.flexRow($horizontal: start)
+      
+      border-radius: 15px
+      overflow: hidden
+      border: solid 2px variables.$outline-btn-color
+      button
+        border: none
+        outline: none
+        cursor: pointer
+        width: 60px
+        height: 40px
+        background-color: transparent
+        color: variables.$light-buttons-text
+        font-family: variables.$font-text
+        font-weight: 600
+        @include mix.transition-ease
+        &:hover
+          background-color:  variables.$light-buttons-color
+        &.active
+          background-color:  variables.$light-buttons-color
+
+          
+      hr
+        width: 2px
+        height: 40px
+        border: none
+        background-color: variables.$outline-btn-color
+
+
+
+  .ingredientes__list
+    padding-left: variables.$gap-min
+    @include mix.flexColumn($horizontal: start)
+    gap: variables.$gap-min
+    li
+      font-family: variables.$font-text
+      font-size: 1rem
+
+.steps
+  @include mix.flexColumn($horizontal: center)
+  gap: variables.$gap-min
+  padding: 0.45rem 0.45rem
+  width: 100%
+  position: relative
+  border-radius: 15px
+  background-color: variables.$light-text-background-color
+  color: variables.$light-header-background-color
+  box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
+  isolation: isolate
+
+  .player-box
+    position: sticky
+    top: 15vh
+    z-index: 9
+    width: 100%
+    border: solid 2px variables.$violet-glow
+    border-radius: 15px
+    padding: 0.5rem
+    backdrop-filter: blur(12px)
+    background: variables.$palyer-gradient
+    @include  mix.flexColumn($vertical: center, $horizontal: center, $text-align: start)
+    gap: variables.$gap-min
+    
+
+    .player 
+      @include mix.flexRow()
+      gap: calc(  variables.$gap-min + 6px)      
+      min-height: 60px
+      
+    .step-box
+      @include  mix.flexRow($vertical: center, $horizontal: center, $text-align: start)
+      gap: variables.$gap-min
+      width: 100%
+      flex-wrap: wrap
+
+      .player-by-step
+        width: 30px
+        height: 30px
+        border-radius: 50%
+        border: none
+        outline: none
+        background-color: variables.$title-color
+        color: variables.$title-stroke
+        font-family: variables.$font-text
+        font-weight: 900
+        font-size: 1rem
+        cursor: pointer
+        box-shadow: inset 0px -2px 0px 1.5px variables.$focus-color
+        transition: background 0.3s ease, box-shadow 0.1s ease
+  
+        &:hover
+          background: variables.$magic-gradient
+          box-shadow: inset 0px -2px 0px 1.5px variables.$violet-glow
+          color: variables.$light-text-background-color
+
+  .label
+    position: relative
+    text-align: center
+    width: 100%
+
+    
+    
+
+  .step, .step__edit
+    @include mix.flexRow($vertical: start, $horizontal: start, $text-align: start)
+    gap: calc( variables.$gap-min / 2 )
+    padding-bottom: 4rem
+    width: 100%
+
+    .step_num
+      @include mix.flexColumn($vertical: center, $horizontal: center, $text-align: center)
+      background-color: variables.$light-buttons-color
+      border-radius: 50%      
+      width: 24px
+      height: 24px
+      
+      p
+        font-family: variables.$font-text
+        font-weight: 900
+        font-size: 1rem
+        text-align: center
+        color: variables.$outline-btn-color
+
+    p
+      font-family: variables.$font-text
+      font-size: clamp(14px, 1.5vw, 18px)
+      color: variables.$light-header-background-color
+      flex: 1
+      max-width: 90%
+      text-align: start
+      line-height: 1.5
+      
+
+.steps_end_btns_box
+  padding: 1rem 0.45rem
+  width: 100%
+  position: relative
+  border-radius: 15px
+  background-color: variables.$light-text-background-color
+  box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
+  padding: calc( variables.$gap-min /2 )
+  @include mix.flexRow($horizontal: space-between, $text-align: start)
+  .steps_end_btns
+    width: 100%
+    @include mix.flexRow($horizontal: center, $text-align: start)
+    gap: variables.$gap-min
+    button
+      outline: none
+      background-color: transparent 
+      border: none
+      cursor: pointer
+      padding: 5px
+
+
+/* Container around the video */
+#video-resizer-wrapper
+  position: relative
+  width: 100%
+  max-width: 900px
+  margin: 1em auto
+  border: solid 1px variables.$dark-buttons-color
+  background: #000
+  backdrop-filter: blur(9px)
+  border-radius: 15px
+  overflow: hidden
+
+
+/* Responsive video container */
+#video-container
+  width: 100%
+  aspect-ratio: 16 / 9   // modern solution
+  position: relative
+
+
+#video-container iframe
+  width: 100%
+  height: 100%
+  border: 0
+  display: block
+
+
+/* Resize handle */
+#resize-handle
+  touch-action: none
+  position: absolute
+  right: 8px
+  bottom: 8px
+  width: 16px
+  height: 16px
+  background: #444
+  cursor: se-resize
+  border: 2px solid #222
+  z-index: 10
+
+@media (max-width: 768px)
+  #resize-handle
+    display: none
+
+.video_youtube 
+  @include mix.flexColumn($horizontal: center)
+  width: 100%
+  height: max-content
+  border-radius: 15px
+  border: solid 1px variables.$hint-color
+  padding: 4px
+  background: #ffffff57
+  backdrop-filter: blur(9px)
+  #video-resizer-wrapper
+    
+    .video 
+      width: 100%
+      height: auto
+      object-position: center
+      object-fit: cover
+
+
+
+
+.nutricion 
+  @include mix.flexColumn($horizontal: center)
+  gap: variables.$gap-min
+  padding: 1rem 0.45rem
+  width: 100%
+
+  .simple_link
+    @include mix.flexColumn($horizontal: center)
+    padding: 1rem
+    @include mix.transition-ease    
+    &:hover hr
+      background-color: variables.$dark-buttons-color
+
+    a
+      text-decoration: none
+      font-family: variables.$font-text
+      font-size: 14px
+      color: variables.$light-buttons-text 
+      @include mix.transition-ease
+      &:hover 
+        color: variables.$dark-buttons-color
+    hr
+      background-color: variables.$light-buttons-color 
+      border: none
+      width: 100%
+      height: 2px
+      
+
+
+.wrapper-main
+  @include mix.flexColumn($horizontal: center)
+  width: 100%
+  min-width: 0
+  position: relative 
+
+  .content-inner
+    @include mix.flexColumn($horizontal: center)
+    gap: variables.$gap-min*2
+    background-color: variables.$light-primary-background-color
+    border-radius: 15px
+    padding: 1rem
+
+
+  @include mix.responsive ($size: 'lg')
+    @include mix.flexColumn($horizontal: start)
+
+    .content-inner
+      width: min(900px, 100%)
+      padding: 2rem
+      
+
+
+
+
+
+
+
+
+
+      
+
+
+
+  
+
+            
+                
+
+            
+
+
+    

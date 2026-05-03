@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.svg">
+  <title>Política de Privacidad y Cookies — Animales Inanimados</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #1A2F4E;
+      --secondary:     #2B5A8F;
+      --accent:        #3A7BD5;
+      --bg:            #F5F7FA;
+      --surface:       #FFFFFF;
+      --border:        #DDE3ED;
+      --text:          #1C2333;
+      --muted:         #5A6478;
+      --summary-bg:    #EEF4FF;
+      --summary-bdr:   #B8D0F8;
+      --warn-bg:       #FFF8E7;
+      --warn-bdr:      #F0C040;
+      --success-bg:    #F0FFF4;
+      --success-bdr:   #86DCA0;
+      --transfer-bg:   #FFF3E0;
+      --transfer-bdr:  #FFCC80;
+      --purple-bg:     #F3E5F5;
+      --purple-bdr:    #CE93D8;
+      --radius:        12px;
+      --radius-sm:     8px;
+      --shadow:        0 2px 12px rgba(26,47,78,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── HEADER ── */
+    .hdr {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      padding: 3rem 2rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hdr::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -8%;
+      width: 380px; height: 380px;
+      background: rgba(255,255,255,.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hdr-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+    .hdr-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28);
+      border-radius: 20px; padding: .3rem .9rem;
+      font-size: .78rem; letter-spacing: .05em; text-transform: uppercase;
+      margin-bottom: 1rem; color: rgba(255,255,255,.9);
+    }
+    .hdr h1 {
+      font-size: clamp(1.75rem, 4vw, 2.7rem);
+      font-weight: 800; letter-spacing: -.02em;
+      line-height: 1.2; margin-bottom: .6rem;
+    }
+    .hdr-sub { font-size: .98rem; opacity: .78; margin-bottom: 1.5rem; }
+    .hdr-meta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+    .meta-chip {
+      display: flex; align-items: center; gap: .35rem;
+      background: rgba(255,255,255,.12); border-radius: 8px;
+      padding: .38rem .8rem; font-size: .8rem; color: rgba(255,255,255,.88);
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 252px 1fr;
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    @media (max-width: 780px) {
+      .layout { grid-template-columns: 1fr; padding: 1rem; }
+      .sidebar { display: none; }
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { position: sticky; top: 1.5rem; height: fit-content; }
+    .sidebar-nav {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.4rem; box-shadow: var(--shadow);
+    }
+    .sidebar-nav h3 {
+      font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted); margin-bottom: .9rem;
+      padding-bottom: .7rem; border-bottom: 1px solid var(--border);
+    }
+    .nav-list { list-style: none; }
+    .nav-list li { margin-bottom: .1rem; }
+    .nav-list a {
+      display: block; padding: .42rem .65rem; border-radius: 6px;
+      text-decoration: none; color: var(--muted); font-size: .82rem;
+      transition: all .18s; border-left: 2px solid transparent;
+    }
+    .nav-list a:hover {
+      color: var(--accent); background: var(--summary-bg);
+      border-left-color: var(--accent);
+    }
+
+    /* ── MOBILE NAV ── */
+    .mobile-nav {
+      display: none; background: var(--surface);
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 1rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);
+    }
+    @media (max-width: 780px) { .mobile-nav { display: block; } }
+    .mobile-nav label { display: block; font-size: .82rem; font-weight: 600; color: var(--muted); margin-bottom: .5rem; }
+    .mobile-nav select {
+      width: 100%; padding: .6rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: .9rem; cursor: pointer; background: #fff;
+    }
+
+    /* ── OVERVIEW ── */
+    .overview {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem; margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .overview-label {
+      font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted); margin-bottom: 1.1rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: .9rem;
+    }
+    .ov-card { background: var(--bg); border-radius: var(--radius-sm); padding: 1.1rem; text-align: center; }
+    .ov-icon { font-size: 1.9rem; margin-bottom: .45rem; display: block; }
+    .ov-card h4 { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: .35rem; }
+    .ov-card p { font-size: .8rem; color: var(--text); }
+
+    /* ── SECTION ── */
+    .section {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.9rem; margin-bottom: 1.4rem;
+      box-shadow: var(--shadow); scroll-margin-top: 1.5rem;
+    }
+    .sec-head {
+      display: flex; align-items: flex-start; gap: .9rem;
+      margin-bottom: 1.4rem; padding-bottom: 1.1rem;
+      border-bottom: 2px solid var(--bg);
+    }
+    .sec-num {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 36px; height: 36px; background: var(--primary);
+      color: #fff; border-radius: 9px; font-weight: 800; font-size: .88rem;
+      flex-shrink: 0; margin-top: .1rem;
+    }
+    .sec-head h2 { font-size: 1.22rem; font-weight: 700; color: var(--primary); line-height: 1.3; }
+
+    /* ── BOXES ── */
+    .box { border-radius: var(--radius-sm); padding: 1rem 1.2rem; margin-bottom: 1.2rem; font-size: .875rem; }
+    .box-label { display: block; font-weight: 700; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .35rem; }
+    .box-summary { background: var(--summary-bg); border: 1.5px solid var(--summary-bdr); }
+    .box-summary .box-label { color: var(--accent); }
+    .box-warn { background: var(--warn-bg); border: 1.5px solid var(--warn-bdr); }
+    .box-warn .box-label { color: #9A6E00; }
+    .box-transfer { background: var(--transfer-bg); border: 1.5px solid var(--transfer-bdr); }
+    .box-transfer .box-label { color: #B84D00; }
+    .box-purple { background: var(--purple-bg); border: 1.5px solid var(--purple-bdr); }
+
+    /* ── TABLES ── */
+    .tbl-wrap { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; overflow-x: auto; margin: 1.1rem 0; }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .83rem; }
+    thead th {
+      background: var(--primary); color: #fff; padding: .7rem 1rem;
+      text-align: left; font-weight: 600; font-size: .76rem;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:nth-child(even) td { background: #F8FAFD; }
+
+    /* ── BADGES ── */
+    .badge { display: inline-flex; align-items: center; gap: .28rem; padding: .18rem .55rem; border-radius: 20px; font-size: .73rem; font-weight: 600; }
+    .b-us  { background: #FFF3E0; color: #C84B00; border: 1px solid #FFCC80; }
+    .b-dpf { background: #E8F5E9; color: #1B5E20; border: 1px solid #A5D6A7; }
+    .b-scc { background: #EDE7F6; color: #4A148C; border: 1px solid #CE93D8; }
+    .b-needed { background: #FFF8E1; color: #E65100; border: 1px solid #FFCC80; }
+
+    /* ── RIGHTS GRID ── */
+    .rights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: .9rem; margin: 1.1rem 0; }
+    .right-card { background: var(--success-bg); border: 1.5px solid var(--success-bdr); border-radius: var(--radius-sm); padding: 1rem; }
+    .right-card .ri { font-size: 1.35rem; display: block; margin-bottom: .35rem; }
+    .right-card h4 { font-size: .83rem; font-weight: 700; color: var(--primary); margin-bottom: .25rem; }
+    .right-card p { font-size: .76rem; color: var(--muted); margin: 0; }
+
+    /* ── PROVIDER CARDS ── */
+    .provider-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 1rem; }
+    .provider-head { display: flex; align-items: center; gap: .9rem; padding: .9rem 1.2rem; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .p-logo { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .p-name { font-weight: 700; font-size: .98rem; color: var(--primary); }
+    .p-role { font-size: .78rem; color: var(--muted); }
+    .provider-body { padding: .9rem 1.2rem; }
+    .prow { display: flex; gap: .6rem; margin-bottom: .55rem; font-size: .82rem; align-items: flex-start; }
+    .plabel { min-width: 118px; font-weight: 600; color: var(--muted); font-size: .78rem; flex-shrink: 0; }
+
+    /* ── COOKIE CHIPS ── */
+    .ck-needed   { background: #E8F5E9; color: #1B5E20; border-radius: 10px; padding: .18rem .55rem; font-size: .73rem; font-weight: 600; }
+    .ck-analytics{ background: #FFF8E1; color: #B84D00; border-radius: 10px; padding: .18rem .55rem; font-size: .73rem; font-weight: 600; }
+
+    /* ── AEPD BOX ── */
+    .aepd-box { background: var(--purple-bg); border: 1.5px solid var(--purple-bdr); border-radius: var(--radius-sm); padding: 1rem 1.2rem; margin-top: 1.2rem; font-size: .86rem; }
+
+    /* ── CONTACT ── */
+    .contact-card {
+      background: linear-gradient(135deg, var(--summary-bg) 0%, #EEF6FF 100%);
+      border: 1.5px solid var(--summary-bdr);
+      border-radius: var(--radius); padding: 1.75rem; text-align: center;
+    }
+    .contact-card .ci { font-size: 2.4rem; margin-bottom: .9rem; display: block; }
+    .contact-card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: .45rem; }
+    .contact-card p { font-size: .88rem; color: var(--muted); margin-bottom: 1.1rem; }
+    .btn-contact {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: var(--primary); color: #fff;
+      padding: .72rem 1.65rem; border-radius: 8px;
+      text-decoration: none; font-weight: 600; font-size: .88rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-contact:hover { background: var(--secondary); transform: translateY(-1px); }
+
+    /* ── TYPOGRAPHY ── */
+    h3 { font-size: .98rem; font-weight: 700; color: var(--primary); margin: 1.2rem 0 .65rem; }
+    p  { margin-bottom: .7rem; font-size: .875rem; }
+    ul { padding-left: 1.4rem; margin-bottom: .7rem; }
+    ul li { font-size: .855rem; margin-bottom: .32rem; }
+    a  { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: var(--primary); }
+    .legal-note { font-size: .77rem; color: var(--muted); font-style: italic; border-top: 1px dashed var(--border); padding-top: .7rem; margin-top: .9rem; }
+
+    /* ── FOOTER ── */
+    .footer { max-width: 1100px; margin: 0 auto; padding: 1.4rem 1.5rem; text-align: center; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <span class="hdr-badge">🔒 Documento legal · RGPD</span>
+    <h1>Política de Privacidad y Cookies</h1>
+    <p class="hdr-sub">Animales Inanimados &mdash; <strong style="color:#fff">animales-inanimados.onrender.com</strong></p>
+    <div class="hdr-meta">
+      <span class="meta-chip">📅 Última actualización: 01/05/2026</span>
+      <span class="meta-chip">🇪🇸 Aplicable a usuarios en España</span>
+      <span class="meta-chip">⚖️ Conforme al RGPD (UE) 2016/679</span>
+    </div>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- DESKTOP SIDEBAR -->
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <h3>Índice</h3>
+      <ul class="nav-list">
+        <li><a href="#resumen">🗺️ Resumen visual</a></li>
+        <li><a href="#s1">1. Responsable</a></li>
+        <li><a href="#s2">2. Ámbito</a></li>
+        <li><a href="#s3">3. Datos recogidos</a></li>
+        <li><a href="#s4">4. Finalidades y base jurídica</a></li>
+        <li><a href="#s5">5. Transferencias internacionales</a></li>
+        <li><a href="#s6">6. Encargados del tratamiento</a></li>
+        <li><a href="#s7">7. Conservación</a></li>
+        <li><a href="#s8">8. Sus derechos</a></li>
+        <li><a href="#s9">9. Menores</a></li>
+        <li><a href="#cookies">🍪 Política de Cookies</a></li>
+        <li><a href="#s10">10. Modificaciones</a></li>
+        <li><a href="#contacto">📬 Contacto</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <main>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav">
+      <label for="navSel">Ir a sección:</label>
+      <select id="navSel" onchange="if(this.value){document.getElementById(this.value).scrollIntoView({behavior:'smooth'});this.value='';}">
+        <option value="">— Seleccione una sección —</option>
+        <option value="resumen">Resumen visual</option>
+        <option value="s1">1. Responsable</option>
+        <option value="s2">2. Ámbito</option>
+        <option value="s3">3. Datos recogidos</option>
+        <option value="s4">4. Finalidades y base jurídica</option>
+        <option value="s5">5. Transferencias internacionales</option>
+        <option value="s6">6. Encargados del tratamiento</option>
+        <option value="s7">7. Conservación</option>
+        <option value="s8">8. Sus derechos</option>
+        <option value="s9">9. Menores</option>
+        <option value="cookies">Política de Cookies</option>
+        <option value="s10">10. Modificaciones</option>
+        <option value="contacto">Contacto</option>
+      </select>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section id="resumen" class="overview">
+      <p class="overview-label">🗺️ Resumen en un vistazo — Lo más importante</p>
+      <div class="overview-grid">
+        <div class="ov-card"><span class="ov-icon">📧</span><h4>Qué recogemos</h4><p>Email, apodo y el contenido que crea (recetas, favoritos)</p></div>
+        <div class="ov-card"><span class="ov-icon">🎯</span><h4>Para qué</h4><p>Gestionar su cuenta, ofrecer el servicio y mejorar el sitio</p></div>
+        <div class="ov-card"><span class="ov-icon">🌍</span><h4>Dónde se guardan</h4><p>Servidores en EE.UU. (Firebase + Render) con garantías RGPD</p></div>
+        <div class="ov-card"><span class="ov-icon">🛡️</span><h4>Sus derechos</h4><p>Acceso, rectificación, supresión y portabilidad, sin coste</p></div>
+      </div>
+    </section>
+
+    <!-- S1 -->
+    <section id="s1" class="section">
+      <div class="sec-head"><span class="sec-num">1</span><h2>Identidad del Responsable del Tratamiento</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>La responsable de sus datos es la desarrolladora del sitio, Ekaterina Gorbacheva (Animales Inanimados).</div>
+      <p>De conformidad con el RGPD (UE) 2016/679 y la LOPDGDD 3/2018 se identifican los datos del responsable:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:35%">Dato</th><th>Información</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Responsable</strong></td><td>Animales Inanimados</td></tr>
+            <tr><td><strong>Titular</strong></td><td>Ekaterina Gorbacheva</td></tr>
+            <tr><td><strong>Sitio web</strong></td><td>animales-inanimados.onrender.com</td></tr>
+            <tr><td><strong>Servicio</strong></td><td>Aplicación web de gestión de recetas culinarias</td></tr>
+            <tr><td><strong>Contacto</strong></td><td><a href="https://www.linkedin.com/in/katerina-gorbacheva-93717324a/" target="_blank" rel="noopener noreferrer">LinkedIn: Ekaterina Gorbacheva</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- S2 -->
+    <section id="s2" class="section">
+      <div class="sec-head"><span class="sec-num">2</span><h2>Ámbito de Aplicación</h2></div>
+      <p>La presente Política se aplica a todos los usuarios que accedan o utilicen <strong>Animales Inanimados</strong>, destinado principalmente a personas en <strong>España</strong>, quedando sujeto al ordenamiento jurídico español y de la UE.</p>
+      <p>El acceso y uso implica la aceptación de esta Política. Si no está de acuerdo, le rogamos que abandone el sitio y no facilite sus datos.</p>
+    </section>
+
+    <!-- S3 -->
+    <section id="s3" class="section">
+      <div class="sec-head"><span class="sec-num">3</span><h2>Datos Personales que se Recogen</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>Solo recogemos los datos que usted facilita voluntariamente al registrarse y usar el servicio, más datos técnicos mínimos para el funcionamiento.</div>
+
+      <h3>3.1. Datos facilitados directamente por el usuario</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Dato</th><th>Dónde se almacena</th><th>Observaciones</th></tr></thead>
+          <tbody>
+            <tr><td>Correo electrónico</td><td>Firebase Authentication (Google, EE.UU.)</td><td>Necesario para crear cuenta e iniciar sesión</td></tr>
+            <tr><td>Contraseña</td><td>Firebase Authentication (Google, EE.UU.)</td><td>Cifrada por Firebase. El responsable <strong>nunca accede</strong> a ella en texto plano</td></tr>
+            <tr><td>Apodo (nickname)</td><td>Base de datos SQLite en Render (Oregon, EE.UU.)</td><td>Por defecto «Fantasma». El UID de Firebase se almacena <strong>hasheado</strong></td></tr>
+            <tr><td>Recetas creadas</td><td>Base de datos SQLite en Render (Oregon, EE.UU.)</td><td>Nombre, descripción, ingredientes, pasos, imagen de portada y vídeo (opcionales)</td></tr>
+            <tr><td>Recetas favoritas</td><td>Base de datos SQLite en Render (Oregon, EE.UU.)</td><td>Listado de recetas guardadas con marca de tiempo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.2. Datos recogidos automáticamente</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Dato</th><th>Origen</th><th>Finalidad</th></tr></thead>
+          <tbody>
+            <tr><td>Dirección IP</td><td>Firebase Auth / Render</td><td>Seguridad y gestión de sesión. Retenida unas pocas semanas</td></tr>
+            <tr><td>Token de sesión (UID)</td><td>Firebase Auth → backend Flask</td><td>Verificación de identidad entre frontend y servidor</td></tr>
+            <tr><td>Datos de navegación (páginas, duración, dispositivo, IP anonimizada)</td><td>Google Analytics</td><td>Estadísticas de uso. <span class="badge b-needed">Requiere consentimiento</span></td></tr>
+            <tr><td>Preferencias de visualización</td><td>localStorage del navegador</td><td>Personalización de interfaz. Solo en su dispositivo, nunca enviado al servidor</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box box-warn"><span class="box-label">⚠️ Importante</span><strong>No se recogen ni tratan datos especialmente protegidos</strong> (salud, ideología, religión, origen racial, etc.) según el artículo 9 del RGPD.</div>
+    </section>
+
+    <!-- S4 -->
+    <section id="s4" class="section">
+      <div class="sec-head"><span class="sec-num">4</span><h2>Finalidades del Tratamiento y Base Jurídica</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>Cada uso de sus datos tiene un fundamento legal específico. Las cookies analíticas solo se activan con su consentimiento expreso.</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Finalidad</th><th>Base jurídica (RGPD)</th><th>Datos afectados</th></tr></thead>
+          <tbody>
+            <tr><td>Prestación del servicio: autenticación, recetas y favoritos</td><td>Art. 6.1.b — Ejecución de un contrato</td><td>Email, contraseña, apodo, recetas, favoritos, sesión</td></tr>
+            <tr><td>Seguridad técnica y prevención de fraude</td><td>Art. 6.1.f — Interés legítimo</td><td>Dirección IP, registros técnicos, token de sesión</td></tr>
+            <tr><td>Análisis estadístico del uso del sitio (Google Analytics)</td><td>Art. 6.1.a — Consentimiento expreso</td><td>Datos de navegación, dispositivo, cookies _ga / _gid</td></tr>
+            <tr><td>Cumplimiento de obligaciones legales</td><td>Art. 6.1.c — Obligación legal</td><td>Los necesarios según normativa aplicable</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="legal-note">Cuando la base jurídica sea el <strong>consentimiento</strong>, usted puede retirarlo en cualquier momento sin que ello afecte a la licitud del tratamiento previo (art. 7.3 RGPD).</p>
+    </section>
+
+    <!-- S5 -->
+    <section id="s5" class="section">
+      <div class="sec-head"><span class="sec-num">5</span><h2>Transferencias Internacionales de Datos</h2></div>
+      <div class="box box-transfer">
+        <span class="box-label">🌍 Aviso — Transferencias a Estados Unidos</span>
+        Este sitio utiliza servicios con servidores en <strong>EE.UU.</strong>, que no pertenece al EEE. Todas las transferencias se realizan con las <strong>garantías adecuadas</strong> del artículo 46 RGPD.
+      </div>
+
+      <h3>5.1. Firebase / Google LLC — Autenticación</h3>
+      <p><strong>Firebase Authentication</strong> procesa datos exclusivamente en servidores de EE.UU.</p>
+      <ul>
+        <li><span class="badge b-dpf">✅ EU-US Data Privacy Framework</span> — Google LLC certificada (Decisión de adecuación CE, 10/07/2023).</li>
+        <li><span class="badge b-scc">📄 Cláusulas Contractuales Tipo (SCC)</span> — Incorporadas en los Firebase Data Processing and Security Terms.</li>
+      </ul>
+
+      <h3>5.2. Google Analytics — Analítica</h3>
+      <p>Opera bajo infraestructura de Google LLC en EE.UU. Se aplican las mismas garantías que en 5.1 (EU-US DPF + SCCs).</p>
+
+      <h3>5.3. Render, Inc. — Hospedaje</h3>
+      <p>Servidores en <strong>Oregon (EE.UU.)</strong>. Aloja el servidor Flask y la base de datos SQLite.</p>
+      <ul>
+        <li><span class="badge b-scc">📄 Cláusulas Contractuales Tipo (SCC)</span> — Render ofrece DPA con SCCs para transferencias desde el EEE.</li>
+      </ul>
+
+      <div class="box box-warn">
+        <span class="box-label">⚠️ Aviso: Plan gratuito de Render — Almacenamiento efímero</span>
+        El sitio se aloja en el <strong>plan gratuito de Render</strong>. La base de datos SQLite usa un <strong>sistema de archivos efímero</strong>: los datos (recetas, favoritos, apodo) pueden perderse ante reinicios o redespliegues. El responsable no garantiza la persistencia indefinida en el plan gratuito.
+      </div>
+      <p class="legal-note">Puede solicitar copia de las garantías de transferencia contactando con el responsable.</p>
+    </section>
+
+    <!-- S6 -->
+    <section id="s6" class="section">
+      <div class="sec-head"><span class="sec-num">6</span><h2>Encargados del Tratamiento</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>Solo se comparten datos con tres proveedores estrictamente necesarios, todos sujetos a contratos conforme al artículo 28 RGPD.</div>
+
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#FFF3E0">🔥</div>
+          <div><div class="p-name">Firebase Authentication</div><div class="p-role">Google LLC — Encargado del tratamiento</div></div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Email, contraseña (hash), IP, UID de sesión</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Autenticación y gestión segura de sesiones</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 EE.UU. (exclusivo para Auth)</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-dpf">EU-US DPF</span>&nbsp;<span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Retención IP:</span><span>Unas pocas semanas</span></div>
+          <div class="prow"><span class="plabel">Tras baja:</span><span>Eliminación en máx. 180 días</span></div>
+          <div class="prow"><span class="plabel">Política:</span><span><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">firebase.google.com/support/privacy</a></span></div>
+        </div>
+      </div>
+
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#E8F5E9">📊</div>
+          <div><div class="p-name">Google Analytics (Firebase Analytics)</div><div class="p-role">Google LLC — Encargado del tratamiento</div></div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Páginas visitadas, duración, dispositivo/navegador, IP anonimizada</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Estadísticas de uso (seguimiento de páginas vistas; sin eventos personalizados)</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 EE.UU.</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-dpf">EU-US DPF</span>&nbsp;<span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Base jurídica:</span><span>Consentimiento (art. 6.1.a RGPD) — gestionado mediante Google Consent Mode v2</span></div>
+          <div class="prow"><span class="plabel">Retención:</span><span>14 meses (configuración por defecto)</span></div>
+        </div>
+      </div>
+
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#E8EAF6">☁️</div>
+          <div><div class="p-name">Render, Inc.</div><div class="p-role">Proveedor de hospedaje — Encargado del tratamiento</div></div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Apodo, recetas, ingredientes, pasos, favoritos, UID hasheado</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Hospedaje del servidor Flask y base de datos SQLite</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 Oregon, EE.UU.</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Plan:</span><span>Gratuito — almacenamiento efímero (ver sección 5.3)</span></div>
+          <div class="prow"><span class="plabel">Política:</span><span><a href="https://render.com/privacy" target="_blank" rel="noopener noreferrer">render.com/privacy</a></span></div>
+        </div>
+      </div>
+
+      <p>No se ceden datos a terceros distintos de los anteriores, salvo obligación legal o requerimiento de autoridad competente.</p>
+    </section>
+
+    <!-- S7 -->
+    <section id="s7" class="section">
+      <div class="sec-head"><span class="sec-num">7</span><h2>Conservación de los Datos</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>Sus datos se conservan mientras su cuenta esté activa y durante los plazos legalmente exigibles. Tras éstos se eliminan o anonimizan de forma segura.</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Tipo de dato</th><th>Período</th><th>Responsable</th></tr></thead>
+          <tbody>
+            <tr><td>Cuenta (email, autenticación)</td><td>Activo + hasta <strong>180 días</strong> tras baja</td><td>Firebase (Google)</td></tr>
+            <tr><td>Dirección IP</td><td><strong>Unas pocas semanas</strong></td><td>Firebase (Google)</td></tr>
+            <tr><td>Recetas, ingredientes, favoritos, apodo</td><td>Mientras cuenta activa o hasta solicitud de supresión</td><td>Render, Inc.</td></tr>
+            <tr><td>Datos de Google Analytics</td><td><strong>14 meses</strong></td><td>Google Analytics</td></tr>
+            <tr><td>Preferencias locales (localStorage)</td><td>Hasta eliminación manual desde el navegador</td><td>Dispositivo del usuario</td></tr>
+            <tr><td>Cookies de sesión</td><td>Hasta cerrar el navegador</td><td>Dispositivo del usuario</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- S8 -->
+    <section id="s8" class="section">
+      <div class="sec-head"><span class="sec-num">8</span><h2>Derechos de los Usuarios</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>Pleno control sobre sus datos. Puede ejercer sus derechos de forma gratuita. Responderemos en el plazo máximo de <strong>un mes</strong> (prorrogable dos meses en casos complejos).</div>
+      <div class="rights-grid">
+        <div class="right-card"><span class="ri">👁️</span><h4>Acceso (art. 15)</h4><p>Conocer qué datos tenemos y cómo los usamos</p></div>
+        <div class="right-card"><span class="ri">✏️</span><h4>Rectificación (art. 16)</h4><p>Corregir datos inexactos o incompletos</p></div>
+        <div class="right-card"><span class="ri">🗑️</span><h4>Supresión (art. 17)</h4><p>Solicitar la eliminación («derecho al olvido»)</p></div>
+        <div class="right-card"><span class="ri">⏸️</span><h4>Limitación (art. 18)</h4><p>Restringir el tratamiento en ciertas circunstancias</p></div>
+        <div class="right-card"><span class="ri">✋</span><h4>Oposición (art. 21)</h4><p>Oponerse al tratamiento por interés legítimo</p></div>
+        <div class="right-card"><span class="ri">📦</span><h4>Portabilidad (art. 20)</h4><p>Recibir sus datos en formato estructurado</p></div>
+        <div class="right-card"><span class="ri">🚫</span><h4>No automatización (art. 22)</h4><p>No ser objeto de decisiones automatizadas</p></div>
+        <div class="right-card"><span class="ri">↩️</span><h4>Retirar consentimiento (art. 7.3)</h4><p>Retirar el consentimiento en cualquier momento</p></div>
+      </div>
+      <p>Para ejercer sus derechos, contacte con la responsable vía LinkedIn (sección 1) adjuntando copia de su documento de identidad.</p>
+      <div class="aepd-box">
+        <strong>🏛️ Reclamación ante la AEPD</strong><br>
+        Agencia Española de Protección de Datos · C/ Jorge Juan, 6, 28001 Madrid · 📞 901 100 099<br>
+        🌐 <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a> &nbsp;·&nbsp;
+        <a href="https://sedeagpd.gob.es" target="_blank" rel="noopener noreferrer">sedeagpd.gob.es</a>
+      </div>
+    </section>
+
+    <!-- S9 -->
+    <section id="s9" class="section">
+      <div class="sec-head"><span class="sec-num">9</span><h2>Menores de Edad</h2></div>
+      <p>De conformidad con el artículo 7 de la LOPDGDD:</p>
+      <ul>
+        <li>El uso por menores de <strong>14 años</strong> requiere consentimiento previo y verificable de padres o tutores legales.</li>
+        <li>No se recaban conscientemente datos de menores de 14 años sin dicho consentimiento.</li>
+        <li>Si se detectasen tales datos, serán eliminados inmediatamente.</li>
+        <li>Los menores de 14 a 18 años pueden usar el servicio autónomamente; se recomienda supervisión parental.</li>
+      </ul>
+    </section>
+
+    <!-- COOKIES -->
+    <section id="cookies" class="section">
+      <div class="sec-head"><span class="sec-num">🍪</span><h2>Política de Cookies</h2></div>
+      <div class="box box-summary"><span class="box-label">En resumen</span>Usamos cookies <strong>técnicas</strong> (siempre activas, necesarias) y cookies de <strong>Google Analytics</strong> (solo con consentimiento previo, controladas mediante Google Consent Mode v2).</div>
+
+      <h3>¿Qué son las cookies?</h3>
+      <p>Pequeños archivos de texto que los sitios web colocan en su dispositivo para almacenar información y recoger estadísticas. Pueden gestionarse desde la configuración de su navegador.</p>
+
+      <h3>Cookies que utilizamos</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Cookie / Tecnología</th><th>Categoría</th><th>Finalidad</th><th>Duración</th><th>Tercero</th></tr></thead>
+          <tbody>
+            <tr><td>Sesión Firebase Auth</td><td><span class="ck-needed">Técnica / Necesaria</span></td><td>Mantener la sesión del usuario autenticado</td><td>Al cerrar el navegador</td><td>Google LLC</td></tr>
+            <tr><td>localStorage (preferencias)</td><td><span class="ck-needed">Técnica / Necesaria</span></td><td>Guardar preferencias de visualización en el dispositivo</td><td>Hasta borrado manual</td><td>Solo dispositivo usuario</td></tr>
+            <tr><td>_ga, _ga_PTN69XBXFK</td><td><span class="ck-analytics">Analítica</span></td><td>Estadísticas de uso (Google Analytics)</td><td>Hasta 2 años</td><td>Google LLC</td></tr>
+            <tr><td>_gid</td><td><span class="ck-analytics">Analítica</span></td><td>Estadísticas de sesión de corta duración</td><td>24 horas</td><td>Google LLC</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box box-warn">
+        <span class="box-label">⚠️ Cumplimiento — Google Consent Mode v2</span>
+        El sitio implementa <strong>Google Consent Mode v2</strong>: las cookies analíticas están bloqueadas por defecto y solo se activan si el usuario da su consentimiento explícito mediante el banner de cookies. Conforme a LSSI-CE art. 22.2 y directrices de la AEPD.
+      </div>
+
+      <h3>Gestión de cookies</h3>
+      <p>Use el botón <strong>🍪 Cookies</strong> (parte inferior izquierda del sitio) para revisar o cambiar sus preferencias en cualquier momento. También puede gestionarlas desde su navegador:</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+        <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+        <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
+        <li><a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+      </ul>
+      <p>Para inhabilitar Google Analytics específicamente: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>.</p>
+    </section>
+
+    <!-- S10 -->
+    <section id="s10" class="section">
+      <div class="sec-head"><span class="sec-num">10</span><h2>Modificaciones de la Política</h2></div>
+      <p>El Responsable puede modificar esta Política para adaptarla a cambios normativos o técnicos. Las modificaciones se publicarán en este sitio indicando su fecha de entrada en vigor. En caso de cambios sustanciales se notificará a los usuarios registrados.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Versión</th><th>Fecha</th><th>Cambios</th></tr></thead>
+          <tbody>
+            <tr><td><strong>v2.0</strong></td><td>01/05/2026</td><td>Revisión completa: Firebase Auth, Google Analytics (Consent Mode v2), Render plan gratuito, transferencias internacionales EU-US DPF + SCCs, Legal Design</td></tr>
+            <tr><td>v1.0</td><td>22/12/2024</td><td>Versión inicial</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="section">
+      <div class="contact-card">
+        <span class="ci">💬</span>
+        <h3>¿Preguntas sobre sus datos personales?</h3>
+        <p>Para ejercer sus derechos o cualquier consulta sobre esta Política, contacte con la responsable del tratamiento:</p>
+        <a href="https://www.linkedin.com/in/katerina-gorbacheva-93717324a/" target="_blank" rel="noopener noreferrer" class="btn-contact">
+          💼 Contactar vía LinkedIn
+        </a>
+        <p style="margin-top:1rem; font-size:.8rem; color:var(--muted)">Respuesta en el plazo máximo de <strong>30 días naturales</strong> (art. 12.3 RGPD)</p>
+      </div>
+      <div class="aepd-box" style="margin-top:1.4rem">
+        <strong>🏛️ Autoridad de control</strong><br>
+        Agencia Española de Protección de Datos (AEPD)<br>
+        C/ Jorge Juan, 6 · 28001 Madrid · 📞 901 100 099<br>
+        🌐 <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a> &nbsp;·&nbsp;
+        <a href="https://sedeagpd.gob.es" target="_blank" rel="noopener noreferrer">sedeagpd.gob.es</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <p><strong>Animales Inanimados</strong> · Política de Privacidad y Cookies · Versión 2.0</p>
+  <p style="margin-top:.4rem">Última actualización: 01 de mayo de 2026 &nbsp;·&nbsp; Conforme al RGPD (UE) 2016/679, LOPDGDD 3/2018 y LSSI-CE 34/2002</p>
+</footer>
+
+</body>
+</html>

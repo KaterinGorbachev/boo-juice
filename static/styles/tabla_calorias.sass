@@ -1,0 +1,140 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+
+$calorias-bg: variables.$light-primary-background-color !default
+$row-bg-colors: #fdf2f2 #fffbeb #ecfdf5 #eff6ff #f5f3ff #ede9fe
+
+.calorias
+  max-width: 1100px
+  margin: 2.5rem auto
+  padding: 1.5rem
+  font-family: system-ui, sans-serif
+  background: #FCEBD9
+  isolation: isolate
+  
+  table
+    background: #fff
+    border-radius: 0.75rem
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06)
+    width: 100%
+    border-collapse: collapse
+    overflow: hidden
+
+    thead
+      background: rgba(67, 97, 238, 0.08)
+      th
+        padding: 1rem
+        font-weight: 700
+        text-align: left
+        color: #1f2937
+        border-bottom: 1px solid rgba(31, 41, 55, 0.15)
+
+    tbody tr td
+      padding: 0.9rem 1rem
+      border-top: 1px solid rgba(31, 41, 55, 0.12)
+      font-size: 0.92rem
+      color: #1f2937
+
+.calorias-search
+  position: sticky
+  top: 17vh
+  z-index: 90
+  background: #FCEBD9
+  padding: 0.75rem 0
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  margin-bottom: 1.5rem
+  flex-wrap: wrap
+
+  min-width: 0
+  width: 100%
+
+
+  input[type="text"]
+    @include mix.inputForm($maxwidth: 400px)
+    flex: 1 1 0
+
+  .search-nav
+    display: flex
+    align-items: center
+    gap: 0.25rem
+
+    button
+      background: variables.$violet-glow
+      color: #fff
+      border: none
+      border-radius: 0.4rem
+      width: 2rem
+      height: 2rem
+      font-size: 1rem
+      cursor: pointer
+      display: flex
+      align-items: center
+      justify-content: center
+      transition: opacity 0.15s ease
+      &:hover
+        opacity: 0.8
+      &:disabled
+        opacity: 0.35
+        cursor: default
+
+  .search-count
+    font-size: 0.85rem
+    color: rgba(variables.$text, 0.6)
+    min-width: 3.5rem
+
+.calorias
+  +mix.responsive-table()
+
+  @media (max-width: 768px)
+    table
+      width: 100% !important
+
+    tbody
+      display: block
+
+    tr
+      display: flex
+      flex-direction: row
+      align-items: flex-start
+      justify-content: space-between
+      padding: 0.4rem 0rem
+      
+      border-radius: 0
+      box-shadow: none
+
+    // Category title row: full-width heading
+    tr:first-child
+      display: block
+      
+
+      td
+        display: block
+        width: 100% !important
+      td:last-child
+        display: none
+
+    td
+      display: block
+      width: auto !important
+      padding: 0
+      text-align: start
+      &::before
+        display: none
+      &:first-child
+        flex: 1
+        overflow-wrap: break-word
+        word-break: break-word
+    
+        text-align: start
+      &:last-child
+        text-align: start
+        white-space: nowrap
+        flex-shrink: 0
+
+  table tr.highlight-match td
+    background: variables.$violet-glow !important
+

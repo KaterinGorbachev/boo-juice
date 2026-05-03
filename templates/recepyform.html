@@ -1,0 +1,187 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/recepy_form.css')}}">
+        
+{% endblock %}
+
+{% block title %}Boo-Juice Nueva Receta{% endblock %}
+
+{% block volver_button %}
+    <a href="/" class="volver-button">Volver </a>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<div class="page-description-title page-form-receta-box">
+  <h1 class="page__title">Nueva receta</h1>
+  <p class="description">Rellena todos los campos obligatorios para compartir tu receta.</p>
+</div>
+<section class="form__recepy__container">
+  
+
+  <form method="post" id="recipeForm" class="form__recepy">
+    
+    <section class="input__labeled">
+      <label for="recipe_name" class="medium-title">Nombre de la receta *</label>
+      <div class="input-message-box">
+        <input
+        type="text"
+        id="recipe_name"
+        name="name"
+        minlength="2"
+        maxlength="150"
+        placeholder="Ejemplo: Dedos de bruja"
+        class="text"
+        required
+      >
+        <small class="small_input ">2/150 caracteres</small>
+
+      </div>
+      
+    </section>
+
+    <section class="input__labeled">
+      <label for="recipe_description" class="label">Descripción *</label>
+      <div class="input-message-box">
+        <textarea
+        id="recipe_description"
+        name="description"
+        minlength="10"
+        maxlength="500"
+        required
+        placeholder="Puede ser descripción breve, o una anécdota familiar o algún dato curioso..."
+        autocapitalize="sentences" 
+        spellcheck="true"
+        class="text"
+      ></textarea>
+      <small class="small_input ">10/500 caracteres</small>
+
+      </div>
+      
+    </section>
+
+    <!-- <section>
+      <label for="recipe_cover">Portada</label>
+      <input type="file" id="recipe_cover" name="cover" accept="image/*">
+    </section> -->
+
+    <section class="input__labeled">
+      <label for="recipe_video" class="label">YouTube link con video de la receta</label>
+      <div class="input-message-box">
+        <input type="url" id="recipe_video" name="videolink" placeholder="https://">
+        <small class="small_input ">Ejemplo: https://www.youtube.com/watch?v=example</small>
+
+      </div>
+      
+    </section>
+
+    <fieldset class="input-time">
+      <legend class="label">Tiempo de preparación</legend>
+      <div class="input__left_label">
+        <input type="number" name="hours" min="0" placeholder="Horas" class="num_input">
+        <label for="hours" class="text">h</label>
+      </div>
+      <div class="input__left_label">
+        <input type="number" name="minutes" min="0" max="59" placeholder="Minutos" class="num_input">
+        <label for="minutes" class="text">min</label>
+      </div>
+      
+      
+    </fieldset>
+        
+    <section class="short_input__labeled" >
+      <label for="servings" class="label">Cantidad de porciones *</label>
+      <input type="number" id="servings" name="servings" min="1" required>
+    </section>  
+
+    <fieldset id="ingredients_fieldset" class="input__multiple">
+      <legend class="label">Ingredientes *</legend>
+      <div class="ingredient__input">
+        <input type="text" name="ingredients[]" placeholder="Ingrediente" required class="ingredient" list="ingredientes-list">
+        {% if data %}
+        <datalist id="ingredientes-list">
+          {% for i in data %}
+          <option value="{{ i.nombre_ingrediente_es }}"></option>
+          {% endfor %}
+
+        </datalist>
+
+        {% endif %}
+        <div class="input__left_label">
+          <input type="number" name="amounts[]" step="0.125" min="0" placeholder="Cantidad"  class="num_input text">
+          <select name="measures[]" required class="measure_select text">
+            <option value="">Medida</option>
+            <option value="pieza">pieza</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="cuchara">cuchara</option>
+            <option value="cucharadita">cucharadita</option>
+            <option value="taza">taza</option>
+            <option value="ml">ml</option>
+            <option value="l">l</option>
+            <option value="al gusto">al gusto</option>
+            <option value="pizca">pizca</option>
+            
+          </select>
+
+        </div>   
+
+      </div>
+      
+      <button type="button" id="btn_add_ingredient" class="outline-button-neutral">+ Añadir ingrediente</button>
+    </fieldset>
+    <br><br>
+
+    <fieldset id="pasos_fieldset" class="input__multiple">
+      <legend class="medium-title">Pasos de preparación *</legend>
+
+      <div class="step__input">
+        <label class="small-title">Paso 1</label>
+        <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" required class="step_description"></textarea>
+
+      </div>
+
+      
+      <!-- <input type="file" name="step_photos[]" accept="image/*"> -->
+       <div id="pasos_btns">
+
+        <button type="button" id="btn_add_paso" class="outline-button-neutral">+ Añadir paso</button>
+
+       </div>
+
+      
+    </fieldset>
+
+    <fieldset id="tips_fieldset" class="input__labeled">
+      <legend class="label">Tips</legend>
+      
+      <div class="input-message-box tip">
+        <input type="text" name="tips[]" maxlength="200" placeholder="Tu secreto para cocinar delicioso y rápido" class="text">
+        <small class="small_input">0/200 caracteres</small>
+      </div>       
+
+      
+      
+      <button type="button" id="btn_add_tip" class="outline-button-neutral">+ Añadir tip</button>
+    </fieldset>
+
+    <button type="submit" class="action-button">Enviar la receta <span class="button-symbol">🪄✨✨</span></button>
+
+  </form>
+</section>
+    
+
+{% endblock %}
+
+
+{% block scripts %} 
+
+<script type="module" src="{{ url_for('static', filename='scripts/new_recepy_form.js')}}"></script>
+
+{% endblock %}

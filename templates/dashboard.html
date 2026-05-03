@@ -1,0 +1,118 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css')}}">
+        
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Custom delete confirmation modal -->
+<div class="confirm-overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="confirm-modal">
+    <div class="confirm-icon">&#9888;</div>
+    <h3 class="confirm-title" id="confirmTitle">¿Eliminar elemento?</h3>
+    <p class="confirm-body">Esta acción no se puede deshacer.</p>
+    <div class="confirm-actions">
+      <button type="button" class="outline-button-neutral" id="confirmCancel">Cancelar</button>
+      <button type="button" class="outline-button-danger" id="confirmDelete">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-page-wrapper">
+  <div class="page-description-title">
+    <h1 class="page__title">Admin Dashboard</h1>
+    <p class="description">Elimina usuarios, recetas o ingredientes</p>
+    <a href="{{ url_for('dashboard_admin.logout') }}" class="outline-button-danger">Log out</a>
+  </div>
+
+  <div class="dashboard">
+    
+
+    <div class="table-controls">
+      <h2 class="medium-title">Selecciona una tabla</h2>
+      <form action="{{ url_for('dashboard_admin.dashboard') }}" method="get">
+        <label for="table" class="label">Tablas:</label>
+        <select name="table" id="table">
+          <option value="usuarios" {% if selected_table == 'usuarios' %}selected{% endif %}>Usuarios</option>
+          <option value="recetas" {% if selected_table == 'recetas' %}selected{% endif %}>Recetas</option>
+          <option value="ingredientes" {% if selected_table == 'ingredientes' %}selected{% endif %}>Ingredientes</option>
+        </select>
+        <button type="submit" class="outline-button-neutral">Cargar</button>
+      </form>
+    </div>
+
+  <h3 class="small-title">Información de {{ selected_table }}</h3>
+
+  <div class="table-wrapper">
+    {% if items %}
+      <div class="table">
+    
+        <div class="tbody">
+          {% for item in items %}
+            <div class="tr">
+              {% for column, value in item.items() %}
+                <div class="td" data-label="{{ column }}">{{ value }}</div>
+              {% endfor %}
+              <div class="td">
+                <form action="{{ url_for('dashboard_admin.delete_item', table=selected_table, item_id=item.id) }}" method="post">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button type="button" class="outline-button-danger"
+                    onclick="showConfirm(this.closest('form'))">Eliminar</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+      </div>
+    {% else %}
+      <p>No items found in the selected table.</p>
+    {% endif %}
+  </div>
+  </div>
+
+
+</div>
+
+<script>
+  const overlay    = document.getElementById('confirmOverlay');
+  const cancelBtn  = document.getElementById('confirmCancel');
+  const deleteBtn  = document.getElementById('confirmDelete');
+  let pendingForm  = null;
+
+  function showConfirm(form) {
+    pendingForm = form;
+    overlay.classList.add('active');
+    cancelBtn.focus();
+  }
+
+  cancelBtn.addEventListener('click', () => {
+    overlay.classList.remove('active');
+    pendingForm = null;
+  });
+
+  deleteBtn.addEventListener('click', () => {
+    if (pendingForm) pendingForm.submit();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove('active');
+      pendingForm = null;
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      overlay.classList.remove('active');
+      pendingForm = null;
+    }
+  });
+</script>
+
+
+
+
+{% endblock %}

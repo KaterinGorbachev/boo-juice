@@ -1,0 +1,19 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/error_pages.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="error-404">
+
+
+    <div class="container">
+        <div class="ghost">🧟</div>
+        <h1>400 - Bad Request</h1>
+        <p>Solicitud inválida. Algo se ha enredado en la telaraña.</p>
+        <br>
+        <a href="/" class="action-button">Volver a inicio <span class="button-symbol">🏰</span></a>
+    </div>
+</div>
+{% endblock %}

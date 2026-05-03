@@ -1,0 +1,202 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+
+//sass --watch recepy_form.sass recepy_form.css 
+
+.page-form-receta-box
+    max-width: 800px
+
+.label
+    color: variables.$outline-btn-color
+
+.send__form_btn 
+    margin-top: 1rem
+    width: 100%
+    flex: 1 1
+    padding: 0.75rem 
+    
+    background-color: variables.$light-buttons-color
+    color: variables.$light-buttons-text
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: none
+    box-shadow: inset 0px -2px 0px 1.5px variables.$outline-btn-color
+    font-family: variables.$font-text
+    font-weight: 900
+    font-size: 1rem
+    letter-spacing: 6%
+    
+    @include mix.transition-ease
+  
+    &:hover
+        background-color: variables.$dark-buttons-color
+        box-shadow: inset 0px -2px 0px 1.5px variables.$dark-primary-background-color
+        color: variables.$light-text-background-color
+        
+        
+        
+
+
+.input__basic
+    @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:20%)
+    width: 100%
+    flex: 1 1
+
+.tip
+    width: 100%
+    @include mix.flexColumn($horizontal: start)
+    gap: variables.$gap-min/3
+    flex: 1 1
+
+#tips_fieldset 
+    @include mix.flexColumn($horizontal: start)
+    width: 100%
+    gap: calc(  variables.$gap-min*1.4  ) 
+
+
+.remove__button 
+    padding: 0.6rem 0.75rem
+    background-color: transparent 
+    color: variables.$light-title-h1-color    
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: solid 2px variables.$light-title-h1-color
+    font-family: variables.$font-text
+    font-weight: 600
+    @include mix.transition-ease
+    &:hover
+        background-color: variables.$light-title-h1-color
+        color: variables.$light-text-background-color
+        
+
+.add__button 
+    margin-top: 1rem
+    width: 100%
+    padding: 0.6rem 0.75rem
+    background-color: transparent
+    color: variables.$outline-btn-color
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: solid 2px variables.$outline-btn-color
+    font-family: variables.$font-text
+    font-weight: 600
+    
+    @include mix.transition-ease
+    &:hover
+        background-color:  variables.$light-buttons-color
+        color: variables.$light-buttons-text
+
+#pasos_btns
+    @include mix.flexRow($horizontal: stretch, $direction:row-reverse)
+    width: 100%
+    gap: 1rem
+    button  
+        flex: 1 1 0   
+        min-width: 44px
+        width: 100%          
+        
+
+
+
+.recepy__titles
+    font-size: variables.$font-size-h2
+    color: variables.$outline-btn-color
+    font-family: variables.$font-h3
+    font-weight: 900
+
+    
+
+
+
+
+        
+
+.input__multiple
+    @include mix.flexColumn($horizontal: start)
+    width: 100%
+    gap: clamp(0.9rem, 1.5vw, 1.1rem)
+    margin-bottom: clamp(0.5rem, 0.5vw, 1rem)
+    border: none
+    outline: none
+    legend
+        margin-bottom: clamp(0.9rem, 1.5vw, 1.1rem)
+
+    .ingredient__input
+        @include mix.flexColumn($horizontal: start)
+        width: 100%
+        gap: calc(variables.$gap-min / 2)
+        .ingredient
+            @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:30%)
+            width: 100%
+
+    .input__left_label
+        @include mix.flexColumn($horizontal: start)
+        gap: 0.5rem
+        width: 100%
+
+        .left_label
+            font-family: variables.$font-text
+            font-size: 14px                  
+
+        .num_input, .measure_select
+            @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:20%)
+            width: 100%
+            min-width: 0 
+            flex: 1 1 0
+            cursor: pointer
+        @include mix.responsive($size: 'md')
+            @include mix.flexRow($horizontal: stretch)
+
+
+        
+            
+
+            
+    
+
+.step__input
+    @include mix.flexColumn($horizontal: start)
+    width: 100%
+    gap: calc(variables.$gap-min / 2)
+    .step_label
+        font-size: clamp(0.9rem, 1.5vw, 1.1rem)
+        color: variables.$light-buttons-text
+        opacity: 79%
+        font-weight: 900
+        padding-left: calc(variables.$gap-min / 2)
+        font-family: variables.$font-h3
+
+    .step_description
+        @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:100%)
+        padding: 1rem
+        width: 100%
+        resize: none
+        max-height: 200px
+        height: 150px
+        overflow-y: scroll
+
+
+.form__recepy__container
+    @include mix.flexColumn($horizontal: start)
+    gap: variables.$gap-min
+    width: 100%
+    max-width: 800px
+    background-color: variables.$light-primary-background-color
+    padding: 1rem 1rem 3rem 1rem
+    border-radius: 15px
+    box-shadow: 0 4px 8px variables.$violet-glow
+    
+
+    .form__recepy 
+        @include mix.flexColumn($horizontal: start)
+        gap: variables.$gap-min
+        width: 100%
+
+
+
+        

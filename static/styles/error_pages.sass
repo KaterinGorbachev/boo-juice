@@ -1,0 +1,59 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+
+.error-404, .error-500
+  font-family: 'Arial', sans-serif
+  background: variables.$magic-gradient
+  
+  text-align: center
+  margin: 0
+  padding: 0.5em
+  border-radius: 15px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  overflow: hidden
+
+  .container
+    max-width: 600px
+    padding: 20px
+    background-color: rgba(255, 255, 255, 0.185)
+    border-radius: 15px
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3)
+
+  h1
+    font-size: clamp(1.5em, 5vw, 3em)
+    margin-bottom: 20px
+    text-shadow: 2px 2px 4px variables.$violet-glow
+    color: variables.$light-text-background-color
+    font-family: variables.$font-title
+
+  p
+    font-size: clamp(14px, 3vw, 1.5rem)
+    margin-bottom: 30px
+    color: variables.$light-buttons-text
+    font-family: variables.$font-text
+    opacity: 0.9
+    line-height: 1.5
+    text-align: center
+
+
+  .ghost
+    font-size: 5em
+    animation: float 3s ease-in-out infinite
+
+  @keyframes float
+    0%, 100%
+      transform: translateY(0px)
+    50%
+      transform: translateY(-20px)
+
+  
+
+  .pumpkin
+    font-size: 3em
+    margin-top: 20px
+

@@ -1,0 +1,402 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/receta.css')}}">
+
+        
+{% endblock %}
+
+
+{% block title %}Boo-Juice Receta: {{ data.nombre_receta }} {% endblock %}
+
+{% block volver_button %}
+    <a href="/recetas#{{ 'receta_id_' + data.id|string }}" onclick="history.back(); return false;" class="volver-button">Volver </a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="wrapper-main">
+    <div class="content-inner">
+        <section class="comon__info">
+            <div class="cell">
+                    <div class="img__box">
+                        <img
+                            src="{{ data.portada or [
+                                url_for('static', filename='assets/images/shopping.jpg'),
+                                url_for('static', filename='assets/images/pattern2.jpg'),
+                                url_for('static', filename='assets/images/pattern3.jpg'), 
+                                url_for('static', filename='assets/images/pattern_boo_1.jpg'), 
+                                url_for('static', filename='assets/images/iconPimpkinIdea.jpg')
+                            ] | random }}"
+                            alt="{{ data.nombre_receta }}"
+                            >
+                    </div>
+                    
+                    <div class="title__box">
+                        
+                        <div class="name__like_btn">
+                            <h1>{{ data.nombre_receta }}</h1>
+                            {% if can_save %}
+                            <a class="save-receta-heart" href="{{ url_for('save_recepy', id=data.id) }}" title="Guardar receta">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 512 512"
+                                        class="like__heart" width="25px">
+
+                                    <defs>
+
+                                        <!-- 3D Filter -->
+                                        <filter id="heart3d" x="-50%" y="-50%" width="200%" height="200%">
+                                        
+                                            <!-- Soft outer shadow (same style as printer) -->
+                                            <feDropShadow 
+                                                dx="0" 
+                                                dy="8" 
+                                                stdDeviation="10" 
+                                                flood-color="#4c1d95" 
+                                                flood-opacity="0.5"/>
+
+                                            <!-- Subtle inner shadow -->
+                                            <!-- <feOffset in="SourceAlpha" dx="0" dy="6" result="offset"/>
+                                            <feGaussianBlur in="offset" stdDeviation="10" result="blur"/>
+                                            <feComposite in="blur" in2="SourceAlpha" operator="in" result="innerShadow"/>
+                                            
+                                            <feMerge>
+                                                <feMergeNode in="innerShadow"/>
+                                                <feMergeNode in="SourceGraphic"/>
+                                            </feMerge> -->
+
+                                        </filter>
+
+                                        <!-- Internal gradient (kept intact) -->
+                                        <linearGradient id="heartGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#F3BEE1"/>
+                                        <stop offset="40%" stop-color="#b4093d"/>
+                                        <stop offset="100%" stop-color="#8C1822"/>
+                                        </linearGradient>
+
+                                    </defs>
+
+                                    <path 
+                                        d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"
+                                        fill="url(#heartGradient)"
+                                        filter="url(#heart3d)"/>
+
+                                </svg>
+
+                                
+                            </a>
+
+                            {% endif %}
+                            
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3750 3750" class="like__heart" >
+                                <path  fill="#8C1822" d="M 1137.980469 519.941406 C 626.277344 518.261719 173.441406 1038.21875 382.480469 1655.578125 C 622.984375 2266.03125 1289.5 2797.214844 1875 3230.058594 C 2460.5 2797.214844 3127.019531 2266.03125 3367.519531 1655.578125 C 3576.558594 1038.21875 3123.71875 518.261719 2612.019531 519.941406 C 2353.148438 520.800781 2085.929688 660.121094 1875 982.898438 C 1664.070312 660.121094 1396.851562 520.800781 1137.980469 519.941406 Z M 1254.671875 734.46875 C 1472.550781 735.191406 1697.46875 852.449219 1875 1124.128906 C 2052.539062 852.449219 2277.449219 735.191406 2495.328125 734.46875 C 2926.03125 733.050781 3307.179688 1170.691406 3131.230469 1690.308594 C 2928.808594 2204.121094 2367.808594 2651.210938 1875 3015.535156 C 1382.191406 2651.210938 821.195312 2204.121094 618.769531 1690.308594 C 442.820312 1170.691406 823.972656 733.050781 1254.671875 734.46875 Z M 1254.671875 734.46875 "/>
+                            </svg> -->
+                        </div>            
+                        
+                        <p>{{ data.descripcion }}</p>
+                    </div>
+            </div>
+            <div class="preparation__info">
+                <div>
+                    <h3 class="label">Cocinando:</h3>
+                    <p>{{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
+                </div>
+
+                <hr>
+                
+                <div>
+                    <h3 class="label">Raciones:</h3>
+                    <p>{{ data.cantidad_porciones }}</p>
+                </div>
+            </div>
+            <a href="#nutricion" class="outlined__link">Datos de Nutrición</a>
+        </section>
+        <section class="ingredientes">
+            <div class="ingredientes__btns">
+                <label class="theme-toggle" aria-label="Toggle for no shutdown display">
+                    <input type="checkbox" id="theme-toggle" role="switch" aria-checked="false">
+                    <span class="slider"> 
+                        <span class="icon">🎃</span>
+                    </span>
+                </label>
+                <p class="toggle_label">Modo cocinar</p>
+                
+            </div>
+            <small class="hint_pantalla">(mantener la pantalla encendida en Chrome)</small>
+            <div class="ingredientes__size">
+                <h3 class="label">Ingredientes</h3>
+                <div class="btns__box">
+                    <button data-factor="0.5">1/2</button>
+                    <hr>
+                    <button data-factor="1" class="active">1</button>
+                    <hr>
+                    <button data-factor="2">2</button>
+                </div>
+            </div>
+            <ul class="ingredientes__list">
+                {% for item in data.ingredientes %}
+                <li 
+                    data-base="{{ item.cantidad }}"
+                    data-medida="{{ item.medida }}"
+                    data-nombre="{{ item.nombre_ingrediente_es }}"
+                
+                >{{ item.cantidad_str }} {{ item.medida }} - {{ item.nombre_ingrediente_es }}</li>
+
+                {% endfor %}
+            </ul>
+        </section>
+        <section class="steps">
+            {% if data.pasos %}
+            <div class="player-box">
+                <div id="speech-error" role="alert" aria-live="assertive" class="speech-error hidden"></div>
+                <div class="player">
+                    <!-- <button id="back_play" type="button" class="change_step_btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="change_play_step_svg" fill="currentColor" style="transform: rotate(180deg); transform-origin: center;">
+                            <path d="M21 36.8c12.9-7 28.7-6.3 41 1.8L320 208.1 320 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 384c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-144.1-258 169.6c-12.3 8.1-28 8.8-41 1.8S0 454.7 0 440L0 72C0 57.3 8.1 43.8 21 36.8z"/>
+                        </svg>
+                    
+                    </button> -->
+                    <button type="button" id="play_recepy" class="play">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="play_svg" fill="currentColor">
+                            <path d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72l0 368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/>
+                        </svg>          
+                        
+                    </button>
+                    <button type="button" id="resume_recepy" class="play hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="play_svg" fill="currentColor">
+                            <path d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72l0 368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/>
+                        </svg>          
+                        
+                    </button>
+                    <button type="button" id="pause_recepy" class="play hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="play_svg" fill="currentColor">
+                            <path d="M48 32C21.5 32 0 53.5 0 80L0 432c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48L48 32zm224 0c-26.5 0-48 21.5-48 48l0 352c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48l-64 0z"/>
+                        </svg>        
+                        
+                    </button>
+                    <!-- <button id="next_play" type="button" class="change_step_btn hidden" >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="change_play_step_svg" fill="currentColor">
+                            <path d="M21 36.8c12.9-7 28.7-6.3 41 1.8L320 208.1 320 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 384c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-144.1-258 169.6c-12.3 8.1-28 8.8-41 1.8S0 454.7 0 440L0 72C0 57.3 8.1 43.8 21 36.8z"/>
+                        </svg>
+                    </button>       --> 
+                
+                </div>
+                <div class="step-box">
+                    {% for item in data.pasos %}
+                    <button class="player-by-step" type="button"> {{ item.numero_paso }} </button>
+                    {% endfor %}
+
+
+                </div>
+
+            </div>
+            
+            {% endif %}
+
+            <h3 class="label">Pasos de la receta</h3>
+            {% for item in data.pasos %}
+            <div class="step"
+                data-base="{{ item.numero_paso }}"
+                data-medida="{{ item.descripcion }}"    
+            >
+                <div class="step_num"><p>{{ item.numero_paso }}</p></div>    
+                <p>{{ item.descripcion }}</p>
+            </div>
+                
+
+            {% endfor %}
+
+            {% if data.tips %}
+            <div class="simple-box">
+                <h3 class="label">Consejos</h3>
+                {% for item in data.tips %}
+                <p class="text">{{ item.descripcion }}</p>
+                {% endfor %}
+
+
+            </div>
+            {% endif %}
+            <div></div>
+            
+        
+
+
+
+        </section>
+        {% if data.video %}
+        <section class="video_youtube">
+            <div id="video-resizer-wrapper">
+                {% if data.video.endswith('.mp4') %}
+                <video          
+                autoplay
+                muted
+                loop
+                playsinline
+                class="video"
+                >
+                <source src="{{ data.video }}" type="video/mp4" />
+                </video>
+                
+                {% else %}
+                
+
+                
+                <div id="video-container">
+                    <!-- WordPress oEmbed YouTube URL -->
+                    <iframe
+                        id="responsive-video"
+                        src="{{ data.video }}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        ></iframe>
+                </div>
+
+                <!-- Drag handle -->
+                <div id="resize-handle"></div>
+                
+                {% endif %}
+
+            </div>
+
+
+        </section>
+        {% endif %}
+
+        <section class="steps_end_btns_box">
+            <div class="steps_end_btns">
+                {% if can_save %}
+                <button >
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            class="like__heart" width="25px">
+
+                        <defs>
+
+                            <!-- 3D Filter -->
+                            <filter id="heart3d" x="-50%" y="-50%" width="200%" height="200%">
+                            
+                                <!-- Soft outer shadow (same style as printer) -->
+                                <feDropShadow 
+                                    dx="0" 
+                                    dy="8" 
+                                    stdDeviation="10" 
+                                    flood-color="#4c1d95" 
+                                    flood-opacity="0.5"/>
+
+                                <!-- Subtle inner shadow -->
+                                <!-- <feOffset in="SourceAlpha" dx="0" dy="6" result="offset"/>
+                                <feGaussianBlur in="offset" stdDeviation="10" result="blur"/>
+                                <feComposite in="blur" in2="SourceAlpha" operator="in" result="innerShadow"/>
+                                
+                                <feMerge>
+                                    <feMergeNode in="innerShadow"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge> -->
+
+                            </filter>
+
+                            <!-- Internal gradient (kept intact) -->
+                            <linearGradient id="heartGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#F3BEE1"/>
+                            <stop offset="45%" stop-color="#ff2b6a"/>
+                            <stop offset="100%" stop-color="#b4093d"/>
+                            </linearGradient>
+
+                        </defs>
+
+                        <path 
+                            d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"
+                            fill="url(#heartGradient)"
+                            filter="url(#heart3d)"/>
+
+                    </svg>
+
+                    
+                </button>
+
+                {% endif %}
+                <a href="{{ url_for('recepy_page.recepy_pdf', id=data.id)  }}" target="_blank">
+                    <svg width="35" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" class="like__heart">
+
+                        <defs>
+                            <!-- Main violet gradient -->
+                            <linearGradient id="violetBody" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#E8A7D6"/>
+                                <stop offset="50%" stop-color="#9B4181"/>
+                                <stop offset="100%" stop-color="#2B0125"/>
+                            </linearGradient>
+
+                            <!-- Paper gradient -->
+                            <linearGradient id="paperGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#e5e7eb"/>
+                            </linearGradient>
+
+                            <!-- Soft shadow -->
+                            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feDropShadow dx="0" dy="3" stdDeviation="2" 
+                                    flood-color="#4c1d95" flood-opacity="0.3"/>
+                            </filter>
+
+                        </defs>
+
+                        <!-- Printer body -->
+                        <g filter="url(#shadow)">
+                            <rect x="12" y="20" width="40" height="22" rx="4" fill="url(#violetBody)"/>
+                            
+                            <!-- Top -->
+                            <rect x="18" y="10" width="28" height="14" rx="3" fill="url(#violetBody)"/>
+
+                            <!-- Paper -->
+                            <rect x="20" y="34" width="24" height="18" rx="2" fill="url(#paperGrad)"/>
+
+                            <!-- Paper lines -->
+                            <rect x="24" y="38" width="16" height="2" rx="1" fill="#9B4181"/>
+                            <rect x="24" y="42" width="12" height="2" rx="1" fill="#E8A7D6"/>
+                        </g>
+
+                    </svg>
+
+
+
+                </a>
+            </div>
+
+        </section>
+        <section class="nutricion" id="nutricion">
+            <h3 class="label">Datos de Nutrición</h3>
+            <div></div>
+            <div class="simple_link">
+                <a href="{{ url_for('calorias', id=data.id) }}" >Mostrar tabla nutricional completa</a>
+                <hr>
+
+            </div>
+            
+        </section>
+
+
+    </div>
+    
+
+
+</div>
+
+
+
+
+{% endblock %}
+
+
+{% block scripts %} 
+
+<!-- <script src="https://js.puter.com/v2/"></script>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key={{secretapi}}"></script>  -->
+<script src="{{ url_for('static', filename='scripts/player.js')}}"></script>
+<script type="module" src="{{ url_for('static', filename='scripts/recepy_page.js')}}"></script>
+
+
+
+{% endblock %}

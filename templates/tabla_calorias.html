@@ -1,0 +1,1415 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/tabla_calorias.css') }}">
+<style>
+.calorias table td:nth-child(2) {
+    text-align: right;
+}
+</style>
+{% endblock %}
+
+{% block volver_button %}
+    <a href="{{ url_for('recepy_page.receta', id=data) }}" class="volver-button">Volver </a>
+
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+<div class="page-description-title">
+    
+    <h1 class="page__title">Tabla de calorias</h1>
+    <p class="description">La tabla de calorías es una herramienta útil que muestra la cantidad de energía que aportan los alimentos. Permite conocer cuántas calorías contiene cada ingrediente.</p>
+</div>
+
+
+
+<section class="calorias">
+  <div class="calorias-search">
+    <input type="text" id="caloriasSearch" placeholder="Buscar alimento…" autocomplete="off" aria-label="Buscar alimento">
+    <div class="search-nav">
+        <button id="searchPrev" aria-label="Anterior" disabled>&#8593;</button>
+        <button id="searchNext" aria-label="Siguiente" disabled>&#8595;</button>
+    </div>
+    <span class="search-count" id="searchCount"></span>
+  </div>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>VERDURAS Y HORTALIZAS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Aceitunas negras</td>
+<td>349</td>
+</tr>
+<tr>
+<td>Aceitunas verdes</td>
+<td>132</td>
+</tr>
+<tr>
+<td>Acelgas</td>
+<td>33</td>
+</tr>
+<tr>
+<td>Ajos</td>
+<td>169</td>
+</tr>
+<tr>
+<td>Alcachofas</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Apio</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Berenjena</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Berros</td>
+<td>21</td>
+</tr>
+<tr>
+<td>Brócoli</td>
+<td>31</td>
+</tr>
+<tr>
+<td>Calabacín</td>
+<td>31</td>
+</tr>
+<tr>
+<td>Calabaza</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Cebolla</td>
+<td>47</td>
+</tr>
+<tr>
+<td>Cebolla tierna</td>
+<td>39</td>
+</tr>
+<tr>
+<td>Champiñón y otras setas</td>
+<td>28</td>
+</tr>
+<tr>
+<td>Col</td>
+<td>28</td>
+</tr>
+<tr>
+<td>Col de Bruselas</td>
+<td>54</td>
+</tr>
+<tr>
+<td>Coliflor</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Endibia</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Escarola</td>
+<td>37</td>
+</tr>
+<tr>
+<td>Espárragos</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Espárragos en lata</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Espinaca</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Espinacas congeladas</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Habas tiernas</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Hinojo</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Lechuga</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Nabos</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Papas cocidas</td>
+<td>86</td>
+</tr>
+<tr>
+<td>Pepino</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Perejil</td>
+<td>55</td>
+</tr>
+<tr>
+<td>Pimiento</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Porotos verdes</td>
+<td>21</td>
+</tr>
+<tr>
+<td>Puerros</td>
+<td>42</td>
+</tr>
+<tr>
+<td>Rábanos</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Remolacha</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Repollo</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Rúcula</td>
+<td>37</td>
+</tr>
+<tr>
+<td>Soja, Brotes de</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Tomate triturado en conserva</td>
+<td>39</td>
+</tr>
+<tr>
+<td>Tomates</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Trufa</td>
+<td>92</td>
+</tr>
+<tr>
+<td>Zanahoria</td>
+<td>42</td>
+</tr>
+<tr>
+<td>Zumo de tomate</td>
+<td>21</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>FRUTAS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Arándanos</td>
+<td>41</td>
+</tr>
+<tr>
+<td>Caqui</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Cereza</td>
+<td>47</td>
+</tr>
+<tr>
+<td>Chirimoya</td>
+<td>78</td>
+</tr>
+<tr>
+<td>Ciruela</td>
+<td>44</td>
+</tr>
+<tr>
+<td>Ciruela seca</td>
+<td>290</td>
+</tr>
+<tr>
+<td>Coco</td>
+<td>646</td>
+</tr>
+<tr>
+<td>Dátil</td>
+<td>279</td>
+</tr>
+<tr>
+<td>Dátil seco</td>
+<td>306</td>
+</tr>
+<tr>
+<td>Frambuesa</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Fresas</td>
+<td>36</td>
+</tr>
+<tr>
+<td>Granada</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Grosella</td>
+<td>37</td>
+</tr>
+<tr>
+<td>Higos</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Higos secos</td>
+<td>275</td>
+</tr>
+<tr>
+<td>Kiwi</td>
+<td>51</td>
+</tr>
+<tr>
+<td>Limón</td>
+<td>39</td>
+</tr>
+<tr>
+<td>Mandarina</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Mango</td>
+<td>57</td>
+</tr>
+<tr>
+<td>Manzana</td>
+<td>52</td>
+</tr>
+<tr>
+<td>Melón</td>
+<td>31</td>
+</tr>
+<tr>
+<td>Mora</td>
+<td>37</td>
+</tr>
+<tr>
+<td>Naranja</td>
+<td>44</td>
+</tr>
+<tr>
+<td>Nectarina</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Nísperos</td>
+<td>97</td>
+</tr>
+<tr>
+<td>Papaya</td>
+<td>45</td>
+</tr>
+<tr>
+<td>Pera</td>
+<td>61</td>
+</tr>
+<tr>
+<td>Piña</td>
+<td>51</td>
+</tr>
+<tr>
+<td>Piña en almíbar</td>
+<td>84</td>
+</tr>
+<tr>
+<td>Plátano</td>
+<td>90</td>
+</tr>
+<tr>
+<td>Pomelo</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Sandía</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Uva</td>
+<td>81</td>
+</tr>
+<tr>
+<td>Uva pasa</td>
+<td>324</td>
+</tr>
+<tr>
+<td>Zumo de fruta</td>
+<td>45</td>
+</tr>
+<tr>
+<td>Zumo de Naranja</td>
+<td>42</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>FRUTOS SECOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Almendras</td>
+<td>620</td>
+</tr>
+<tr>
+<td>Avellanas</td>
+<td>675</td>
+</tr>
+<tr>
+<td>Castañas</td>
+<td>199</td>
+</tr>
+<tr>
+<td>Maní</td>
+<td>560</td>
+</tr>
+<tr>
+<td>Nueces</td>
+<td>660</td>
+</tr>
+<tr>
+<td>Piñones</td>
+<td>660</td>
+</tr>
+<tr>
+<td>Pistacho</td>
+<td>581</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>LÁCTEOS Y DERIVADOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Cuajada</td>
+<td>92</td>
+</tr>
+<tr>
+<td>Flan de huevo</td>
+<td>126</td>
+</tr>
+<tr>
+<td>Flan de vainilla</td>
+<td>102</td>
+</tr>
+<tr>
+<td>Helados lácteos</td>
+<td>167</td>
+</tr>
+<tr>
+<td>Leche condensada c/azúcar</td>
+<td>350</td>
+</tr>
+<tr>
+<td>Leche condensada s/azúcar</td>
+<td>160</td>
+</tr>
+<tr>
+<td>Leche de cabra</td>
+<td>72</td>
+</tr>
+<tr>
+<td>Leche de oveja</td>
+<td>96</td>
+</tr>
+<tr>
+<td>Leche descremada</td>
+<td>36</td>
+</tr>
+<tr>
+<td>Leche en polvo descremada</td>
+<td>373</td>
+</tr>
+<tr>
+<td>Leche en polvo entera</td>
+<td>500</td>
+</tr>
+<tr>
+<td>Leche entera</td>
+<td>68</td>
+</tr>
+<tr>
+<td>Leche semi descremada</td>
+<td>49</td>
+</tr>
+<tr>
+<td>Mousse</td>
+<td>177</td>
+</tr>
+<tr>
+<td>Nata o crema de leche</td>
+<td>298</td>
+</tr>
+<tr>
+<td>Queso blanco desnatado</td>
+<td>70</td>
+</tr>
+<tr>
+<td>Queso Brie</td>
+<td>263</td>
+</tr>
+<tr>
+<td>Queso cammembert</td>
+<td>312</td>
+</tr>
+<tr>
+<td>Queso cheddar</td>
+<td>381</td>
+</tr>
+<tr>
+<td>Queso crema</td>
+<td>245</td>
+</tr>
+<tr>
+<td>Queso de bola</td>
+<td>349</td>
+</tr>
+<tr>
+<td>Queso de Burgos</td>
+<td>174</td>
+</tr>
+<tr>
+<td>Queso de oveja</td>
+<td>245</td>
+</tr>
+<tr>
+<td>Queso edam</td>
+<td>306</td>
+</tr>
+<tr>
+<td>Queso emmental</td>
+<td>415</td>
+</tr>
+<tr>
+<td>Queso fundido untable</td>
+<td>285</td>
+</tr>
+<tr>
+<td>Queso gruyere</td>
+<td>391</td>
+</tr>
+<tr>
+<td>Queso manchego</td>
+<td>376</td>
+</tr>
+<tr>
+<td>Queso mozzarella</td>
+<td>245</td>
+</tr>
+<tr>
+<td>Queso parmesano</td>
+<td>393</td>
+</tr>
+<tr>
+<td>Queso ricota</td>
+<td>400</td>
+</tr>
+<tr>
+<td>Queso roquefort</td>
+<td>405</td>
+</tr>
+<tr>
+<td>Requesón</td>
+<td>96</td>
+</tr>
+<tr>
+<td>Yogur desnatado</td>
+<td>45</td>
+</tr>
+<tr>
+<td>Yogur desnatado con frutas</td>
+<td>82</td>
+</tr>
+<tr>
+<td>Yogur enriquecido con nata</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Yogur natural</td>
+<td>62</td>
+</tr>
+<tr>
+<td>Yogur natural con fruta</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>CARNES, CAZA Y EMBUTIDOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Bacon (Panceta ahumada)</td>
+<td>665</td>
+</tr>
+<tr>
+<td>Butifarra cocida</td>
+<td>390</td>
+</tr>
+<tr>
+<td>Butifarra, salchicha fresca</td>
+<td>326</td>
+</tr>
+<tr>
+<td>Cabrito</td>
+<td>127</td>
+</tr>
+<tr>
+<td>Cerdo, chuleta</td>
+<td>330</td>
+</tr>
+<tr>
+<td>Cerdo, hígado</td>
+<td>153</td>
+</tr>
+<tr>
+<td>Cerdo, lomo</td>
+<td>208</td>
+</tr>
+<tr>
+<td>Chicharrón</td>
+<td>601</td>
+</tr>
+<tr>
+<td>Chorizo</td>
+<td>468</td>
+</tr>
+<tr>
+<td>Ciervo</td>
+<td>120</td>
+</tr>
+<tr>
+<td>Codorniz y perdiz</td>
+<td>114</td>
+</tr>
+<tr>
+<td>Conejo, liebre</td>
+<td>162</td>
+</tr>
+<tr>
+<td>Cordero lechón</td>
+<td>105</td>
+</tr>
+<tr>
+<td>Cordero pierna</td>
+<td>98</td>
+</tr>
+<tr>
+<td>Cordero, costillas</td>
+<td>215</td>
+</tr>
+<tr>
+<td>Cordero, hígado</td>
+<td>132</td>
+</tr>
+<tr>
+<td>Faisán</td>
+<td>144</td>
+</tr>
+<tr>
+<td>Foie-Gras</td>
+<td>518</td>
+</tr>
+<tr>
+<td>Gallina</td>
+<td>369</td>
+</tr>
+<tr>
+<td>Hamburguesa</td>
+<td>230</td>
+</tr>
+<tr>
+<td>Jabalí</td>
+<td>107</td>
+</tr>
+<tr>
+<td>Jamón</td>
+<td>380</td>
+</tr>
+<tr>
+<td>Jamón cocido</td>
+<td>126</td>
+</tr>
+<tr>
+<td>Jamón crudo</td>
+<td>296</td>
+</tr>
+<tr>
+<td>Jamón York</td>
+<td>289</td>
+</tr>
+<tr>
+<td>Lengua de vaca</td>
+<td>191</td>
+</tr>
+<tr>
+<td>Lomo embuchado</td>
+<td>380</td>
+</tr>
+<tr>
+<td>Mortadela</td>
+<td>265</td>
+</tr>
+<tr>
+<td>Pato</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Pavo, Muslo</td>
+<td>186</td>
+</tr>
+<tr>
+<td>Pavo, Pechuga</td>
+<td>134</td>
+</tr>
+<tr>
+<td>Perdiz</td>
+<td>120</td>
+</tr>
+<tr>
+<td>Pies de cerdo</td>
+<td>290</td>
+</tr>
+<tr>
+<td>Pollo, Hígado</td>
+<td>129</td>
+</tr>
+<tr>
+<td>Pollo, Muslo</td>
+<td>186</td>
+</tr>
+<tr>
+<td>Pollo</td>
+<td>134</td>
+</tr>
+<tr>
+<td>Salami</td>
+<td>325</td>
+</tr>
+<tr>
+<td>Salchicha Frankfurt</td>
+<td>315</td>
+</tr>
+<tr>
+<td>Salchichón</td>
+<td>294</td>
+</tr>
+<tr>
+<td>Ternera</td>
+<td>181</td>
+</tr>
+<tr>
+<td>Ternera, chuleta</td>
+<td>168</td>
+</tr>
+<tr>
+<td>Ternera, hígado</td>
+<td>140</td>
+</tr>
+<tr>
+<td>Ternera, lengua</td>
+<td>207</td>
+</tr>
+<tr>
+<td>Ternera, riñón</td>
+<td>86</td>
+</tr>
+<tr>
+<td>Ternera, sesos</td>
+<td>125</td>
+</tr>
+<tr>
+<td>Ternera, solomillo</td>
+<td>290</td>
+</tr>
+<tr>
+<td>Tira de asado</td>
+<td>401</td>
+</tr>
+<tr>
+<td>Tripas</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Vacuno, Hígado</td>
+<td>129</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>PESCADOS, CRUSTÁCEOS Y MARISCOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Almejas</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Anchoas</td>
+<td>175</td>
+</tr>
+<tr>
+<td>Anguilas</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Atún en lata con aceite vegetal</td>
+<td>280</td>
+</tr>
+<tr>
+<td>Atún en lata con agua</td>
+<td>127</td>
+</tr>
+<tr>
+<td>Atún fresco</td>
+<td>225</td>
+</tr>
+<tr>
+<td>Bacalao fresco</td>
+<td>74</td>
+</tr>
+<tr>
+<td>Bacalao seco</td>
+<td>322</td>
+</tr>
+<tr>
+<td>Besugo</td>
+<td>118</td>
+</tr>
+<tr>
+<td>Caballa</td>
+<td>153</td>
+</tr>
+<tr>
+<td>Calamar</td>
+<td>82</td>
+</tr>
+<tr>
+<td>Cangrejo</td>
+<td>85</td>
+</tr>
+<tr>
+<td>Caviar</td>
+<td>233</td>
+</tr>
+<tr>
+<td>Congrio</td>
+<td>112</td>
+</tr>
+<tr>
+<td>Dorada</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Gallo</td>
+<td>73</td>
+</tr>
+<tr>
+<td>Gambas</td>
+<td>96</td>
+</tr>
+<tr>
+<td>Langosta</td>
+<td>67</td>
+</tr>
+<tr>
+<td>Langostino</td>
+<td>96</td>
+</tr>
+<tr>
+<td>Lenguado</td>
+<td>73</td>
+</tr>
+<tr>
+<td>Lubina</td>
+<td>118</td>
+</tr>
+<tr>
+<td>Lucio</td>
+<td>81</td>
+</tr>
+<tr>
+<td>Mejillón</td>
+<td>74</td>
+</tr>
+<tr>
+<td>Merluza</td>
+<td>86</td>
+</tr>
+<tr>
+<td>Mero</td>
+<td>118</td>
+</tr>
+<tr>
+<td>Ostras</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Pejerrey</td>
+<td>87</td>
+</tr>
+<tr>
+<td>Pez espada</td>
+<td>109</td>
+</tr>
+<tr>
+<td>Pulpo</td>
+<td>57</td>
+</tr>
+<tr>
+<td>Rodaballo</td>
+<td>81</td>
+</tr>
+<tr>
+<td>Salmón</td>
+<td>172</td>
+</tr>
+<tr>
+<td>Salmón ahumado</td>
+<td>154</td>
+</tr>
+<tr>
+<td>Salmonete</td>
+<td>97</td>
+</tr>
+<tr>
+<td>Sardina en lata con aceite vegetal</td>
+<td>192</td>
+</tr>
+<tr>
+<td>Sardinas</td>
+<td>151</td>
+</tr>
+<tr>
+<td>Trucha</td>
+<td>94</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>AZÚCARES Y DULCES</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Azúcar</td>
+<td>380</td>
+</tr>
+<tr>
+<td>Cacao en polvo con azúcar instantáneo</td>
+<td>366</td>
+</tr>
+<tr>
+<td>Caramelos</td>
+<td>378</td>
+</tr>
+<tr>
+<td>Chocolate con leche</td>
+<td>550</td>
+</tr>
+<tr>
+<td>Chocolate sin leche</td>
+<td>530</td>
+</tr>
+<tr>
+<td>Crema chocolate con avellanas</td>
+<td>549</td>
+</tr>
+<tr>
+<td>Dulce de membrillo</td>
+<td>215</td>
+</tr>
+<tr>
+<td>Helados de agua</td>
+<td>139</td>
+</tr>
+<tr>
+<td>Mermeladas con azúcar</td>
+<td>280</td>
+</tr>
+<tr>
+<td>Mermeladas sin azúcar</td>
+<td>145</td>
+</tr>
+<tr>
+<td>Miel</td>
+<td>300</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>CEREALES Y DERIVADOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Arroz blanco</td>
+<td>354</td>
+</tr>
+<tr>
+<td>Arroz integral</td>
+<td>350</td>
+</tr>
+<tr>
+<td>Avena</td>
+<td>367</td>
+</tr>
+<tr>
+<td>Cebada</td>
+<td>373</td>
+</tr>
+<tr>
+<td>Centeno</td>
+<td>350</td>
+</tr>
+<tr>
+<td>Cereales con chocolate</td>
+<td>358</td>
+</tr>
+<tr>
+<td>Cereales desayuno, con miel</td>
+<td>386</td>
+</tr>
+<tr>
+<td>Copos de maíz</td>
+<td>350</td>
+</tr>
+<tr>
+<td>Harina de maíz</td>
+<td>349</td>
+</tr>
+<tr>
+<td>Harina de trigo integral</td>
+<td>340</td>
+</tr>
+<tr>
+<td>Harina de trigo refinada</td>
+<td>353</td>
+</tr>
+<tr>
+<td>Pan de centeno</td>
+<td>241</td>
+</tr>
+<tr>
+<td>Pan de trigo blanco</td>
+<td>255</td>
+</tr>
+<tr>
+<td>Pan de trigo integral</td>
+<td>239</td>
+</tr>
+<tr>
+<td>Pan de trigo molde blanco</td>
+<td>233</td>
+</tr>
+<tr>
+<td>Pan de trigo molde integral</td>
+<td>216</td>
+</tr>
+<tr>
+<td>Pasta al huevo</td>
+<td>368</td>
+</tr>
+<tr>
+<td>Pasta de sémola</td>
+<td>361</td>
+</tr>
+<tr>
+<td>Polenta</td>
+<td>358</td>
+</tr>
+<tr>
+<td>Sémola de trigo</td>
+<td>368</td>
+</tr>
+<tr>
+<td>Yuca</td>
+<td>338</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>LEGUMBRES</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Garbanzos</td>
+<td>361</td>
+</tr>
+<tr>
+<td>Judías</td>
+<td>343</td>
+</tr>
+<tr>
+<td>Lentejas</td>
+<td>336</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>HUEVOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Clara</td>
+<td>48</td>
+</tr>
+<tr>
+<td>Huevo duro</td>
+<td>147</td>
+</tr>
+<tr>
+<td>Huevo entero</td>
+<td>162</td>
+</tr>
+<tr>
+<td>Yema</td>
+<td>368</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>PASTELERÍA</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Bizcocho</td>
+<td>456</td>
+</tr>
+<tr>
+<td>Croissant chocolate</td>
+<td>469</td>
+</tr>
+<tr>
+<td>Croissant, donut</td>
+<td>456</td>
+</tr>
+<tr>
+<td>Galletas de chocolate</td>
+<td>524</td>
+</tr>
+<tr>
+<td>Galletas de mantequilla tipo “Danesas”</td>
+<td>397</td>
+</tr>
+<tr>
+<td>Galletas saladas</td>
+<td>464</td>
+</tr>
+<tr>
+<td>Magdalenas</td>
+<td>469</td>
+</tr>
+<tr>
+<td>Pasta de hojaldre cocida</td>
+<td>565</td>
+</tr>
+<tr>
+<td>Pastel de manzana</td>
+<td>311</td>
+</tr>
+<tr>
+<td>Pastel de manzana, masa hojaldre</td>
+<td>456</td>
+</tr>
+<tr>
+<td>Pastel de queso</td>
+<td>414</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>BEBIDAS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Agua ardiente</td>
+<td>280</td>
+</tr>
+<tr>
+<td>Agua tónica</td>
+<td>34</td>
+</tr>
+<tr>
+<td>Anís</td>
+<td>312</td>
+</tr>
+<tr>
+<td>Batido lácteo de cacao</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Cacao en polvo sin azúcar a la taza</td>
+<td>439</td>
+</tr>
+<tr>
+<td>Café</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Cerveza negra</td>
+<td>37</td>
+</tr>
+<tr>
+<td>Cerveza rubia</td>
+<td>45</td>
+</tr>
+<tr>
+<td>Champaña demi-sec</td>
+<td>90</td>
+</tr>
+<tr>
+<td>Champaña dulce</td>
+<td>118</td>
+</tr>
+<tr>
+<td>Champaña seca</td>
+<td>85</td>
+</tr>
+<tr>
+<td>Coñac, brandy</td>
+<td>243</td>
+</tr>
+<tr>
+<td>Crema de cacao</td>
+<td>260</td>
+</tr>
+<tr>
+<td>Daiquiri</td>
+<td>122</td>
+</tr>
+<tr>
+<td>Gin &amp; Tónica</td>
+<td>76</td>
+</tr>
+<tr>
+<td>Ginebra</td>
+<td>244</td>
+</tr>
+<tr>
+<td>Leche de almendras</td>
+<td>335</td>
+</tr>
+<tr>
+<td>Licor de caña</td>
+<td>273</td>
+</tr>
+<tr>
+<td>Piña colada</td>
+<td>194</td>
+</tr>
+<tr>
+<td>Pisco</td>
+<td>210</td>
+</tr>
+<tr>
+<td>Refrescos carbonatados</td>
+<td>48</td>
+</tr>
+<tr>
+<td>Ron</td>
+<td>244</td>
+</tr>
+<tr>
+<td>Sidra dulce</td>
+<td>33</td>
+</tr>
+<tr>
+<td>Sidra seca</td>
+<td>35</td>
+</tr>
+<tr>
+<td>Té</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Vermouth amargo</td>
+<td>112</td>
+</tr>
+<tr>
+<td>Vermouth dulce</td>
+<td>160</td>
+</tr>
+<tr>
+<td>Vino de mesa</td>
+<td>70</td>
+</tr>
+<tr>
+<td>Vino dulce, jerez</td>
+<td>160</td>
+</tr>
+<tr>
+<td>Vino oporto</td>
+<td>160</td>
+</tr>
+<tr>
+<td>Vodka</td>
+<td>315</td>
+</tr>
+<tr>
+<td>Whisky</td>
+<td>244</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>ACEITES Y GRASAS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Aceite de girasol</td>
+<td>900</td>
+</tr>
+<tr>
+<td>Aceite de oliva</td>
+<td>900</td>
+</tr>
+<tr>
+<td>Manteca</td>
+<td>670</td>
+</tr>
+<tr>
+<td>Mantequilla</td>
+<td>752</td>
+</tr>
+<tr>
+<td>Margarina vegetal</td>
+<td>752</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table>
+<colgroup> </colgroup>
+<tbody>
+<tr>
+<td><strong>SALSAS Y CONDIMENTOS</strong></td>
+<td><strong>CALORÍAS por cada 100 gramos</strong></td>
+</tr>
+<tr>
+<td>Bechamel</td>
+<td>115</td>
+</tr>
+<tr>
+<td>Caldos concentrados</td>
+<td>259</td>
+</tr>
+<tr>
+<td>Ketchup</td>
+<td>98</td>
+</tr>
+<tr>
+<td>Mayonesa</td>
+<td>718</td>
+</tr>
+<tr>
+<td>Mayonesa light</td>
+<td>374</td>
+</tr>
+<tr>
+<td>Mostaza</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Salsa de soja</td>
+<td>61</td>
+</tr>
+<tr>
+<td>Salsa de tomate en conserva</td>
+<td>86</td>
+</tr>
+<tr>
+<td>Sofrito</td>
+<td>116</td>
+</tr>
+<tr>
+<td>Vinagres</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+                
+
+                    
+</section>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/tabla_calorias.js') }}"></script>
+{% endblock %}

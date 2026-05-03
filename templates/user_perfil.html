@@ -1,0 +1,106 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/recetas.css')}}">
+        
+{% endblock %}
+
+{% block volver_button %}
+    <a href="/" onclick="history.back(); return false;" class="volver-button">Volver </a>
+
+{% endblock %}
+
+{% block title %}Boo-Juice Recetas para Helloween: Perfil de Usuario{% endblock %}
+
+{% block content %}
+<div class="page-description-title">
+    <h1 class="page__title">Tu Perfil</h1>
+    <p class="description">Aquí puedes ver tus recetas favoritas y editar las recetas compartidas.</p>
+</div>
+    {% if shared %}
+
+    <h2 class="medium-title">Recetas Compartidas</h2>
+    <section class="grid">
+        
+        {% for item in shared %}
+
+        <div class="cell">
+            <div class="img-box">
+                <img
+                    src="{{ item.portada or [
+                        url_for('static', filename='assets/images/shopping.jpg'),
+                        url_for('static', filename='assets/images/pattern2.jpg'),
+                        url_for('static', filename='assets/images/pattern3.jpg'), 
+                        url_for('static', filename='assets/images/pattern_boo_1.jpg'), 
+                        url_for('static', filename='assets/images/iconPimpkinIdea.jpg')
+                    ] | random }}"
+                    alt="{{ item.nombre_receta }}"
+                    >
+
+            </div> 
+            <a class="title-box" href="{{ url_for('recepy_page.edit_receta', id=item.id) }}">
+                <h2>{{ item.nombre_receta }}</h2>
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+
+    </section>
+    
+    {% else %}
+    <div>
+        <h2 class="small-title">No hay recetas compartidas</h2>
+        
+        <a href="/nuevareceta" class="volver-button">Compartir la receta</a>
+    </div>
+
+
+    {% endif %}
+
+    {% if liked %}
+    <h2 class="medium-title">Recetas Favoritas</h2>
+    <section class="grid">
+        
+        {% for item in liked %}
+
+        <div class="cell">
+            <div class="img-box">
+                <img
+                    src="{{ item.portada or [
+                        url_for('static', filename='assets/images/shopping.jpg'),
+                        url_for('static', filename='assets/images/pattern2.jpg'),
+                        url_for('static', filename='assets/images/pattern3.jpg'), 
+                        url_for('static', filename='assets/images/pattern_boo_1.jpg'), 
+                        url_for('static', filename='assets/images/iconPimpkinIdea.jpg')
+                    ] | random }}"
+                    alt="{{ item.nombre_receta }}"
+                    >
+
+            </div> 
+            <a class="title-box" href="{{ url_for('recepy_page.receta', id=item.id) }}">
+                <h2>{{ item.nombre_receta }}</h2>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+
+    </section>
+
+    {% else %}
+    <div >
+        <h2 class="small-title">No hay recetas favoritas</h2>
+        <a href="{{ url_for('recepy_page.show_all_heloween_recepies') }}" class="volver-button">Ver todas las recetas</a>
+    </div>
+
+
+    {% endif %}
+
+
+
+
+{% endblock %}

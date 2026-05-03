@@ -1,0 +1,534 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+
+
+.header-meta
+
+    @include mix.flexColumn($horizontal: start, $vertical: start)
+    width: 100%
+    gap: .9rem
+
+    .meta-chip
+        border: solid 2px variables.$violet-glow
+        padding: 0.5em 1em
+        border-radius: 15px
+        background: variables.$palyer-gradient
+
+    @include mix.responsive($size: 'lg')
+        @include mix.flexRow($horizontal: space-between, $vertical: center)
+
+// ── LAYOUT ──
+.layout
+    display: grid
+    grid-template-columns: 252px 1fr
+    gap: 0.5rem
+    max-width: 1100px
+    margin: 0 auto
+    padding: 3rem 0rem
+
+@media (max-width: 780px)
+    .layout
+        grid-template-columns: 1fr
+        padding: 1rem 0
+    .sidebar
+        display: none
+
+// ── SIDEBAR ──
+.sidebar
+    position: sticky
+    top: 1.5rem
+    height: fit-content
+
+.sidebar-nav
+    background: variables.$light-primary-background-color    
+    border-radius: 15px
+    padding: 1rem 
+    box-shadow: variables.$shadow
+
+    
+
+.nav-list
+    list-style: none
+
+
+    li
+        margin-bottom: .1rem
+
+    a
+        display: block
+        padding: .42rem .65rem
+        border-radius: 6px
+        text-decoration: none
+        color: variables.$text
+        font-size: .82rem
+        transition: all .18s
+        border-left: 2px solid transparent
+        font-family: variables.$font-simple
+
+        &:hover
+            color: variables.$light-buttons-text
+            background: variables.$palyer-gradient
+            border-left-color: variables.$violet-glow
+
+// ── MOBILE NAV ──
+.mobile-nav
+    display: none
+    background: variables.$light-primary-background-color
+    border-radius: 15px
+    padding: 1rem
+    margin-bottom: 1.5rem
+    box-shadow: variables.$shadow
+
+    label
+        display: block
+        font-size: .82rem
+        font-weight: 600
+        color: variables.$text
+        margin-bottom: .5rem
+
+    select
+        width: 100%
+        padding: .6rem
+        border: 1.5px solid variables.$violet-glow
+        border-radius: 8px
+        font-size: .9rem
+        cursor: pointer
+        background: #fff
+
+@media (max-width: 780px)
+    .mobile-nav
+        display: block
+
+// ── QUICK OVERVIEW ──
+.overview
+    background: variables.$palyer-gradient
+    border: 1.5px solid variables.$violet-glow
+    border-radius: 15px
+    padding: 1.6rem
+    margin-bottom: 1.5rem
+    box-shadow: variables.$shadow
+    
+
+.overview-grid
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr))
+    gap: .9rem
+    @include mix.responsive($size: 'lg')
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))
+
+.ov-card
+    background: color.mix(variables.$light-primary-background-color, transparent, 30%)
+    border-radius: 15px
+    padding: 1.1rem
+    text-align: center
+
+    
+
+.ov-icon
+    font-size: 1.9rem
+    margin-bottom: .45rem
+    display: block
+
+// ── SECTION ──
+.section-privacy
+    background: variables.$light-primary-background-color
+    border: 1.5px solid variables.$violet-glow
+    border-radius: variables.$radius
+    padding: 1.9rem
+    margin-bottom: 1.4rem
+    box-shadow: variables.$shadow
+    scroll-margin-top: 1.5rem
+    overflow-wrap: break-word
+    @include mix.flexColumn($horizontal: start, $vertical: start)
+    gap: variables.$gap-min
+    width: 100%
+
+.sec-head
+    display: flex
+    align-items: flex-start
+    gap: .9rem
+    margin-bottom: 1.4rem
+    padding-bottom: 1.1rem
+    border-bottom: 2px solid variables.$light-buttons-color
+    width: 100%
+
+    
+
+.sec-num
+    display: flex
+    align-items: center
+    justify-content: center
+    min-width: 36px
+    height: 36px
+    background: variables.$light-buttons-color
+    color: variables.$outline-btn-color
+    border-radius: 50%
+    font-weight: 800
+    font-size: .88rem
+    flex-shrink: 0
+    margin-top: .1rem
+    font-family: variables.$font-simple
+
+// ── BOXES ──
+.box
+    border-radius: variables.$radius
+    padding: 1rem 1.2rem
+    margin-bottom: 1.2rem
+    font-size: .875rem
+
+.box-label
+    display: block
+    font-weight: 700
+    font-size: .72rem
+    text-transform: uppercase
+    letter-spacing: .06em
+    margin-bottom: .35rem
+
+.box-summary
+    background: variables.$palyer-gradient
+    border: 1.5px solid variables.$violet-glow
+    @include mix.flexColumn($horizontal: start, $vertical: start)
+    gap: .6rem
+
+    
+
+.box-warn
+    background: variables.$orange-glow
+    border: 1.5px solid variables.$focus-color
+    @include mix.flexColumn($horizontal: start, $vertical: start)
+    gap: .6rem
+
+    .label
+        color: variables.$focus-color
+
+.box-transfer
+    background: color.mix(variables.$light-buttons-color, transparent, 50%)
+    border: 1.5px solid variables.$light-buttons-color
+    @include mix.flexColumn($horizontal: start, $vertical: start)
+    gap: .6rem
+
+    .box-label
+        color: variables.$outline-btn-color
+
+.box-purple
+    background: variables.$violet-glow
+    border: 1.5px solid variables.$violet-glow
+
+// ── TABLES ──
+.tbl-wrap
+    border: 1.5px solid variables.$light-buttons-color
+    border-radius: 10px
+    overflow: hidden
+    overflow-x: auto
+    margin: 1.1rem 0
+
+.resp-table
+    display: table
+    width: 100%
+    border-spacing: 0
+    font-size: .83rem
+    font-family: variables.$font-text
+
+.resp-thead
+    display: table-header-group
+
+.resp-tbody
+    display: table-row-group
+
+    .resp-tr:last-child .resp-td
+        border-bottom: none
+
+    .resp-tr:nth-child(even) .resp-td
+        background: color.mix(variables.$light-buttons-color, transparent, 20%)
+
+.resp-tr
+    display: table-row
+
+.resp-th
+    display: table-cell
+    background: variables.$light-buttons-color
+    color: variables.$light-buttons-text
+    padding: .7rem 1rem
+    text-align: left
+    font-weight: 600
+    font-size: .76rem
+    font-family: variables.$font-simple
+    text-transform: uppercase
+    letter-spacing: .05em
+
+.resp-td
+    display: table-cell
+    padding: .7rem 1rem
+    
+    vertical-align: top
+
+@media (max-width: 600px)
+    .resp-table, .resp-tbody, .resp-tr
+        display: block
+
+    .resp-thead
+        display: none
+
+    .resp-tr
+        border-bottom: 2px solid variables.$light-buttons-color
+        padding: .25rem 0
+
+    .resp-tr:last-child
+        border-bottom: none
+
+    .resp-td
+        display: flex
+        gap: .6rem
+        padding: .45rem 1rem
+        border-bottom: none
+        overflow-wrap: anywhere
+        min-width: 0
+
+        &::before
+            content: attr(data-label)
+            min-width: 100px
+            font-weight: 700
+            font-size: .72rem
+            text-transform: uppercase
+            color: var(--muted)
+            flex-shrink: 0
+            padding-top: .1rem
+
+// ── BADGES ──
+.badge
+    display: inline-flex
+    align-items: center
+    gap: .28rem
+    padding: .18rem .55rem
+    border-radius: 20px
+    font-size: .73rem
+    font-weight: 600
+
+.b-us
+    background: #FFF3E0
+    color: #C84B00
+    border: 1px solid #FFCC80
+
+.b-dpf
+    background: #E8F5E9
+    color: #1B5E20
+    border: 1px solid #A5D6A7
+
+.b-scc
+    background: #EDE7F6
+    color: #4A148C
+    border: 1px solid #CE93D8
+
+.b-needed
+    background: #FFF8E1
+    color: #E65100
+    border: 1px solid #FFCC80
+
+.b-ok
+    background: #E8F5E9
+    color: #1B5E20
+    border: 1px solid #A5D6A7
+
+.b-warn
+    background: variables.$orange-glow
+    color: variables.$title-stroke
+    border: 1px solid variables.$focus-color
+
+// ── RIGHTS GRID ──
+.rights-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr))
+    gap: .9rem
+    margin: 1.1rem 0
+
+.right-card
+    background: color.mix(variables.$light-primary-background-color, white, 30%)
+    border: 1.5px solid variables.$light-buttons-color
+    border-radius: variables.$radius
+    padding: 1rem
+
+    .ri
+        font-size: 1.35rem
+        display: block
+        margin-bottom: .35rem
+
+    h4
+        font-size: .83rem
+        font-weight: 700
+        color: variables.$outline-btn-color
+        font-family: variables.$font-h3
+        margin-bottom: .25rem
+
+    p
+        font-size: .76rem
+        color: variables.$light-buttons-text
+        margin: 0
+        font-family: variables.$font-text
+
+// ── PROVIDER CARDS ──
+.provider-card
+    border: 1.5px solid variables.$light-buttons-color
+    border-radius: variables.$radius
+    overflow: hidden
+    margin-bottom: 1rem
+
+.provider-head
+    display: flex
+    align-items: center
+    gap: .9rem
+    padding: .9rem 1.2rem
+    background: variables.$light-primary-background-color
+    border-bottom: 1px solid variables.$light-buttons-color
+
+.p-logo
+    width: 40px
+    height: 40px
+    border-radius: 9px
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 1.3rem
+
+.p-name
+    font-weight: 700
+    font-size: .98rem
+    color: variables.$outline-btn-color
+
+.p-role
+    font-size: .78rem
+    color: variables.$light-buttons-text
+
+.provider-body
+    padding: .9rem 1.2rem
+
+.prow
+    display: flex
+    gap: .6rem
+    margin-bottom: .55rem
+    font-size: .82rem
+    align-items: flex-start
+    flex-wrap: wrap
+    overflow-wrap: break-word
+
+.plabel
+    min-width: 118px
+    font-weight: 600
+    color: variables.$light-buttons-text
+    font-size: .78rem
+    flex-shrink: 0
+
+// ── AEPD ──
+.aepd-box
+    background: variables.$palyer-gradient
+    border: 1.5px solid variables.$violet-glow
+    border-radius: variables.$radius
+    padding: 1rem 1.2rem
+    margin-top: 1.2rem
+    font-size: .86rem
+    overflow-wrap: break-word
+    width: 100%
+
+// ── CONTACT ──
+.contact-card
+    background: variables.$palyer-gradient
+    border: 1.5px solid variables.$violet-glow
+    border-radius: variables.$radius
+    padding: 1.75rem
+    text-align: center
+
+    .ci
+        font-size: 2.4rem
+        margin-bottom: .9rem
+        display: block
+
+    
+
+.btn-contact
+    display: inline-flex
+    align-items: center
+    gap: .45rem
+    background: variables.$light-buttons-color
+    color: variables.$outline-btn-color
+    padding: .72rem 1.65rem
+    border-radius: 8px
+    text-decoration: none
+    font-weight: 600
+    font-size: .88rem
+    transition: background .2s, transform .15s
+
+    &:hover
+        background: variables.$magic-gradient
+        transform: translateY(-1px)
+
+// ── COOKIE CHIPS ──
+.ck-needed
+    background: #E8F5E9
+    color: #1B5E20
+    border-radius: 10px
+    padding: .18rem .55rem
+    font-size: .73rem
+    font-weight: 600
+
+.ck-analytics
+    background: #FFF8E1
+    color: #B84D00
+    border-radius: 10px
+    padding: .18rem .55rem
+    font-size: .73rem
+    font-weight: 600
+
+// ── VERSION TABLE ──
+.ver-table
+    .resp-th
+        background: variables.$light-buttons-color
+
+
+
+p
+    margin-bottom: .7rem
+    font-size: .875rem
+    font-family: variables.$font-text
+
+ul
+    
+    margin-bottom: .7rem
+
+    li
+        font-size: .855rem
+        margin-bottom: .32rem
+
+a
+    color: variables.$brand
+    text-decoration: none
+    overflow-wrap: break-word
+
+    &:hover
+        text-decoration: underline
+
+strong
+    color: var(--primary)
+
+// ── EXTRA SMALL SCREENS (320px) ──
+@media (max-width: 400px)
+    .section
+        padding: 1.2rem 1rem
+
+    .resp-td
+        flex-direction: column
+        gap: .15rem
+
+        &::before
+            min-width: unset
+
+    .plabel
+        min-width: unset
+
+.legal-note
+    font-size: .77rem
+    color: variables.$dark-primary-background-color
+    font-style: italic
+    border-top: 1px dashed variables.$light-buttons-color
+    padding-top: .7rem
+    margin-top: .9rem

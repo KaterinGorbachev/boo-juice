@@ -1,0 +1,133 @@
+@use "sass:color"
+@use "sass:math"
+@use 'sass:map'
+
+// state variables
+$popup-width: 340px
+$radius: 15px
+
+
+
+$bg-overlay: rgba(0,0,0,0.35)
+
+$shadow-3d: (0 9px 0 #F0EDE6, 0 20px 35px rgba(0,0,0,0.25))
+
+$transition-fast: .15s ease
+$transition-smooth: .35s ease-in-out
+
+
+// colors
+
+$shadow: rgba(80, 40, 120, 0.25) 
+$button-hover: #fbbf24
+$violet-glow: rgba(168, 85, 247, 0.25)
+$orange-glow: rgba(245, 158, 11, 0.25)
+$title-color: #ffcd45
+$magic-gradient: linear-gradient(135deg, #ffcd45, #ac5fff)
+$palyer-gradient: linear-gradient(135deg, #ffe7a688, #d2a9ff7a)
+$edit-input-bg: #fef5ff
+
+
+$text: #1f2937dc
+$brand: #4361ee
+$danger: #ff4b4b
+$danger-dark: #cc3c3c
+$light-primary-background-color: #FCEBD9
+$light-text-background-color: #fefefe
+$light-header-background-color: #310A18
+$light-buttons-color: #e8a7c2
+$outline-btn-color: #61204e
+$light-buttons-text: #2B0125
+$light-title-h1-color: #a71d56
+$light-hover-color:#ffa23091
+$light-checkbox-color:#F3BEE1
+$hint-color:#ededed
+$box-shadow-text-back: #f4bf422f
+$light-title-background-color: #ffffffee
+$focus-color-pink: #b4093d
+$focus-color: #FF8C00
+$title-stroke: #D12300
+
+$footer-background-color: #a51c00
+
+$dark-primary-background-color: #133A3C
+$dark-text-background-color: #000000c9
+$dark-header-background-color: #321B2E
+$dark-buttons-color: #6A8A36
+$dark-title-h1-color: #B5FF81
+$dark-hover-color:#D12300
+$dark-checkbox-color: $light-hover-color
+$dark-h3-color:#9d00ff
+
+
+//Bagel Fat One only Regular
+//Ojuji all font-weights
+//Baloo Bhaijaan  all font-weights
+//Bai Jamjuree all font-weights
+
+$font-title: "Bagel Fat One"
+$font-header-h2: "Ojuju", sans-serif
+$font-h3: "Baloo Bhaijaan 2", sans-serif
+$font-text: "Bai Jamjuree", sans-serif
+$font-simple: "Space Mono", monospace
+$font-simple-headers: "Montserrat", sans-serif
+
+
+//map-get($font-weights, regular)
+$font-weights: (
+  "regular": 400,
+  "medium": 500,
+  "bold": 700
+)
+
+$font-size-general-text: 16px
+$font-size-h1: clamp(1.5rem, 2vw + 1rem, 3rem)
+$font-size-h2: clamp(1.25rem, 1.5vw + 1rem, 2.5rem)
+$font-size-label: 20px
+
+$gap-min: 1rem
+
+
+
+@function set-text-color($background-color)
+  @if color.channel($background-color, "lightness", $space: hsl) > 40%
+    @return #000
+  @else
+    @return #fff
+
+
+
+// alternative WCAG-compliant version
+@function luminance($color)
+  $rgb: (
+    red: color.red($color) / 255,
+    green: color.green($color) / 255,
+    blue: color.blue($color) / 255
+  )
+
+  @each $name, $value in $rgb
+    @if $value < 0.03928
+      $rgb: map.set($rgb, $name, $value / 12.92)
+    @else
+      $rgb: map.set($rgb, $name, math.pow((($value + 0.055) / 1.055), 2.4))
+
+  @return (0.2126 * map.get($rgb, red)) +
+          (0.7152 * map.get($rgb, green)) +
+          (0.0722 * map.get($rgb, blue))
+
+
+@function set-text-color($background)
+  $light-luminance: luminance(#ffffff)
+  $dark-luminance: luminance(#000000)
+  $bg-luminance: luminance($background)
+
+  $contrast-dark: ($bg-luminance + 0.05) / ($dark-luminance + 0.05)
+  $contrast-light: ($light-luminance + 0.05) / ($bg-luminance + 0.05)
+
+  @if $contrast-dark > $contrast-light
+    @return $light-header-background-color // better contrast
+  @else
+    @return $light-checkbox-color
+
+
+

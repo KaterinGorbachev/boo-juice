@@ -1,0 +1,683 @@
+{% extends './layout.html' %}
+{% block title %}Boo-Juice: politica de privacidad{% endblock %} 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/privacy.css')}}">
+
+        
+{% endblock %}
+
+{% block volver_button %}
+    <a href="/" onclick="history.back(); return false;" class="volver-button">Volver </a>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="page-description-title">
+    <h1 class="page__title">Política de Privacidad</h1>
+    <p class="description">Documento legal · RGPD</p>
+    <div class="header-meta">
+        <span class="meta-chip text">📅 Última actualización: 01/05/2026</span>
+        <span class="meta-chip text">🇪🇸 Aplicable a usuarios en España</span>
+        <span class="meta-chip text">⚖️ Conforme al RGPD (UE) 2016/679</span>
+
+    </div>
+    
+</div>
+
+<!-- ═══ MAIN LAYOUT ═══ -->
+<div class="layout">
+
+  <!-- DESKTOP SIDEBAR -->
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <h3 class="small-title ">Índice</h3>
+      <ul class="nav-list">
+        <li><a href="#resumen">🗺️ Resumen visual</a></li>
+        <li><a href="#s1">1. Responsable</a></li>
+        <li><a href="#s2">2. Ámbito</a></li>
+        <li><a href="#s3">3. Datos recogidos</a></li>
+        <li><a href="#s4">4. Finalidades y base jurídica</a></li>
+        <li><a href="#s5">5. Transferencias internacionales</a></li>
+        <li><a href="#s6">6. Encargados del tratamiento</a></li>
+        <li><a href="#s7">7. Conservación</a></li>
+        <li><a href="#s8">8. Sus derechos</a></li>
+        <li><a href="#s9">9. Menores</a></li>
+        <li><a href="#cookies">🍪 Política de Cookies</a></li>
+        <li><a href="#s11">11. Modificaciones</a></li>
+        <li><a href="#contacto">📬 Contacto</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <div>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav">
+      <label for="navSel">Ir a sección:</label>
+      <select id="navSel" onchange="if(this.value){document.getElementById(this.value).scrollIntoView({behavior:'smooth'});this.value='';}">
+        <option value="">— Seleccione una sección —</option>
+        <option value="resumen">Resumen visual</option>
+        <option value="s1">1. Responsable</option>
+        <option value="s2">2. Ámbito</option>
+        <option value="s3">3. Datos recogidos</option>
+        <option value="s4">4. Finalidades y base jurídica</option>
+        <option value="s5">5. Transferencias internacionales</option>
+        <option value="s6">6. Encargados del tratamiento</option>
+        <option value="s7">7. Conservación</option>
+        <option value="s8">8. Sus derechos</option>
+        <option value="s9">9. Menores</option>
+        <option value="cookies">Política de Cookies</option>
+        <option value="s10">10. Modificaciones</option>
+        <option value="contacto">Contacto</option>
+      </select>
+    </div>
+
+    <!-- ─── OVERVIEW ─── -->
+    <section id="resumen" class="overview">
+      <p class="small-title">🗺️ Resumen en un vistazo &mdash; Lo más importante</p>
+      <div class="overview-grid">
+        <div class="ov-card">
+          <span class="ov-icon">📧</span>
+          <h4 class="label">Qué recogemos</h4>
+          <p class="text">Email, apodo y el contenido que crea (recetas, favoritos)</p>
+        </div>
+        <div class="ov-card">
+          <span class="ov-icon">🎯</span>
+          <h4 class="label">Para qué</h4>
+          <p class="text">Gestionar su cuenta, ofrecer el servicio y mejorar el sitio</p>
+        </div>
+        <div class="ov-card">
+          <span class="ov-icon">🌍</span>
+          <h4 class="label">Dónde se guardan</h4>
+          <p class="text">Servidores en EE.UU. (Firebase + Render) con garantías RGPD</p>
+        </div>
+        <div class="ov-card">
+          <span class="ov-icon">🛡️</span>
+          <h4 class="label">Sus derechos</h4>
+          <p class="text">Acceso, rectificación, supresión y portabilidad, sin coste</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── S1: RESPONSABLE ─── -->
+    <section id="s1" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">1</span>
+        <h2 class="small-title">Identidad del Responsable del Tratamiento</h2>
+      </div>
+      <div class="box box-summary text">
+        <span class="label">En resumen</span>
+        <span class="text">La responsable de sus datos es la desarrolladora del sitio, Ekaterina Gorbacheva.</span>
+        
+      </div>
+      <p class="text">De conformidad con el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD) se identifican los datos del responsable:</p>
+      <div class="tbl-wrap">
+        <div class="resp-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th" style="width:35%">Dato</div><div class="resp-th">Información</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr"><div class="resp-td" data-label="Dato"><strong>Responsable</strong></div><div class="resp-td" data-label="Información">Boo-Juice</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Dato"><strong>Titular</strong></div><div class="resp-td" data-label="Información">Ekaterina Gorbacheva</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Dato"><strong>Sitio web</strong></div><div class="resp-td" data-label="Información">boo-juice.onrender.com</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Dato"><strong>Naturaleza del servicio</strong></div><div class="resp-td" data-label="Información">Aplicación web de gestión de recetas culinarias</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Dato"><strong>Contacto</strong></div><div class="resp-td" data-label="Información"><a href="https://www.linkedin.com/in/katerina-gorbacheva-93717324a/" target="_blank" rel="noopener noreferrer">LinkedIn: Ekaterina Gorbacheva</a></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── S2: ÁMBITO ─── -->
+    <section id="s2" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">2</span>
+        <h2 class="small-title">Ámbito de Aplicación</h2>
+      </div>
+      <p class="text">La presente Política de Privacidad y Cookies es de aplicación a todos los usuarios que accedan o utilicen el sitio web <strong>Boo-Juice</strong>, destinado principalmente a personas que residen o visitan <strong>España</strong>, quedando sujeta al ordenamiento jurídico español y de la Unión Europea en materia de protección de datos.</p>
+      <p class="text">El acceso y uso del sitio implica la aceptación de las condiciones establecidas en esta Política. Si usted no está de acuerdo, le rogamos que abandone el sitio y no facilite sus datos personales.</p>
+    </section>
+
+    <!-- ─── S3: DATOS ─── -->
+    <section id="s3" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">3</span>
+        <h2 class="small-title">Datos Personales que se Recogen</h2>
+      </div>
+      <div class="box box-summary">
+        <span class="label">En resumen</span>
+        <span class="text">Solo recogemos los datos que usted proporciona voluntariamente al registrarse y usar el servicio, más datos técnicos mínimos para el funcionamiento. Nunca recogemos datos sensibles.</span>
+      </div>
+
+      <h3 class="label">3.1. Datos facilitados directamente por el usuario</h3>
+      <div class="tbl-wrap">
+        <div class="resp-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Dato</div><div class="resp-th">Dónde se almacena</div><div class="resp-th">Observaciones</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Dirección de correo electrónico</div>
+              <div class="resp-td" data-label="Dónde se almacena">Firebase Authentication (Google, EE.UU.)</div>
+              <div class="resp-td" data-label="Observaciones">Necesaria para crear cuenta e iniciar sesión</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Contraseña</div>
+              <div class="resp-td" data-label="Dónde se almacena">Firebase Authentication (Google, EE.UU.)</div>
+              <div class="resp-td" data-label="Observaciones">Cifrada por Firebase. El responsable <strong>nunca accede</strong> a la contraseña en texto plano</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Apodo (nickname)</div>
+              <div class="resp-td" data-label="Dónde se almacena">Base de datos SQLite en Render (Oregon, EE.UU.)</div>
+              <div class="resp-td" data-label="Observaciones">Valor por defecto: «Fantasma». El UID de Firebase se almacena <strong>hasheado</strong> para desvincular identidades</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Recetas creadas</div>
+              <div class="resp-td" data-label="Dónde se almacena">Base de datos SQLite en Render (Oregon, EE.UU.)</div>
+              <div class="resp-td" data-label="Observaciones">Nombre, descripción, ingredientes, pasos, imagen de portada y vídeo (opcionales)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Recetas marcadas como favoritas</div>
+              <div class="resp-td" data-label="Dónde se almacena">Base de datos SQLite en Render (Oregon, EE.UU.)</div>
+              <div class="resp-td" data-label="Observaciones">Listado de recetas guardadas con marca de tiempo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="label">3.2. Datos recogidos de forma automática</h3>
+      <div class="tbl-wrap">
+        <div class="resp-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Dato</div><div class="resp-th">Origen</div><div class="resp-th">Finalidad</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Dirección IP</div>
+              <div class="resp-td" data-label="Origen">Firebase Auth / Render</div>
+              <div class="resp-td" data-label="Finalidad">Seguridad y gestión de sesión. Retenida solo unas semanas (Firebase)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Token de sesión (UID)</div>
+              <div class="resp-td" data-label="Origen">Firebase Auth → backend Flask</div>
+              <div class="resp-td" data-label="Finalidad">Verificación de identidad entre frontend y servidor</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Datos de navegación (páginas visitadas, duración, dispositivo, IP anonimizada)</div>
+              <div class="resp-td" data-label="Origen">Google Analytics (Firebase)</div>
+              <div class="resp-td" data-label="Finalidad">Análisis estadístico del uso del sitio. <span class="badge b-needed">Requiere consentimiento</span></div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Dato">Preferencias de visualización</div>
+              <div class="resp-td" data-label="Origen">localStorage del navegador</div>
+              <div class="resp-td" data-label="Finalidad">Personalización de interfaz. Solo en su dispositivo, nunca enviado al servidor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <span class="label">⚠️ Importante</span>
+        <span class="text"><strong >No se recogen ni tratan datos especialmente protegidos</strong> contemplados en el artículo 9 del RGPD (datos de salud, ideología, religión, origen racial, vida u orientación sexual, etc.).</span>
+      </div>
+    </section>
+
+    <!-- ─── S4: FINALIDADES ─── -->
+    <section id="s4" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">4</span>
+        <h2 class="small-title">Finalidades del Tratamiento y Base Jurídica</h2>
+      </div>
+      <div class="box box-summary">
+        <span class="label">En resumen</span>
+        <span class="text">Cada uso de sus datos tiene un fundamento legal específico del RGPD. Las cookies analíticas solo se activan con su consentimiento.</span>
+      </div>
+      <div class="tbl-wrap">
+        <div class="resp-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Finalidad</div><div class="resp-th">Base jurídica (RGPD)</div><div class="resp-th">Datos afectados</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Finalidad">Prestación del servicio: autenticación, gestión de recetas y favoritos</div>
+              <div class="resp-td" data-label="Base jurídica">Art. 6.1.b — <strong>Ejecución de un contrato</strong></div>
+              <div class="resp-td" data-label="Datos afectados">Email, contraseña, apodo, recetas, favoritos, sesión</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Finalidad">Seguridad técnica y prevención de fraude</div>
+              <div class="resp-td" data-label="Base jurídica">Art. 6.1.f — <strong>Interés legítimo</strong></div>
+              <div class="resp-td" data-label="Datos afectados">Dirección IP, registros técnicos, token de sesión</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Finalidad">Análisis estadístico del uso del sitio (Google Analytics)</div>
+              <div class="resp-td" data-label="Base jurídica">Art. 6.1.a — <strong>Consentimiento expreso</strong></div>
+              <div class="resp-td" data-label="Datos afectados">Datos de navegación, dispositivo, cookies _ga / _gid</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Finalidad">Cumplimiento de obligaciones legales</div>
+              <div class="resp-td" data-label="Base jurídica">Art. 6.1.c — <strong>Obligación legal</strong></div>
+              <div class="resp-td" data-label="Datos afectados">Los necesarios según normativa aplicable en cada momento</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="legal-note">Cuando la base jurídica sea el <strong>consentimiento</strong>, usted tiene derecho a retirarlo en cualquier momento sin que ello afecte a la licitud del tratamiento previo (art. 7.3 RGPD).</p>
+    </section>
+
+    <!-- ─── S5: TRANSFERENCIAS ─── -->
+    <section id="s5" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">5</span>
+        <h2 class="small-title">Transferencias Internacionales de Datos</h2>
+      </div>
+
+      <div class="box box-transfer">
+        <span class="label">🌍 Aviso sobre transferencias a Estados Unidos</span>
+        <span class="text">Este sitio web utiliza servicios con servidores en <strong>Estados Unidos</strong>, país que no pertenece al Espacio Económico Europeo (EEE). Sus datos personales pueden ser transferidos a dicho país. No obstante, todas las transferencias se realizan con las <strong>garantías adecuadas</strong> exigidas por el artículo 46 del RGPD, según se detalla a continuación.  </span>
+        
+      </div>
+
+      <h3 class="label">5.1. Firebase / Google LLC — Autenticación</h3>
+      <p class="text"><strong>Firebase Authentication</strong> procesa los datos de autenticación <strong>exclusivamente en servidores de EE.UU.</strong>, sin posibilidad de configurar una región alternativa para este servicio.</p>
+      <p class="text">Garantías aplicables a la transferencia:</p>
+      <ul>
+        <li class="text"><span class="badge b-dpf">✅ EU-US Data Privacy Framework</span> — Google LLC está certificada bajo el Marco de Privacidad de Datos UE-EE.UU., aprobado por Decisión de adecuación de la Comisión Europea de 10 de julio de 2023.</li>
+        <li class="text"><span class="badge b-scc">📄 Cláusulas Contractuales Tipo (SCC)</span> — Google incorpora las SCC de la Comisión Europea en sus Condiciones de Servicio de Tratamiento de Datos (Firebase Data Processing and Security Terms).</li>
+      </ul>
+
+      <h3 class="label">5.2. Google Analytics (Firebase) — Analítica</h3>
+      <p class="text">Google Analytics también opera bajo infraestructura de Google LLC en EE.UU. Las mismas garantías del apartado 5.1 son de aplicación (EU-US DPF + SCCs).</p>
+
+      <h3 class="label">5.3. Render, Inc. — Hospedaje del servicio y base de datos</h3>
+      <p class="text">Render es la plataforma de hospedaje con servidores en <strong>Oregon (EE.UU.)</strong> que aloja el servidor de aplicaciones Flask y la base de datos SQLite con todos los datos de la aplicación.</p>
+      <ul>
+        <li class="text"><span class="badge b-scc">📄 Cláusulas Contractuales Tipo (SCC)</span> — Render, Inc. ofrece un Acuerdo de Tratamiento de Datos (DPA) con SCCs para transferencias desde el EEE.</li>
+      </ul>
+
+      <div class="box box-warn">
+        <span class="label">⚠️ Aviso: Plan gratuito de Render y almacenamiento efímero</span>
+        <span class="text">
+            Este sitio web se aloja en el <strong>plan gratuito de Render</strong>. En este plan: (1) el servicio puede suspenderse temporalmente tras períodos de inactividad; (2) la base de datos SQLite se almacena en un <strong>sistema de archivos efímero</strong> que puede perderse ante reinicios o redespliegues del servicio. El responsable no garantiza la persistencia indefinida de datos de recetas y favoritos en el plan gratuito. Se recomienda al usuario que guarde copias de los contenidos que considere importantes.
+
+        </span>
+        
+      </div>
+
+    </section>
+
+    <!-- ─── S6: ENCARGADOS ─── -->
+    <section id="s6" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">6</span>
+        <h2 class="small-title">Encargados del Tratamiento</h2>
+      </div>
+      <div class="box box-summary">
+        <span class="label">En resumen</span>
+        <span class="text">
+          Solo se comparten datos con los tres proveedores estrictamente necesarios para que el servicio funcione. Todos están sujetos a contratos de encargo de tratamiento conforme al artículo 28 del RGPD.
+        </span>
+      </div>
+
+      <!-- Firebase Auth -->
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#FFF3E0">🔥</div>
+          <div>
+            <div class="p-name">Firebase Authentication</div>
+            <div class="p-role">Google LLC &mdash; Encargado del tratamiento</div>
+          </div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Email, contraseña (hash), dirección IP, UID de sesión</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Autenticación de usuarios y gestión segura de sesiones</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 EE.UU. (exclusivo para Auth)</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-dpf">EU-US DPF</span>&nbsp;<span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Retención de IP:</span><span>Unas pocas semanas (política Firebase)</span></div>
+          <div class="prow"><span class="plabel">Datos tras baja:</span><span>Eliminados en un máximo de 180 días desde la supresión de la cuenta</span></div>
+          <div class="prow"><span class="plabel">Política:</span><span><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">firebase.google.com/support/privacy</a></span></div>
+        </div>
+      </div>
+
+      <!-- Google Analytics -->
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#E8F5E9">📊</div>
+          <div>
+            <div class="p-name">Google Analytics (Firebase Analytics)</div>
+            <div class="p-role">Google LLC &mdash; Encargado del tratamiento</div>
+          </div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Páginas visitadas, duración de visita, tipo de dispositivo/navegador, IP anonimizada</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Análisis estadístico del uso del sitio (seguimiento de páginas vistas; sin eventos personalizados)</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 EE.UU.</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-dpf">EU-US DPF</span>&nbsp;<span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Base jurídica:</span><span>Consentimiento del usuario (art. 6.1.a RGPD) — <span class="badge b-dpf">✅ Banner CMP activo</span></span></div>
+          <div class="prow"><span class="plabel">Retención:</span><span>14 meses (configuración por defecto de Google Analytics)</span></div>
+        </div>
+      </div>
+
+      <!-- Render -->
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#E8EAF6">☁️</div>
+          <div>
+            <div class="p-name">Render, Inc.</div>
+            <div class="p-role">Proveedor de hospedaje &mdash; Encargado del tratamiento</div>
+          </div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Todos los datos de aplicación: apodo, recetas, ingredientes, pasos, favoritos, UID hasheado</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Hospedaje del servidor de aplicaciones (Flask) y base de datos (SQLite)</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 Oregon, EE.UU.</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Plan:</span><span>Gratuito — almacenamiento efímero (ver aviso en sección 5.3)</span></div>
+          <div class="prow"><span class="plabel">Política:</span><span><a href="https://render.com/privacy" target="_blank" rel="noopener noreferrer">render.com/privacy</a></span></div>
+        </div>
+      </div>
+
+      <!-- YouTube -->
+      <div class="provider-card">
+        <div class="provider-head">
+          <div class="p-logo" style="background:#FFEBEE">▶️</div>
+          <div>
+            <div class="p-name">YouTube (vídeos incrustados)</div>
+            <div class="p-role">Google LLC — Tercero independiente</div>
+          </div>
+        </div>
+        <div class="provider-body">
+          <div class="prow"><span class="plabel">Datos tratados:</span><span>Identificador de visitante, historial de visualización, preferencias de reproducción</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Reproducción de vídeos incrustados en páginas de recetas que incluyen enlace de vídeo</span></div>
+          <div class="prow"><span class="plabel">Cuándo se activa:</span><span>Solo cuando una receta incluye un vídeo y el usuario visita dicha página</span></div>
+          <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 EE.UU.</span></span></div>
+          <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-dpf">EU-US DPF</span>&nbsp;<span class="badge b-scc">SCCs</span></span></div>
+          <div class="prow"><span class="plabel">Nota:</span><span>YouTube actúa como responsable independiente de las cookies que establece. Boo-Juice no controla el tratamiento que YouTube realiza con esos datos. Consulte la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de privacidad de Google</a>.</span></div>
+        </div>
+      </div>
+
+      <p class="text">No se ceden datos a terceros distintos de los anteriores, salvo obligación legal o requerimiento de autoridad competente.</p>
+    </section>
+
+    <!-- ─── S7: CONSERVACIÓN ─── -->
+    <section id="s7" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">7</span>
+        <h2 class="small-title">Conservación de los Datos</h2>
+      </div>
+      <div class="box box-summary">
+        <span class="label">En resumen</span>
+        <span class="text">
+            Sus datos se conservan mientras su cuenta esté activa y durante los plazos legalmente exigibles. Transcurridos dichos plazos se eliminan o anonimizan de forma segura.
+
+        </span>
+        
+      </div>
+      <div class="tbl-wrap">
+        <div class="resp-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Tipo de dato</div><div class="resp-th">Período de conservación</div><div class="resp-th">Responsable del almacenamiento</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Tipo de dato">Cuenta de usuario (email, autenticación)</div>
+              <div class="resp-td" data-label="Período">Mientras la cuenta esté activa. Hasta <strong>180 días</strong> desde la solicitud de baja (política Firebase)</div>
+              <div class="resp-td" data-label="Responsable">Firebase Authentication (Google)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Tipo de dato">Dirección IP (seguridad)</div>
+              <div class="resp-td" data-label="Período"><strong>Unas pocas semanas</strong></div>
+              <div class="resp-td" data-label="Responsable">Firebase (Google)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Tipo de dato">Recetas, ingredientes, pasos, favoritos, apodo</div>
+              <div class="resp-td" data-label="Período">Mientras la cuenta esté activa o hasta solicitud de supresión</div>
+              <div class="resp-td" data-label="Responsable">Render, Inc. (sujeto a condiciones del plan gratuito)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Tipo de dato">Datos de Google Analytics</div>
+              <div class="resp-td" data-label="Período"><strong>14 meses</strong> (configuración por defecto)</div>
+              <div class="resp-td" data-label="Responsable">Google Analytics</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Tipo de dato">Preferencias locales (localStorage)</div>
+              <div class="resp-td" data-label="Período">Hasta eliminación manual desde el navegador</div>
+              <div class="resp-td" data-label="Responsable">Dispositivo del usuario (no se envía al servidor)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Tipo de dato">Cookies de sesión</div>
+              <div class="resp-td" data-label="Período">Hasta cerrar el navegador</div>
+              <div class="resp-td" data-label="Responsable">Dispositivo del usuario</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── S8: DERECHOS ─── -->
+    <section id="s8" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">8</span>
+        <h2 class="small-title">Derechos de los Usuarios</h2>
+      </div>
+      <div class="box box-summary">
+        <span class="label">En resumen</span>
+        <span class="text">
+            Usted tiene pleno control sobre sus datos. Puede ejercer sus derechos de forma <strong>gratuita</strong>. Responderemos en el plazo máximo de <strong>un mes</strong> (prorrogable dos meses adicionales en casos complejos, con notificación previa).
+
+        </span>
+        
+      </div>
+
+      <div class="rights-grid">
+        <div class="right-card">
+          <span class="ri">👁️</span>
+          <h4>Acceso (art. 15)</h4>
+          <p>Conocer qué datos tenemos sobre usted y cómo los usamos</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">✏️</span>
+          <h4>Rectificación (art. 16)</h4>
+          <p>Corregir datos inexactos o incompletos</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">🗑️</span>
+          <h4>Supresión (art. 17)</h4>
+          <p>Solicitar la eliminación de sus datos («derecho al olvido»)</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">⏸️</span>
+          <h4>Limitación (art. 18)</h4>
+          <p>Restringir el tratamiento en determinadas circunstancias</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">✋</span>
+          <h4>Oposición (art. 21)</h4>
+          <p>Oponerse al tratamiento basado en interés legítimo</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">📦</span>
+          <h4>Portabilidad (art. 20)</h4>
+          <p>Recibir sus datos en formato estructurado y legible por máquina</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">🚫</span>
+          <h4>No automatización (art. 22)</h4>
+          <p>No ser objeto de decisiones basadas únicamente en tratamiento automatizado</p>
+        </div>
+        <div class="right-card">
+          <span class="ri">↩️</span>
+          <h4>Retirar consentimiento (art. 7.3)</h4>
+          <p>Retirar el consentimiento en cualquier momento sin efecto retroactivo</p>
+        </div>
+      </div>
+
+      <p class="text">Para ejercer cualquiera de estos derechos, contacte con la responsable a través del enlace de LinkedIn indicado en la sección 1, adjuntando una copia de su documento de identidad. No se cobrarán tasas, salvo que las solicitudes sean manifiestamente infundadas o excesivas (art. 12.5 RGPD).</p>
+
+      <div class="aepd-box">
+        <strong class="label">🏛️ Reclamación ante la Agencia Española de Protección de Datos (AEPD)</strong><br><br>
+        Si considera que el tratamiento de sus datos no es conforme a la normativa vigente, tiene derecho a presentar una reclamación ante la <strong>AEPD</strong>, autoridad de control competente en España:<br><br>
+        &nbsp;&nbsp;🌐 <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a> &nbsp;·&nbsp; Sede electrónica: <a href="https://sedeagpd.gob.es" target="_blank" rel="noopener noreferrer">sedeagpd.gob.es</a><br>
+        &nbsp;&nbsp;📞 901 100 099 &nbsp;·&nbsp; C/ Jorge Juan, 6, 28001 Madrid<br><br>
+        No obstante, le rogamos que antes se ponga en contacto con nosotros para intentar resolver la cuestión de forma directa.
+      </div>
+    </section>
+
+    <!-- ─── S9: MENORES ─── -->
+    <section id="s9" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">9</span>
+        <h2 class="small-title">Menores de Edad</h2>
+      </div>
+      <p class="text">De conformidad con el artículo 7 de la LOPDGDD:</p>
+      <ul>
+        <li class="text">El uso del servicio por menores de <strong>14 años</strong> requiere el consentimiento previo y verificable de sus padres o tutores legales.</li>
+        <li class="text">No se recaban conscientemente datos personales de menores de 14 años sin dicho consentimiento.</li>
+        <li class="text">Si el responsable detectase la existencia de datos de un menor sin el consentimiento requerido, procederá a su eliminación inmediata.</li>
+        <li class="text">Los menores de entre 14 y 18 años pueden usar el servicio de forma autónoma; se recomienda la supervisión parental.</li>
+      </ul>
+    </section>
+
+    <!-- ─── COOKIES ─── -->
+    <section id="cookies" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">10</span>
+        <h2 class="small-title">Política de Cookies</h2>
+      </div>
+      <div class="box box-summary">
+        <span class="label">En resumen</span>
+        <span class="text">
+            Usamos cookies <strong>técnicas</strong> (necesarias, sin consentimiento), cookies de <strong>Google Analytics</strong> (analíticas, solo con su consentimiento previo) y cookies de <strong>YouTube</strong> (terceros, solo en páginas de recetas que incluyen vídeo incrustado).
+        </span>
+      </div>
+
+      <h3 class="label">¿Qué son las cookies?</h3>
+      <p class="text">Las cookies son pequeños archivos de texto que los sitios web colocan en su dispositivo al visitarlos. Permiten al sitio recordar sus preferencias y recoger información estadística. Pueden gestionarse o eliminarse desde la configuración de su navegador.</p>
+
+      <h3 class="label">Cookies que utilizamos</h3>
+      <div class="tbl-wrap">
+        <div class="resp-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Cookie / Tecnología</div><div class="resp-th">Categoría</div><div class="resp-th">Finalidad</div><div class="resp-th">Duración</div><div class="resp-th">Tercero</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">Cookies de sesión (Firebase Auth)</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-needed">Técnica / Necesaria</span></div>
+              <div class="resp-td" data-label="Finalidad">Mantener la sesión del usuario autenticado</div>
+              <div class="resp-td" data-label="Duración">Al cerrar el navegador</div>
+              <div class="resp-td" data-label="Tercero">Google LLC</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">localStorage (preferencias)</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-needed">Técnica / Necesaria</span></div>
+              <div class="resp-td" data-label="Finalidad">Guardar preferencias de visualización en el dispositivo del usuario</div>
+              <div class="resp-td" data-label="Duración">Hasta eliminación manual</div>
+              <div class="resp-td" data-label="Tercero">Solo dispositivo del usuario</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">_ga, _ga_PTN69XBXFK</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-analytics">Analítica</span></div>
+              <div class="resp-td" data-label="Finalidad">Distinguir usuarios y sesiones para estadísticas de uso</div>
+              <div class="resp-td" data-label="Duración">Hasta 2 años</div>
+              <div class="resp-td" data-label="Tercero">Google LLC</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">_gid</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-analytics">Analítica</span></div>
+              <div class="resp-td" data-label="Finalidad">Distinguir usuarios en estadísticas de sesión de corta duración</div>
+              <div class="resp-td" data-label="Duración">24 horas</div>
+              <div class="resp-td" data-label="Tercero">Google LLC</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">VISITOR_INFO1_LIVE</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-functional">Funcional / Terceros</span></div>
+              <div class="resp-td" data-label="Finalidad">Estimar el ancho de banda del usuario para la reproducción de vídeo de YouTube</div>
+              <div class="resp-td" data-label="Duración">179 días</div>
+              <div class="resp-td" data-label="Tercero">Google LLC (YouTube)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">YSC</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-functional">Funcional / Terceros</span></div>
+              <div class="resp-td" data-label="Finalidad">Registrar las acciones del usuario en los vídeos de YouTube durante la sesión</div>
+              <div class="resp-td" data-label="Duración">Al cerrar el navegador (sesión)</div>
+              <div class="resp-td" data-label="Tercero">Google LLC (YouTube)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">PREF</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-functional">Funcional / Terceros</span></div>
+              <div class="resp-td" data-label="Finalidad">Almacenar preferencias del reproductor de YouTube (volumen, calidad, subtítulos)</div>
+              <div class="resp-td" data-label="Duración">8 meses</div>
+              <div class="resp-td" data-label="Tercero">Google LLC (YouTube)</div>
+            </div>
+            <div class="resp-tr">
+              <div class="resp-td" data-label="Cookie">GPS</div>
+              <div class="resp-td" data-label="Categoría"><span class="ck-functional">Funcional / Terceros</span></div>
+              <div class="resp-td" data-label="Finalidad">Registrar la identificación única del dispositivo móvil para fines de seguimiento geográfico</div>
+              <div class="resp-td" data-label="Duración">30 minutos</div>
+              <div class="resp-td" data-label="Tercero">Google LLC (YouTube)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box box-summary">
+        <span class="label">✅ Estado de conformidad — Gestión de consentimiento activa</span>
+        <span class="text">
+            Las cookies de Google Analytics son de <strong>categoría analítica</strong> y, conforme a la LSSI-CE (Ley 34/2002) y las directrices de la AEPD, requieren el <strong>consentimiento previo e informado del usuario</strong>. El sitio dispone de un <strong>banner de gestión de consentimiento (CMP) activo</strong> que bloquea la carga de Google Analytics hasta que el usuario acepte explícitamente. Si selecciona «Solo necesarias», la biblioteca de analítica no se inicializa en ningún momento. Puede cambiar su elección en cualquier momento usando el botón «🍪 Cookies» que aparece en la esquina inferior izquierda del sitio. Las cookies de YouTube son establecidas por Google LLC como tercero independiente cuando accede a una receta que incluye vídeo; Boo-Juice no controla ese tratamiento.
+        </span>
+      </div>
+
+      <h3 class="label">Gestión de cookies</h3>
+      <p class="text">Puede configurar su navegador para aceptar, rechazar o eliminar las cookies. La desactivación de cookies técnicas puede afectar al funcionamiento correcto del sitio (por ejemplo, imposibilidad de mantener la sesión activa):</p>
+      <ul>
+        <li class="text"><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+        <li class="text"><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+        <li class="text"><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
+        <li class="text"><a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+      </ul>
+      <p class="text">Para inhabilitar el seguimiento de Google Analytics específicamente, puede instalar el complemento oficial del navegador: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h3 id="s10-youtube" class="label">Vídeos incrustados de YouTube</h3>
+      <p class="text">Algunas recetas pueden incluir un vídeo de YouTube incrustado mediante un elemento <code>&lt;iframe&gt;</code>. Cuando accede a una de estas páginas, el navegador establece una conexión directa con los servidores de YouTube (Google LLC, EE.UU.), lo que puede dar lugar a la creación de las cookies de terceros descritas en la tabla anterior (<strong>VISITOR_INFO1_LIVE, YSC, PREF, GPS</strong>).</p>
+      <p class="text">Boo-Juice no tiene control sobre las cookies que YouTube establece, ni sobre el tratamiento que Google realiza con los datos recogidos. Dicho tratamiento se rige por la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de privacidad de Google</a>. Si no desea que YouTube registre su actividad, puede bloquear los iframes de terceros desde la configuración de privacidad de su navegador o usar una extensión de bloqueo de rastreadores antes de visitar páginas de recetas que incluyan vídeo.</p>
+
+      
+    </section>
+
+    <!-- ─── S11: MODIFICACIONES ─── -->
+    <section id="s11" class="section-privacy">
+      <div class="sec-head">
+        <span class="sec-num">11</span>
+        <h2 class="small-title">Modificaciones de la Política</h2>
+      </div>
+      <p class="text">El Responsable se reserva el derecho a modificar la presente Política para adaptarla a cambios normativos, técnicos o de los servicios prestados. Las modificaciones se publicarán en este sitio web con indicación de su fecha de entrada en vigor.</p>
+      <p class="text">En caso de modificaciones sustanciales que afecten a los derechos de los usuarios, se procurará notificarlos a través de los medios disponibles (correo electrónico registrado o aviso destacado en el sitio web).</p>
+
+      <div class="tbl-wrap">
+        <div class="resp-table ver-table">
+          <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Versión</div><div class="resp-th">Fecha</div><div class="resp-th">Cambios principales</div></div></div>
+          <div class="resp-tbody">
+            <div class="resp-tr"><div class="resp-td" data-label="Versión"><strong>v2.1</strong></div><div class="resp-td" data-label="Fecha">03/05/2026</div><div class="resp-td" data-label="Cambios">Añadida información sobre cookies de terceros de YouTube (VISITOR_INFO1_LIVE, YSC, PREF, GPS), proveedor YouTube/Google LLC en encargados del tratamiento, subsección sobre vídeos incrustados, aclaración sobre consentimiento en el registro, CMP banner activo (estado de conformidad actualizado)</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Versión">v2.0</div><div class="resp-td" data-label="Fecha">01/05/2026</div><div class="resp-td" data-label="Cambios">Revisión completa: integración Firebase Auth (EE.UU.), Google Analytics, Render (plan gratuito, almacenamiento efímero), transferencias internacionales con EU-US DPF y SCCs, rediseño con Legal Design</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Versión">v1.0</div><div class="resp-td" data-label="Fecha">22/12/2024</div><div class="resp-td" data-label="Cambios">Versión inicial</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CONTACTO ─── -->
+    <section id="contacto" class="section-privacy">
+      <div class="contact-card">
+        <span class="ci">💬</span>
+        <h3 class="label">¿Preguntas sobre sus datos personales?</h3>
+        <p class="text">Para ejercer sus derechos o realizar cualquier consulta sobre esta Política de Privacidad, contacte con la responsable del tratamiento:</p>
+        <a href="https://www.linkedin.com/in/katerina-gorbacheva-93717324a/" target="_blank" rel="noopener noreferrer" class="btn-contact">
+          💼 Contactar vía LinkedIn
+        </a>
+        <p style="margin-top:1rem; font-size:.8rem; color:var(--muted)">Responderemos en el plazo máximo de <strong>30 días naturales</strong> conforme al artículo 12.3 del RGPD</p>
+      </div>
+
+      <div class="aepd-box" style="margin-top:1.4rem">
+        <strong>🏛️ Autoridad de control</strong><br>
+        Agencia Española de Protección de Datos (AEPD)<br>
+        C/ Jorge Juan, 6 · 28001 Madrid · 📞 901 100 099<br>
+        🌐 <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a> &nbsp;·&nbsp;
+        <a href="https://sedeagpd.gob.es" target="_blank" rel="noopener noreferrer">sedeagpd.gob.es</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+
+
+{% endblock %}

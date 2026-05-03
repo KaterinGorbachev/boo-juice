@@ -1,0 +1,54 @@
+.error-404, .error-500 {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #ffcd45, #ac5fff);
+  text-align: center;
+  margin: 0;
+  padding: 0.5em;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.error-404 .container, .error-500 .container {
+  max-width: 600px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.185);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.error-404 h1, .error-500 h1 {
+  font-size: clamp(1.5em, 5vw, 3em);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(168, 85, 247, 0.25);
+  color: #fefefe;
+  font-family: "Bagel Fat One";
+}
+.error-404 p, .error-500 p {
+  font-size: clamp(14px, 3vw, 1.5rem);
+  margin-bottom: 30px;
+  color: #2B0125;
+  font-family: "Bai Jamjuree", sans-serif;
+  opacity: 0.9;
+  line-height: 1.5;
+  text-align: center;
+}
+.error-404 .ghost, .error-500 .ghost {
+  font-size: 5em;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+.error-404 .pumpkin, .error-500 .pumpkin {
+  font-size: 3em;
+  margin-top: 20px;
+}
+
+/*# sourceMappingURL=error_pages.css.map */

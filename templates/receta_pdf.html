@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.nombre_receta }}</title>
+</head>
+<body style="font-family: 'Courier New', sans-serif; margin: 0; padding: 40px; color: #333; line-height: 1.5;">
+
+    <!-- Header -->
+    <header style="text-align: start; margin-bottom: 50px;">
+        <h1 style="font-family: 'Jokerman', cursive; font-size: 2.5em; margin: 0; color: #63419b;">🐈‍⬛ BOO-JUICE</h1>
+        <p style="font-size: 0.9em; color: #777; margin-top: 5px;"><!-- dir de la pagina web --></p>
+    </header>
+
+    <!-- Recipe Title -->
+    <main>
+        <h2 style=" font-size: 1.5em; margin-bottom: 15px; color: #FF8C00;"> <strong>{{ data.nombre_receta.upper() }}</strong></h2>
+        <p style="margin: 5px 0; font-size: 1.1em;">⏰ Tiempo de preparación: {{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
+
+        <hr style="margin: 25px 0; border: 0; border-top: 3px solid #ccc;">
+
+        <!-- Ingredients Table -->
+        <h3 style="font-size: 1.8em; margin-bottom: 15px; color: #2B0125;">🛒 Ingredientes</h3>
+        <p style="margin-bottom: 15px;">🍽️ Para {{ data.cantidad_porciones }} raciones</p>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+            <thead>
+                <tr>
+                    <th style="text-align: left; padding: 8px; background-color: #ffa23091; color: #2B0125;">Cantidad</th>
+                    <th style="text-align: left; padding: 8px; background-color: #ffa23091; color: #2B0125;">Medida</th>
+                    <th style="text-align: left; padding: 8px; background-color: #ffa23091; color: #2B0125;">Ingrediente</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data.ingredientes %}
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px;">{{ item.cantidad_str if item.cantidad_str is defined else ("" if item.cantidad == 0 else "{:g}".format(item.cantidad)) }}</td>
+                    <td style="padding: 8px;">{{ item.medida }}</td>
+                    <td style="padding: 8px;">{{ item.nombre_ingrediente_es if item.nombre_ingrediente_es is defined else item.nombre_ingrediente }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr style="margin: 25px 0; border: 0; border-top: 2px solid #ccc;">
+
+        <!-- Steps Section -->
+        <h3 style="font-size: 1.8em; margin-bottom: 15px; color: #2B0125;">📍 Pasos de la receta</h3>
+        {% for item in data.pasos %}
+        <div style="margin-bottom: 20px; padding: 15px 15px 15px 60px; position: relative; background-color: #fefefe; border-left: 5px solid #ffa23091; page-break-inside: avoid;">
+            <div style="position: absolute; left: -45px; top: 15px; width: 40px; height: 40px; border-radius: 50%; background-color: #ffa23091; color: #8C1822; text-align: center; line-height: 40px; font-weight: bold; font-size: 1.2em;">
+                {{ item.numero_paso }}
+            </div>
+            <p style="margin: 0; font-size: 1.1em;">{{ item.descripcion }}</p>
+        </div>
+        {% endfor %}
+
+        {% if data.tips %}
+        <div style="margin-top: 30px; page-break-inside: avoid;">
+            <h3 style="font-size: 1.8em; margin-bottom: 10px; color: #2B0125;">🎃 Consejos</h3>
+            {% for item in data.tips %}
+            <p style="margin: 5px 0; font-size: 1.1em;">- <i>{{ item.descripcion }}</i></p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </main>
+
+  
+
+   
+
+</body>
+</html>
+
+
+
+        
+        

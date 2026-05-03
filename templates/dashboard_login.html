@@ -1,0 +1,31 @@
+{% extends './layout.html' %}
+
+
+
+
+{% block content %}
+<div class="admin-page-wrapper">
+    <div class="page-description-title">
+        <h1 class="page__title">Accesso a admin dashboard</h1>
+        <p class="description">Por favor, introduce tu contraseña para acceder al dashboard de administración.</p>
+
+    </div>
+
+
+    <form action="{{ url_for('dashboard_admin.login_admin') }}" method="POST" class="basic-form-layout ">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="input__labeled">
+            <label for="password" class="label">Contraseña:</label>
+            <div class="input-message-box">
+                <input type="password" name="password" id="password">
+            </div>
+            <button class="action-button" type="submit">Entrar</button>
+
+        </div>
+        
+        
+    </form>
+
+</div>
+
+{% endblock %}

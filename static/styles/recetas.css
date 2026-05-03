@@ -1,0 +1,121 @@
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  width: 100%;
+}
+
+.page-name {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  text-align: start;
+  margin-top: 2rem;
+  gap: calc(clamp(24px, 2.5rem, 48px) / 2);
+}
+.page-name h1 {
+  font-weight: 800;
+  color: #a71d56;
+  font-family: "Bagel Fat One";
+  letter-spacing: 6%;
+  word-spacing: 30%;
+  font-size: clamp(24px, 2.5rem, 48px);
+}
+.page-name p {
+  font-weight: 600;
+  font-size: clamp(14px, 1.2rem, 18px);
+  color: #a71d56;
+  font-family: "Bai Jamjuree", sans-serif;
+  padding: 0.5rem;
+  border-radius: 15px;
+  background-color: #FCEBD9;
+}
+
+.grid {
+  display: grid;
+  width: 100%;
+  gap: 2rem;
+  grid-template-columns: min(100%, 300px);
+  justify-content: center;
+}
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 210px));
+    justify-content: start;
+    column-gap: 2.2rem;
+    row-gap: 3rem;
+  }
+}
+.grid .cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  position: relative;
+  height: 250px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.grid .cell .img-box {
+  width: 100%;
+  height: 80%;
+  overflow: hidden;
+  background-color: #ededed;
+  border-radius: 15px;
+}
+.grid .cell .img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.grid .cell .title-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  height: 25%;
+  max-height: 80%;
+  flex: 0 1 auto;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.9333333333);
+  color: #61204e;
+  box-shadow: 0 4px 4px 0 rgba(244, 191, 66, 0.1843137255);
+  transition: all 0.5s ease-in-out;
+}
+.grid .cell .title-box h2 {
+  font-size: clamp(16px, 1.25rem, 20px);
+  text-transform: capitalize;
+  font-family: "Baloo Bhaijaan 2", sans-serif;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.5;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.grid .cell .title-box:hover {
+  scale: 1.03;
+  background: linear-gradient(135deg, #ffcd45, #ac5fff);
+  background-color: transparent;
+  color: #fefefe;
+  box-shadow: 0 4px 4px 0 rgba(168, 85, 247, 0.25);
+}
+
+/*# sourceMappingURL=recetas.css.map */

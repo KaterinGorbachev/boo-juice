@@ -1,0 +1,137 @@
+@use 'sass:map'
+@use 'sass:color'
+@use './_variables.sass' as variables
+
+$breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 993px
+)
+
+
+@mixin stickyHeader($header-height, $z-index-header)
+  width: 100%
+  position: sticky
+  top: 0
+  left: 0
+  right: 0
+  z-index: $z-index-header
+  height: $header-height
+  overflow-x: hidden
+
+@mixin responsive ($size)
+  @if $size == 'sm'
+      @media (max-width: map.get($breakpoints, 'md') - 1px)
+          @content
+  @else if $size == 'md'
+      @media (min-width: map.get($breakpoints, 'md'))
+          @content
+  @else if $size == 'lg'
+      @media (min-width: map.get($breakpoints, 'lg'))
+          @content
+  @else
+      @warn "El tamaño #{size} no existe"
+
+@mixin flexColumn($vertical: center, $horizontal: center, $text-align: start)
+  display: flex
+  flex-direction: column
+  align-items: $horizontal
+  justify-content: $vertical
+  text-align: $text-align
+
+@mixin flexRow($vertical: center, $horizontal: center, $text-align: start, $direction:row)
+  display: flex
+  flex-direction: $direction
+  align-items: $vertical
+  justify-content: $horizontal
+  text-align: $text-align
+
+
+@mixin resetLink()
+  list-style: none
+  text-align: start
+  text-decoration: none
+
+@mixin inputForm($radius-sm:15px, $text:#000000, $accent: variables.$violet-glow, $maxwidth: 100%, $minwidth: 80px, $shadow-color: #f4bf425d)
+  font-size: 0.95rem
+  padding: 0.6rem 0.75rem
+  border-radius: $radius-sm
+  border: none
+  background: #ffffff
+  color: $text
+  outline: none
+  box-shadow: 0 4px 4px 0 $shadow-color
+  transition: box-shadow 0.18s ease, border-color 0.18s ease
+  min-width: $minwidth
+  max-width: $maxwidth
+  caret-color: $accent
+
+  &:focus-visible
+    border-color: variables.$violet-glow
+    box-shadow: 0 0 0 4px variables.$violet-glow
+
+  &:placeholder-shown
+    color: #2B0125
+
+
+@mixin header
+  font-family: variables.$font-title
+  font-weight: map.get(variables.$font-weights, 'bold')
+
+@mixin small_header
+  font-weight: map.get(variables.$font-weights, 'medium')
+  font-family: variables.$font-h3
+
+
+@mixin transition-ease
+  transition: all 0.5s ease-in-out
+
+
+@mixin gridMobile
+  display: grid
+  width: 100%
+  gap: 2rem
+  grid-template-columns: min(100%, 300px)
+  justify-content: center
+  @media (min-width: 600px)
+    grid-template-columns: repeat(auto-fill, minmax(150px, 210px))
+    justify-content: start
+    column-gap: 2.2rem
+    row-gap: 3rem
+  
+
+
+
+@mixin card()
+  background: #fff
+  border-radius: 0.75rem
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06)
+
+@mixin responsive-table()
+  @media (max-width: 768px)
+    table
+      border: none
+      box-shadow: none
+    thead
+      display: none
+    tbody
+      display: flex
+      flex-direction: column
+      gap: 1rem
+    tr
+      display: flex
+      flex-direction: column
+      padding: 1rem
+      border-radius: 0.75rem
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08)
+    td
+      display: flex
+      justify-content: space-between
+      border: none
+      
+      &::before
+        content: attr(data-label)
+        font-weight: 600
+        color: rgba(variables.$text, 0.75)
+        
+        flex-shrink: 0

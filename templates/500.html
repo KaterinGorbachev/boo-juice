@@ -1,0 +1,22 @@
+{% extends './layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/error_pages.css')}}">
+        
+{% endblock %}
+
+
+
+{% block content %}
+<div class="error-500">
+    <div class="container">
+        <div class="ghost">🦇</div>
+        <h1>500 - Server Error!</h1>
+        <p>Uh oh! Something went wrong - our magical cauldron is having a spooky malfunction. Try again later for more delicious Halloween recipes!</p>
+        
+        <br>
+        <a href="/" class="action-button">Return to the Haunted House <span class="button-symbol">🏰</span></a>
+    </div>
+
+</div>
+{% endblock %}

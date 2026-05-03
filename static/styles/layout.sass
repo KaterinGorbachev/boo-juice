@@ -1,0 +1,689 @@
+@use './_variables.sass' as variables
+@use './_mixins.sass' as mix
+@use 'sass:map'
+@use "sass:color"
+
+// sass --watch layout.sass layout.css
+
+//-------------------------
+// button styles
+//-------------------------
+// navigation buttons
+// link to the page
+.volver-button        
+    padding: 0.5rem 1rem 
+    background-color: color.mix(variables.$outline-btn-color, variables.$light-buttons-color, 5%)
+    color: variables.$outline-btn-color    
+    border: solid 2px variables.$light-buttons-color  
+    border-radius: 15px
+    cursor: pointer        
+    text-decoration: none
+    font-weight: 600
+    font-size: 14px
+    font-family: variables.$font-text
+    letter-spacing: 10%
+    @include mix.transition-ease
+    &:hover
+        background: variables.$magic-gradient
+.volver-button-wrapper
+    @include mix.flexRow($horizontal: end, $vertical: center)
+    width: 100%
+    gap: 1rem
+    
+//-------------------------
+//outline button 
+.outline-button-neutral
+    margin-top: 0.5rem
+    flex: 1 1 
+    width: 100%
+    min-width: 0
+    padding: 0.6rem 0.75rem
+    background-color: transparent
+    color: variables.$outline-btn-color
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: solid 2px variables.$outline-btn-color
+    font-family: variables.$font-text
+    font-weight: 600 
+    font-size: clamp(0.9rem, 1vw, 1.1rem)
+    @include mix.flexRow()       
+    @include mix.transition-ease
+    &:hover
+        background-color:  variables.$light-buttons-color
+        color: variables.$light-buttons-text
+    &:disabled
+        cursor: default
+    &:disabled:hover
+        background-color: transparent
+        color: variables.$outline-btn-color
+        
+//-------------------------
+// outline danger button
+.outline-button-danger
+    margin-top: 0.5rem
+    padding: 0.6rem 0.75rem
+    flex: 1 1
+    background-color: transparent 
+    color: variables.$light-title-h1-color    
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: solid 2px variables.$light-title-h1-color
+    font-family: variables.$font-text
+    font-weight: 600
+    text-align: start
+    font-size: clamp(0.85rem, 0.8vw, 1rem)
+    @include mix.flexRow()  
+    @include mix.transition-ease
+    &:hover
+        background-color: color.mix(variables.$light-title-h1-color, transparent, 75%)
+        color: variables.$light-text-background-color
+//-------------------------
+// page main action button
+.action-button
+    margin-top: 2rem
+    width: 100%
+    flex: 1 1
+    padding: 0.75rem     
+    background-color: variables.$light-buttons-color
+    color: variables.$outline-btn-color
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: none
+    box-shadow: inset 0px -2px 0px 1.5px variables.$outline-btn-color
+    font-family: variables.$font-text
+    font-weight: 900
+    font-size: clamp(1rem, 1.5vw, 1.2rem)
+    letter-spacing: 6%    
+    @include mix.flexRow($text-align: center, $horizontal: center, $vertical: center) 
+    @include mix.transition-ease  
+    text-decoration: none
+    .button-symbol
+        font-size: clamp(1rem, 1.5vw, 1.2rem)
+        margin-left: 0.5rem
+        display: none 
+        @include mix.transition-ease 
+    &:hover
+        background: variables.$magic-gradient
+        box-shadow: inset 0px -2px 0px 1.5px variables.$violet-glow
+        .button-symbol
+            display: block
+//-------------------------
+// page h1 title
+
+.page-description-title
+    @include mix.flexColumn($horizontal: start)
+    gap: clamp(1rem, 2vw, 2rem)
+    margin-bottom: clamp(1rem, 2vw, 3rem)
+    width: 100%
+    .page__title
+        font-size: clamp(2rem, 4vw, 3rem)
+        @include mix.header()
+        color: variables.$light-title-h1-color
+        width: 100%
+    .description
+        font-size: clamp(1rem, 1.5vw, 1.5rem)
+        width: 100%
+        font-family: variables.$font-simple
+        line-height: 1.5
+        color: variables.$light-title-h1-color
+        @include mix.flexRow($text-align: start, $horizontal: start)
+        padding: 1em
+        border-radius: 15px
+        background-color: variables.$light-primary-background-color
+        border: solid 1px color.mix(variables.$light-primary-background-color, orange, 80%)
+//-------------------------
+// page h2 title
+.medium-title
+    @include mix.small_header
+    color: variables.$outline-btn-color
+    font-size: clamp(1.5rem, 3vw, 2.5rem)
+//-------------------------
+// page h3 title
+.small-title 
+    @include mix.small_header
+    color: variables.$outline-btn-color
+    font-size: clamp(1.3rem, 2vw, 1.8rem)
+//------------------------- 
+// texts 
+.text
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem)
+    font-family: variables.$font-text
+    color: variables.$light-header-background-color    
+    font-weight: 400
+//-------------------------
+// label
+.label
+    font-size: clamp(1rem, 1.5vw, 1.2rem)
+    font-family: variables.$font-text
+    color: variables.$outline-btn-color
+    font-weight: 600
+//-------------------------
+// labeled container
+.input__labeled
+    @include mix.flexColumn($horizontal: start)
+    width: 100%
+    gap: clamp(0.5rem, 0.5vw, 0.7rem)
+    margin-bottom: clamp(0.5rem, 0.5vw, 1rem)
+    border: none
+    outline: none
+    legend
+        margin-bottom: clamp(0.9rem, 1.5vw, 1.1rem)
+        
+    .input-message-box
+        @include mix.flexColumn($horizontal: start)
+        gap: 0.15rem
+        width: 100%
+
+        input
+            @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:100%)
+            width: 100%
+            
+        textarea
+            @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:100%)
+            width: 100%
+            resize: none
+            max-height: 200px
+            height: 200px
+            overflow-y: scroll
+        .small_input
+            font-size: 12px
+            color: #000000b7
+            font-family: variables.$font-text
+            padding: 0.5rem 
+//-------------------------
+// input time
+.input-time
+    @include mix.flexColumn($horizontal: start)
+    flex-wrap: wrap
+    width: 100%
+    margin-bottom: clamp(0.5rem, 0.5vw, 1rem)
+    border: none
+    outline: none    
+    gap: 0.5rem
+    legend
+        margin-bottom: clamp(0.9rem, 1.5vw, 1.1rem)
+    .input__left_label
+        @include mix.flexRow($horizontal: start)
+        flex-wrap: wrap
+        gap: 0.25rem        
+        .num_input
+            @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:30%)
+            min-width: 100px
+@include mix.responsive($size: 'md')
+    .input-time
+        @include mix.flexRow($horizontal: stretch)
+        gap: 1rem
+        max-width: 400px
+
+        .input__left_label
+            flex: 1 1 0
+            flex-wrap: nowrap
+            .num_input
+                min-width: 0
+                width: 100%
+
+//-------------------------
+// short input 
+.short_input__labeled
+    @include mix.flexColumn($horizontal: start)
+    width: 100%
+    gap: clamp(0.5rem, 0.5vw, 0.7rem)
+    margin-bottom: clamp(0.5rem, 0.5vw, 1rem)
+    input
+        @include mix.inputForm($accent: variables.$light-buttons-color)
+        width: 40%   
+        max-width: 200px             
+            
+
+//-------------------------
+// table styles
+.calorias
+  @include mix.flexColumn($horizontal: start)
+  padding: 2rem
+  border-radius: 15px
+  background-color: variables.$light-primary-background-color
+  width: 100%
+  box-shadow: 0 4px 4px 0 variables.$violet-glow
+  table
+    @include mix.card()
+    width: 100%
+    border-collapse: collapse
+    overflow: hidden
+    padding: 1rem 2rem
+
+    thead
+      background: rgba(variables.$brand, 0.08)
+      th
+        padding: 1rem
+        font-weight: 700
+        text-align: left
+        color: variables.$text
+        border-bottom: 1px solid rgba(variables.$text, 0.15)
+
+    tbody
+      tr
+        
+
+        td
+          padding: 0.9rem 1rem
+          border-top: 1px solid rgba(variables.$text, 0.12)
+          font-size: 0.92rem
+          color: variables.$text
+
+  // mobile stack
+  @include mix.responsive-table()           
+            
+
+//-------------------------
+.simple-box
+  padding: 2em
+  border-radius: 15px
+  border: solid 2px color.mix(variables.$light-primary-background-color, orange, 80%)
+  width: 100%
+  @include mix.flexColumn($horizontal: start)
+  gap: variables.$gap-min         
+
+// state pop up styles 
+.state-overlay 
+  position: fixed
+  inset: 0
+  background: variables.$bg-overlay
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 9999
+  backdrop-filter: blur(4px)
+
+
+.hidden 
+  display: none
+
+
+
+.state-popup 
+
+  width: variables.$popup-width
+  padding: 28px
+
+  background: white
+  border-radius: variables.$radius
+
+  text-align: center
+
+  box-shadow: variables.$shadow-3d
+
+  transform: translateY(-20px) scale(.9)
+  animation: duoPop variables.$transition-smooth forwards
+
+  h3 
+    margin: 5px 0
+    font-weight: 700
+  
+
+  p 
+    color: #555
+    margin-bottom: 18px
+  
+
+  button 
+
+    margin-top: 10px
+    background: variables.$light-buttons-color
+    border: none
+    padding: 12px 22px
+    color: variables.$light-buttons-text
+    font-weight: 600
+    border-radius: 10px
+    box-shadow: 0 4px 0 variables.$outline-btn-color
+    cursor: pointer
+    transition: all variables.$transition-fast
+
+    &:active 
+      transform: translateY(3px)
+      box-shadow: 0 1px 0 variables.$outline-btn-color
+    
+  
+
+
+
+
+#state-icon 
+  font-size: 3rem
+  margin-bottom: 10px
+
+
+
+
+.state-bar 
+
+  height: 6px
+  background: #eee
+
+  border-radius: 10px
+  overflow: hidden
+
+  margin-top: 10px
+
+  #state-timer 
+    height: 100%
+    width: 100%
+    background: variables.$outline-btn-color
+    transition: width linear
+  
+
+
+
+
+@keyframes duoPop 
+
+  0% 
+    opacity: 0
+    transform: translateY(-30px) scale(.8)
+  
+
+  60% 
+    transform: translateY(5px) scale(1.02)
+  
+
+  100% 
+    opacity: 1
+    transform: translateY(0) scale(1)
+  
+
+
+
+
+
+// ------------------------   
+
+// ------------------------
+
+.admin-page-wrapper
+    @include mix.flexColumn($horizontal: start)
+    width: 100%
+    max-width: 900px
+    gap: clamp(1rem, 2vw, 2rem)
+    margin-bottom: clamp(2rem, 4vw, 3rem)
+    form
+        width: 100%
+
+
+    
+
+.error_input
+  border-color: variables.$light-title-h1-color !important
+  box-shadow: 0 0 0 4px color.scale(variables.$light-title-h1-color, $lightness: 30%) !important
+
+
+
+.orange
+  background-color: variables.$title-stroke !important
+  color: white !important
+  box-shadow: inset 0 -10px 0px -6px #a71c00 !important
+  a
+    color: white !important
+  &:hover
+    background-color: color.adjust(variables.$title-stroke, $lightness: -5%) !important
+
+.basic-form-layout
+    @include mix.flexColumn($vertical: start, $horizontal: start)
+    gap: variables.$gap-min
+    
+    width: 100%
+    padding: 1rem
+    border: solid 2px variables.$light-primary-background-color
+    border-radius: 15px
+    background-color: variables.$light-primary-background-color
+    box-shadow: 0 2px 4px 0 variables.$violet-glow
+
+
+.basic-button-layout
+    margin-top: 1rem
+    flex: 1 1
+    padding: 0.75rem 
+    width: 100%
+    background-color: variables.$light-buttons-color
+    color: variables.$light-buttons-text
+    cursor: pointer
+    border-radius: 15px
+    outline: none
+    border: none
+    box-shadow: inset 0px -2px 0px 1.5px variables.$outline-btn-color
+    font-family: variables.$font-text
+    font-weight: 900
+    font-size: 1rem
+    letter-spacing: 6%
+    
+    @include mix.transition-ease
+  
+    &:hover
+        background-color: variables.$dark-buttons-color
+        box-shadow: inset 0px -2px 0px 1.5px variables.$dark-primary-background-color
+        color: variables.$light-text-background-color
+
+
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  font-family: variables.$font-text
+  scroll-behavior: smooth
+  scroll-margin-top: 20vh
+
+body
+  background-color: variables.$light-checkbox-color
+  min-height: 100vh
+  @include mix.flexColumn()
+
+
+header        
+    width: 100vw
+    position: sticky
+    z-index: 100
+    top: 0
+    left: 0
+    background: variables.$light-header-background-color
+    flex-wrap: nowrap
+    border: none
+    outline: none
+    .header__box
+        @include mix.flexRow($horizontal: end, $text-align:start)
+        width: 100%
+        padding: 2rem
+        
+
+        .logo
+            width: 80px
+            object-fit: contain
+            position: absolute
+            top: 0.5rem
+            left: 42vw
+            img
+                width: 100%
+
+        
+
+        .burger__box
+            isolation: isolate
+            position: relative
+
+            .menu-btn
+                position: relative
+                z-index: 11
+                right: 2rem
+                top: 0
+                height: 20px
+                width: 28px
+                cursor: pointer
+                @include mix.transition-ease
+
+                &__burger
+                    position: absolute
+                    right: 0
+                    top: 0.9rem
+                    width: 28px
+                    height: 3px
+                    background: variables.set-text-color(variables.$light-header-background-color)
+                    @include mix.transition-ease
+
+                    &::before
+                        content: ''
+                        position: absolute
+                        top: -8px
+                        width: 28px
+                        height: 3px
+                        background: variables.set-text-color(variables.$light-header-background-color)
+                        @include mix.transition-ease
+
+                    &::after
+                        content: ''
+                        position: absolute
+                        top: 8px
+                        width: 20px
+                        height: 3px
+                        background: variables.set-text-color(variables.$light-header-background-color)
+                        @include mix.transition-ease
+
+                    &.open
+                        transform: rotate(720deg)
+                        background: transparent
+
+                        &::before
+                            transform: rotate(45deg) translate(5px, 8px)
+                            background: variables.set-text-color(variables.$light-primary-background-color)
+
+                        &::after
+                            width: 28px
+                            background: variables.set-text-color(variables.$light-primary-background-color)
+                            transform: rotate(-45deg) translate(3px, -7px)
+
+            .nav
+                position: fixed
+                top: 0
+                left: 0
+                width: 100vw
+                opacity: 0.98
+                visibility: hidden
+
+                &.open
+                    visibility: visible
+
+                .menu-nav
+                    @include mix.flexColumn($vertical: start)
+                    overflow: wrap
+                    padding-top: 20vh
+                    height: 100vh
+                    overflow: hidden
+                    background-color: variables.$light-primary-background-color
+                    gap: 1rem
+                    list-style-type: none
+                    padding-right: 1rem
+                    transform: translateY(-100%)
+                    @include mix.transition-ease
+
+                    &.open
+                        transform: translateY(0)
+
+                    &__item
+                        transform: translateX(100vw)
+                        color: variables.set-text-color(variables.$light-primary-background-color)
+                        @include mix.transition-ease
+
+                        &.open
+                            transform: translateX(0)
+
+                        &.active > a
+                            color: variables.$dark-buttons-color
+
+                    &__link
+                        text-transform: uppercase
+                        @include mix.transition-ease
+                        @include mix.resetLink()
+                        color: variables.set-text-color(variables.$light-primary-background-color)
+                        font-size: variables.$font-size-label
+                        color: variables.$light-buttons-text
+                        font-family: variables.$font-h3
+
+                        &:hover
+                            color: variables.$light-hover-color
+
+                    @for $i from 1 through 6
+                        .menu-nav__item:nth-child(#{$i})
+                            transition-delay: ($i *0.1s) + 0.15s
+
+
+    @include mix.responsive($size: 'md')
+    .header__box
+        .logo
+                left: 2rem
+
+main
+    padding: 1rem 
+    position: relative
+    width: 100%
+    @include mix.flexColumn($vertical: space-between, $horizontal: center)
+    gap: variables.$gap-min*2
+    min-height: 50vh
+
+    .layout-wrapper
+        width: 100%
+        @include mix.flexColumn($vertical: space-between, $horizontal: center)
+        gap: variables.$gap-min*2
+        max-width: 960px
+
+    @include mix.responsive($size: 'md')
+        padding: 1rem 2rem
+
+    
+            
+
+
+
+      
+footer
+    width: 100vw
+    position: relative
+    padding-top: 4rem
+
+    .footer
+        @include mix.flexColumn()
+        width: 100%
+        background-color: variables.$light-header-background-color
+        color: variables.$light-title-h1-color
+        padding-bottom: 3rem
+        padding: 0.2rem 2rem
+
+    .section
+        .boo-juice
+            padding: 2rem 0.45rem
+            font-size: 2.5rem
+            font-family: variables.$font-title
+            color: variables.$light-checkbox-color
+    .footer__info
+        @include mix.flexColumn($horizontal: center)
+        width: 100%
+        padding-bottom: 5rem
+        gap: 5rem
+        .social__reds
+            @include mix.flexRow($horizontal: center)
+            width: 100%
+            gap: 2rem
+        .social
+            width: 25px
+            color: variables.$title-color
+            cursor: pointer
+            svg
+            color: variables.$title-color
+
+
+
+
+
+
+
+        
+        
