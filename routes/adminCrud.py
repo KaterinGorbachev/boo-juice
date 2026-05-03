@@ -132,14 +132,14 @@ def logout():
 
 
 @dashboard_admin.errorhandler(500)
-def internal_error(error):
-    return render_template('500.html'), 500 
+def internal_error(_):
+    return render_template('500.html'), 500
 
 @dashboard_admin.errorhandler(404)
-def not_found(error):
+def not_found(_):
     return render_template('404.html'), 404
 
 
 @dashboard_admin.errorhandler(400)
-def not_found(error):
+def bad_request(_):
     return render_template('400.html'), 400

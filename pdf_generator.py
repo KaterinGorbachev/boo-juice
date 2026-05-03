@@ -17,13 +17,8 @@ def _init_browser():
     )
 
 
-def start_browser():
-    _executor.submit(_init_browser).result()
-
-
 def _do_generate_pdf(html_content):
-    if _browser is None:
-        raise RuntimeError("Playwright browser not initialized")
+    _init_browser()  # lazy: only runs on first PDF request
     context = _browser.new_context()
     page = context.new_page()
     try:

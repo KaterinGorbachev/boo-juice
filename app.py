@@ -14,7 +14,6 @@ from extensions import limiter
 
 from routes.showrecepies import recepy_page
 from routes.adminCrud import dashboard_admin
-from pdf_generator import start_browser
 
 """ from sys import path
 path.append('.') """
@@ -108,8 +107,6 @@ limiter.init_app(app)
 
 app.register_blueprint(recepy_page)
 app.register_blueprint(dashboard_admin)
-
-start_browser()
 
 ###
 # UID helpers

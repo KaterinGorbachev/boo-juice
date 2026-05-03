@@ -91,7 +91,7 @@ def show_all_heloween_recepies():
 
     except Exception as e:
         logger.error(f"Error getting data: {e}")
-        return jsonify({"error": "Error fetching data from database"}), 500
+        abort(500)
 
     return render_template('allrecepies.html', data=visible_items, user=is_user, page=page,
         has_more=has_more)
@@ -112,7 +112,7 @@ def load_more_recepies():
         return jsonify({'items': items_data, 'has_more': has_more, 'page': page})
     except Exception as e:
         logger.error(f"Error getting data: {e}")
-        return jsonify({"error": "Error fetching data from database"}), 500
+        abort(500)
 
 @recepy_page.route('/receta/<int:id>') 
 def receta(id): 
@@ -181,7 +181,7 @@ def recepy_pdf(id):
 
     except Exception as e:
         print("PDF Generation Error:", traceback.format_exc())
-        return {"status": "error", "message": str(e)}, 500
+        abort(500)
     
 
 ## edit recepy
@@ -200,7 +200,7 @@ def edit_receta(id):
             cursor.execute("SELECT usuario_id FROM recetas WHERE id = ?", (id,))
             result = cursor.fetchone()
             if not result or result[0] != user_sql_id:
-                return jsonify({"error": "No tienes permiso para editar esta receta"}), 403
+                abort(400)
 
             if request.method == 'POST':
                 nombre_receta = request.form.get('nombre_receta', '').strip()
@@ -296,7 +296,7 @@ def edit_receta(id):
 
     except Exception as e:
         flash('Ha habido un problema en conexión. Intenta más tarde.', '❌Error')
-        return redirect(url_for('app.vue_app'))
+        return redirect(url_for('vue_app'))
 
 
 @recepy_page.errorhandler(500)
