@@ -54,17 +54,17 @@ const sendRecipe = async (recipeData) => {
 
     if (response.status === 400) {
       
-      setTimeout(() => {
-        statePopup((data.error ? data.error : 'Invalid data'), '❕')
-      }, 500)
+      
+      statePopup((data.error ? data.error : 'Invalid data'), '❕')
+      
       
       return
     }
 
     if (!response.ok) {
-      setTimeout(() => {
-        statePopup((response.status ? response.status : 'HTTP error'), '❌')
-      }, 500)
+      
+      statePopup((response.status ? response.status : 'HTTP error'), '❌')
+      
       
       throw new Error(`HTTP error ${response.status}`);
     }
@@ -80,9 +80,9 @@ const sendRecipe = async (recipeData) => {
       
     }
 
-    setTimeout(() => {
-      statePopup('Receta creada con exito', '¡Yupi!','🫰', 1500, '#a1d44f','#036310' )
-    }, 1500)
+    
+    statePopup('Receta creada con exito', '¡Yupi!','🫰', 1500, '#a1d44f','#036310' )
+    
     
     console.log("Saved recipe:", data);
 
@@ -158,13 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = `
 
         <label class="small-title">Paso ${num_paso}</label>
-        <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" required class="step_description"></textarea>
-            
+        <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" class="step_description"></textarea>
+
     `
 
     pasosFieldset.insertBefore(container, pasos_btns);
 
-    const btn_remove_exists = document.getElementById('btn_remove_paso') 
+    const btn_remove_exists = document.getElementById('btn_remove_paso')
 
     if(!btn_remove_exists){
         // remove the last step
@@ -175,20 +175,17 @@ document.addEventListener("DOMContentLoaded", () => {
         removeButton.textContent = "- Eliminar ultimo paso";
         removeButton.addEventListener("click", () => {
             const pasosBlocks = pasosFieldset.querySelectorAll(".step__input");
-            if (pasosBlocks.length === 0){
-                return
-            } 
- 
-            const lastBlock = pasosBlocks[pasosBlocks.length - 1];
-            lastBlock.remove();  // remove the last step
-            num_paso--; 
-            
-            if (pasosFieldset.querySelectorAll(".pasos-block").length === 0) {
+            if (pasosBlocks.length <= 1) return;
+
+            pasosBlocks[pasosBlocks.length - 1].remove();
+            num_paso--;
+
+            if (pasosFieldset.querySelectorAll(".step__input").length <= 1) {
                 removeButton.remove();
             }
         });
 
-        pasos_btns.appendChild(removeButton)       
+        pasos_btns.appendChild(removeButton)
 
     }
 
@@ -374,8 +371,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert('Introduce al menos un ingrediente')
         return
     }
-    else if (steps.length < 1){
-        alert('Introduce al menos un paso de prepaarción')
+    else if (!document.querySelector('textarea[name="steps[]"]')?.value.trim()){
+        statePopup('Introduce al menos un paso de preparación')
         return
     }
     
