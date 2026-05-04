@@ -1,4 +1,6 @@
-import sqlite3
+import psycopg2
+import psycopg2.extras
+import os
 import logging
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -8,7 +10,7 @@ import re
 # -------------------------
 # Loggers
 # -------------------------
-def makeLogger(): 
+def makeLogger():
     '''prepare console and file handlers'''
     logger = logging.getLogger(__name__)
     logger.setLevel('DEBUG')
@@ -16,12 +18,12 @@ def makeLogger():
 
 ###------------------------------------
 
-def formatLoggs(): 
+def formatLoggs():
     return logging.Formatter('{asctime} - {name} - {message}', datefmt='%d/%m/%Y %I:%M:%S %p', style='{')
 
 ###------------------------------------
 
-def getConsoleLogger(logger): 
+def getConsoleLogger(logger):
     console_handler = logging.StreamHandler()
     console_handler.setLevel('DEBUG')
     console_handler.setFormatter(formatLoggs())
@@ -29,7 +31,7 @@ def getConsoleLogger(logger):
 
 ###------------------------------------
 
-def getFileLogger(logger): 
+def getFileLogger(logger):
     file_handler = logging.FileHandler('access.log', mode='a', encoding='utf-8')
     file_handler.setLevel('INFO')
     file_handler.setFormatter(formatLoggs())
@@ -40,17 +42,15 @@ def getFileLogger(logger):
 logger = makeLogger()
 getConsoleLogger(logger)
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 # -------------------------
 # Connection helpers
 # -------------------------
-def create_connection(db_name: str) -> sqlite3.Connection:
-    conn = sqlite3.connect(db_name)
+def create_connection():
+    conn = psycopg2.connect(DATABASE_URL)
     logger.debug('Conexión con DB establecida de forma correcta')
     return conn
-
-
-def enable_foreign_keys(conn: sqlite3.Connection) -> None:
-    conn.execute("PRAGMA foreign_keys = ON;")
 
 
 def close_connection(conn):
@@ -59,36 +59,32 @@ def close_connection(conn):
 
 
 @contextmanager
-def get_connection(db_name: str):
-    """Context manager — always closes the connection, even on exception or early return."""
-    conn = create_connection(db_name)
+def get_connection():
+    """Context manager — commits on success, rolls back on exception, always closes."""
+    conn = create_connection()
     try:
         yield conn
+        conn.commit()
+    except:
+        conn.rollback()
+        raise
     finally:
         close_connection(conn)
 
 
-def make_dicts(cursor, row):
-    return dict((cursor.description[idx][0], value)
-                for idx, value in enumerate(row))
-
-
 # -------------------------
-# INSERT 
+# INSERT
 # -------------------------
 def insert_usuario(conn, firebase_uid, nickname=''):
     cursor = conn.cursor()
     data = datetime.now(timezone.utc)
     sql = """
         INSERT INTO usuarios (nickname, firebase_uid, fecha_creacion)
-        VALUES (?, ?, ?);
+        VALUES (%s, %s, %s) RETURNING id;
     """
     cursor.execute(sql, (nickname, firebase_uid, data))
-
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
-    #lets you link inserted rows correctly
-    return cursor.lastrowid
+    return cursor.fetchone()[0]
 
 
 def insert_receta(conn, usuario_id, nombre_receta, descripcion, tiempo_preparacion, cantidad_porciones, portada='', video=''):
@@ -99,55 +95,44 @@ def insert_receta(conn, usuario_id, nombre_receta, descripcion, tiempo_preparaci
             usuario_id,
             nombre_receta,
             descripcion,
-            portada, 
+            portada,
             video,
             tiempo_preparacion,
-            cantidad_porciones, 
+            cantidad_porciones,
             fecha_creacion
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id;
     """, (
         usuario_id,
-        nombre_receta, 
-        descripcion, 
-        portada, 
-        video, 
+        nombre_receta,
+        descripcion,
+        portada,
+        video,
         tiempo_preparacion,
-        cantidad_porciones, 
+        cantidad_porciones,
         data
-        
     ))
-
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
-    return cursor.lastrowid
+    return cursor.fetchone()[0]
 
 
-def insert_ingrediente(conn, nombre_ingrediente_es, nombre_ingrediente_en, proteina, fat, energy, carb ):
+def insert_ingrediente(conn, nombre_ingrediente_es, nombre_ingrediente_en, proteina, fat, energy, carb):
     cursor = conn.cursor()
     data = datetime.now(timezone.utc)
     cursor.execute("""
         INSERT INTO ingredientes (
             nombre_ingrediente_es,
-            nombre_ingrediente_en,  
-            protein_G, 
-            fat_G, 
+            nombre_ingrediente_en,
+            protein_G,
+            fat_G,
             energy_KCAL,
-            carbohydrate_G,      
+            carbohydrate_G,
             fecha_creacion
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?);
+        VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id;
     """, (nombre_ingrediente_es, nombre_ingrediente_en, proteina, fat, energy, carb, data))
-
-    
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
-    return cursor.lastrowid
-
-
-
-
-
+    return cursor.fetchone()[0]
 
 
 def insert_ingrediente_en_receta(conn, receta_id, ingrediente_id, cantidad, medida):
@@ -156,13 +141,11 @@ def insert_ingrediente_en_receta(conn, receta_id, ingrediente_id, cantidad, medi
         INSERT INTO ingredientes_en_receta (
             receta_id,
             ingrediente_id,
-            cantidad, 
+            cantidad,
             medida
         )
-        VALUES (?, ?, ?, ?);
+        VALUES (%s, %s, %s, %s);
     """, (receta_id, ingrediente_id, cantidad, medida))
-
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
 
 
@@ -174,11 +157,8 @@ def insert_paso(conn, receta_id, numero_paso, descripcion):
             numero_paso,
             descripcion
         )
-        VALUES (?, ?, ?);
+        VALUES (%s, %s, %s);
     """, (receta_id, numero_paso, descripcion))
-
-
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
 
 
@@ -186,38 +166,31 @@ def insert_tip(conn, receta_id, descripcion):
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO tips_receta (receta_id, descripcion)
-        VALUES (?, ?);
+        VALUES (%s, %s);
     """, (receta_id, descripcion))
-
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
 
 
-def insert_usuarios_recetas_favoritos(conn, receta_id, usuario_id, fecha_modificacion): 
+def insert_usuarios_recetas_favoritos(conn, receta_id, usuario_id, fecha_modificacion):
     cursor = conn.cursor()
     data = datetime.now(timezone.utc)
     cursor.execute("""
         INSERT INTO usuarios_recetas_favoritos (receta_id, usuario_id, fecha_creacion, fecha_modificacion)
-        VALUES (?, ?, ?, ?);
+        VALUES (%s, %s, %s, %s);
     """, (receta_id, usuario_id, data, fecha_modificacion))
-    conn.commit()
     logger.debug('Datos insertados de forma correcta')
 
 
-
-
 # -------------------------
-# UPDATE 
+# UPDATE
 # -------------------------
 def update_usuario(conn, usuario_id, newNickname):
     cursor = conn.cursor()
     cursor.execute("""
         UPDATE usuarios
-        SET nickname = ?
-        WHERE id = ?;
+        SET nickname = %s
+        WHERE id = %s;
     """, (newNickname, usuario_id))
-
-    conn.commit()
     logger.debug('Datos actualizados de forma correcta')
 
 
@@ -227,94 +200,78 @@ def update_receta(conn, receta_id, nombre_receta, descripcion, portada, video, t
     if portada is not None:
         cursor.execute("""
             UPDATE recetas
-            SET nombre_receta = ?, descripcion = ?, portada = ?, video = ?, tiempo_preparacion = ?, cantidad_porciones = ?, fecha_modificacion = CURRENT_TIMESTAMP
-            WHERE id = ?;
+            SET nombre_receta = %s, descripcion = %s, portada = %s, video = %s, tiempo_preparacion = %s, cantidad_porciones = %s, fecha_modificacion = CURRENT_TIMESTAMP
+            WHERE id = %s;
         """, (nombre_receta, descripcion, portada, video, tiempo_preparacion, cantidad_porciones, receta_id))
     else:
         cursor.execute("""
             UPDATE recetas
-            SET nombre_receta = ?, descripcion = ?, video = ?, tiempo_preparacion = ?, cantidad_porciones = ?, fecha_modificacion = CURRENT_TIMESTAMP
-            WHERE id = ?;
+            SET nombre_receta = %s, descripcion = %s, video = %s, tiempo_preparacion = %s, cantidad_porciones = %s, fecha_modificacion = CURRENT_TIMESTAMP
+            WHERE id = %s;
         """, (nombre_receta, descripcion, video, tiempo_preparacion, cantidad_porciones, receta_id))
-
-    conn.commit()
     logger.debug('Receta actualizada de forma correcta')
 
 
 def update_ingredientes_receta(conn, receta_id, ingredientes):
-    # First delete existing ingredients
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM ingredientes_en_receta WHERE receta_id = ?", (receta_id,))
+    cursor.execute("DELETE FROM ingredientes_en_receta WHERE receta_id = %s", (receta_id,))
 
-    # Insert new ingredients
     for ingrediente in ingredientes:
-        # Check if ingredient exists, if not create it
-        cursor.execute("SELECT id FROM ingredientes WHERE nombre_ingrediente_es = ?", (ingrediente['nombre'],))
+        cursor.execute("SELECT id FROM ingredientes WHERE nombre_ingrediente_es = %s", (ingrediente['nombre'],))
         result = cursor.fetchone()
 
         if result:
             ingrediente_id = result[0]
         else:
-            # Insert new ingredient
             cursor.execute("""
                 INSERT INTO ingredientes (nombre_ingrediente_es, fecha_creacion, fecha_modificacion)
-                VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                VALUES (%s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id
             """, (ingrediente['nombre'],))
-            ingrediente_id = cursor.lastrowid
+            ingrediente_id = cursor.fetchone()[0]
 
-        # Insert into ingredientes_en_receta
         cursor.execute("""
             INSERT INTO ingredientes_en_receta (receta_id, ingrediente_id, cantidad, medida)
-            VALUES (?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s)
         """, (receta_id, ingrediente_id, ingrediente['cantidad'], ingrediente['medida']))
 
-    conn.commit()
     logger.debug('Ingredientes de receta actualizados de forma correcta')
 
 
 def update_pasos_receta(conn, receta_id, pasos):
-    # First delete existing steps
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM pasos_receta WHERE receta_id = ?", (receta_id,))
+    cursor.execute("DELETE FROM pasos_receta WHERE receta_id = %s", (receta_id,))
 
-    # Insert new steps
     for i in range(len(pasos)):
         cursor.execute("""
             INSERT INTO pasos_receta (receta_id, numero_paso, descripcion)
-            VALUES (?, ?, ?)
+            VALUES (%s, %s, %s)
         """, (receta_id, i+1, pasos[i]))
 
-    conn.commit()
     logger.debug('Pasos de receta actualizados de forma correcta')
 
 
 def update_tips_receta(conn, receta_id, tips):
-    # First delete existing tips
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM tips_receta WHERE receta_id = ?", (receta_id,))
+    cursor.execute("DELETE FROM tips_receta WHERE receta_id = %s", (receta_id,))
 
-    # Insert new tips
     for tip in tips:
         cursor.execute("""
             INSERT INTO tips_receta (receta_id, descripcion)
-            VALUES (?, ?)
+            VALUES (%s, %s)
         """, (receta_id, tip))
 
-    conn.commit()
     logger.debug('Tips de receta actualizados de forma correcta')
 
 
 # -------------------------
-# DELETE 
+# DELETE
 # -------------------------
 def delete_ingrediente(conn, ingrediente_id):
     cursor = conn.cursor()
     cursor.execute("""
         DELETE FROM ingredientes
-        WHERE id = ?;
+        WHERE id = %s;
     """, (ingrediente_id,))
-
-    conn.commit()
     logger.debug('Datos eliminados de forma correcta')
 
 
@@ -329,12 +286,9 @@ def delete_receta(conn, receta_id):
     cursor = conn.cursor()
     cursor.execute("""
         DELETE FROM recetas
-        WHERE id = ?;
+        WHERE id = %s;
     """, (receta_id,))
-
-    conn.commit()
     logger.debug('Datos eliminados de forma correcta')
-
 
 
 ALLOWED_TABLES = {
@@ -352,61 +306,52 @@ def delete_item(table_name, item_id, conn):
     if table_name not in ALLOWED_TABLES:
         raise ValueError(f"Table '{table_name}' is not allowed")
     cursor = conn.cursor()
-    cursor.execute(f"DELETE FROM {table_name} WHERE id = ?", (item_id,))
-    conn.commit()
+    cursor.execute(f"DELETE FROM {table_name} WHERE id = %s", (item_id,))
 
 
 # -------------------------
-# GET 
+# GET
 # -------------------------
 
 def get_all_items(table_name, conn):
     """Fetch all rows from the specified table as a list of dicts."""
     if table_name not in ALLOWED_TABLES:
         raise ValueError(f"Table '{table_name}' is not allowed")
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(f"SELECT * FROM {table_name}")
     rows = cursor.fetchall()
     return [dict(row) for row in rows]
 
 
-
-## return only id 
+## return only id
 def get_usuario_by_firebase_uid(conn, firebase_uid):
     cursor = conn.cursor()
     cursor.execute("""
         SELECT * FROM usuarios
-        WHERE firebase_uid = ?;
+        WHERE firebase_uid = %s;
     """, (firebase_uid,))
-
     row = cursor.fetchone()
     return row[0] if row else None
 
 
-def check_receta_in_favoritos(conn, receta_id, user_id): 
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
+def check_receta_in_favoritos(conn, receta_id, user_id):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute("""
-        SELECT * FROM usuarios_recetas_favoritos WHERE receta_id = ? AND usuario_id = ?;
+        SELECT * FROM usuarios_recetas_favoritos WHERE receta_id = %s AND usuario_id = %s;
     """, (receta_id, user_id))
     recetas = cursor.fetchall()
     return True if recetas else False
 
 
-
-
 def get_user_liked_recepies_info(conn, id):
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-    
     cursor.execute("""
         SELECT r.* FROM recetas r
         LEFT JOIN usuarios_recetas_favoritos urf ON r.id = urf.receta_id
-        WHERE urf.usuario_id = ?;
+        WHERE urf.usuario_id = %s;
     """, (id,))
-    recetas = cursor.fetchall()
+    recetas = [dict(r) for r in cursor.fetchall()]
 
     for receta in recetas:
         rid = receta["id"]
@@ -415,34 +360,31 @@ def get_user_liked_recepies_info(conn, id):
             SELECT i.nombre_ingrediente_es, ier.cantidad, ier.medida
             FROM ingredientes_en_receta ier
             LEFT JOIN ingredientes i ON ier.ingrediente_id = i.id
-            WHERE ier.receta_id = ?;
+            WHERE ier.receta_id = %s;
         """, (rid,))
-        receta["ingredientes"] = cursor.fetchall()
+        receta["ingredientes"] = [dict(r) for r in cursor.fetchall()]
 
         cursor.execute("""
             SELECT numero_paso, descripcion, imagen
             FROM pasos_receta
-            WHERE receta_id = ?
+            WHERE receta_id = %s
             ORDER BY numero_paso;
         """, (rid,))
-        receta["pasos"] = cursor.fetchall()
+        receta["pasos"] = [dict(r) for r in cursor.fetchall()]
 
         cursor.execute("""
-            SELECT descripcion FROM tips_receta WHERE receta_id = ?;
+            SELECT descripcion FROM tips_receta WHERE receta_id = %s;
         """, (rid,))
-        receta["tips"] = cursor.fetchall()
+        receta["tips"] = [dict(r) for r in cursor.fetchall()]
 
     return recetas
 
 
-
-
 def get_user_shared_recepies_info(conn, id):
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-    cursor.execute("SELECT * FROM recetas WHERE usuario_id = ?;", (id,))
-    recetas = cursor.fetchall()
+    cursor.execute("SELECT * FROM recetas WHERE usuario_id = %s;", (id,))
+    recetas = [dict(r) for r in cursor.fetchall()]
 
     for receta in recetas:
         rid = receta["id"]
@@ -451,58 +393,56 @@ def get_user_shared_recepies_info(conn, id):
             SELECT i.nombre_ingrediente_es, ier.cantidad, ier.medida
             FROM ingredientes_en_receta ier
             LEFT JOIN ingredientes i ON ier.ingrediente_id = i.id
-            WHERE ier.receta_id = ?;
+            WHERE ier.receta_id = %s;
         """, (rid,))
-        receta["ingredientes"] = cursor.fetchall()
+        receta["ingredientes"] = [dict(r) for r in cursor.fetchall()]
 
         cursor.execute("""
             SELECT numero_paso, descripcion, imagen
             FROM pasos_receta
-            WHERE receta_id = ?
+            WHERE receta_id = %s
             ORDER BY numero_paso;
         """, (rid,))
-        receta["pasos"] = cursor.fetchall()
+        receta["pasos"] = [dict(r) for r in cursor.fetchall()]
 
         cursor.execute("""
-            SELECT descripcion FROM tips_receta WHERE receta_id = ?;
+            SELECT descripcion FROM tips_receta WHERE receta_id = %s;
         """, (rid,))
-        receta["tips"] = cursor.fetchall()
+        receta["tips"] = [dict(r) for r in cursor.fetchall()]
 
     return recetas
 
 
 def get_all_recepies_info(conn):
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute("SELECT * FROM recetas;")
-    return cursor.fetchall()
+    return [dict(r) for r in cursor.fetchall()]
 
 
 def get_recepies_page(conn, limit, offset):
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(
-        "SELECT * FROM recetas ORDER BY id DESC LIMIT ? OFFSET ?;",
+        "SELECT * FROM recetas ORDER BY id DESC LIMIT %s OFFSET %s;",
         (limit, offset)
     )
-    recetas = cursor.fetchall()
-    cursor.execute("SELECT COUNT(*) FROM recetas;")
-    total = cursor.fetchone()["COUNT(*)"]
+    recetas = [dict(r) for r in cursor.fetchall()]
+    cursor.execute("SELECT COUNT(*) AS total FROM recetas;")
+    total = cursor.fetchone()["total"]
     return recetas, total
 
 
-def get_receta_by_id(rid, conn): 
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM recetas WHERE id = ?;",
-             (rid,))
+def get_receta_by_id(rid, conn):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute("SELECT * FROM recetas WHERE id = %s;", (rid,))
     receta = cursor.fetchone()
-    
+
     if not receta:
         return None
 
+    receta = dict(receta)
+
     cursor.execute("""
-        SELECT 
+        SELECT
             i.id AS ingrediente_id,
             i.nombre_ingrediente_es,
             i.nombre_ingrediente_en,
@@ -513,29 +453,25 @@ def get_receta_by_id(rid, conn):
             ir.cantidad,
             ir.medida
         FROM ingredientes_en_receta ir
-        LEFT JOIN ingredientes i 
+        LEFT JOIN ingredientes i
             ON ir.ingrediente_id = i.id
-        WHERE ir.receta_id = ?;
+        WHERE ir.receta_id = %s;
     """, (rid,))
-    
-    receta["ingredientes"] = cursor.fetchall()
+    receta["ingredientes"] = [dict(r) for r in cursor.fetchall()]
+
+    cursor.execute("""
+        SELECT numero_paso, descripcion, imagen
+        FROM pasos_receta
+        WHERE receta_id = %s
+        ORDER BY numero_paso;
+    """, (rid,))
+    receta["pasos"] = [dict(r) for r in cursor.fetchall()]
 
     cursor.execute(
-        """
-             SELECT numero_paso, descripcion, imagen
-             FROM pasos_receta
-             WHERE receta_id = ?
-             ORDER BY numero_paso;
-             """,
-             (rid,)
-         )
-    receta["pasos"] = cursor.fetchall()
-
-    cursor.execute(
-             "SELECT descripcion FROM tips_receta WHERE receta_id = ?;",
-             (rid,)
-         )
-    receta["tips"] = cursor.fetchall()
+        "SELECT descripcion FROM tips_receta WHERE receta_id = %s;",
+        (rid,)
+    )
+    receta["tips"] = [dict(r) for r in cursor.fetchall()]
 
     return receta
 
@@ -544,38 +480,24 @@ def get_ingrediente(conn, nombre):
     cursor = conn.cursor()
     cursor.execute("""
         SELECT * FROM ingredientes
-        WHERE nombre_ingrediente_es = ? OR nombre_ingrediente_en = ? ;
+        WHERE nombre_ingrediente_es = %s OR nombre_ingrediente_en = %s ;
     """, (nombre, nombre))
-
     row = cursor.fetchone()
     return row[0] if row else None
 
 
 def get_all_ingredientes(conn):
-    conn.row_factory = make_dicts
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute("""
         SELECT id, nombre_ingrediente_es FROM ingredientes;
     """)
-
-    ingredientes = cursor.fetchall()
-
-    return ingredientes
+    return [dict(r) for r in cursor.fetchall()]
 
 
-
-    
-
-
-
-
-def test(): 
-
-    conn = create_connection('recetas.db')
-    enable_foreign_keys(conn)
+def test():
+    conn = create_connection()
     print(get_all_recepies_info(conn))
     conn.close()
-
 
 
 if __name__ == "__main__":

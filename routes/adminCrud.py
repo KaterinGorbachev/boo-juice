@@ -95,7 +95,7 @@ def dashboard():
         
 
     try:
-        with dbquery.get_connection("recetas.db") as conn:
+        with dbquery.get_connection() as conn:
             if selected_table == 'recetas':
                 items = dbquery.get_all_recepies_info(conn)
             else:
@@ -115,8 +115,7 @@ def delete_item(table, item_id):
         return jsonify({"error": "Invalid table"}), 400
 
     try:
-        with dbquery.get_connection("recetas.db") as conn:
-            conn.execute("PRAGMA foreign_keys = ON;")
+        with dbquery.get_connection() as conn:
             dbquery.delete_item(table, item_id, conn)
         logger.info(f"Item with ID {item_id} deleted from table '{table}' by admin.")
         return redirect(f'/dashboard?table={table}')

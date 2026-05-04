@@ -191,7 +191,7 @@ def api_user():
     
 
     try:
-        with dbquery.get_connection("recetas.db") as conn:
+        with dbquery.get_connection() as conn:
             user_exists = dbquery.get_usuario_by_firebase_uid(conn, hash_uid(uid))
             session["sql_user_id"] = user_exists
 
@@ -217,7 +217,7 @@ def vue_app():
 @email_verified_required
 def render_recepy_form():
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             data_ingredientes = dbquery.get_all_ingredientes(conn)
         return render_template("recepyform.html", data=data_ingredientes)
     except Exception as e:
@@ -328,7 +328,7 @@ def get_new_recipe():
     # get user id based on uid from table
     try:
         user_uid = session.get("uid")
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             user_id = dbquery.get_usuario_by_firebase_uid(conn, hash_uid(user_uid))
 
             if not user_id:
@@ -395,7 +395,7 @@ def save_recepy(id):
     usuario_uid = session.get("uid")
 
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             user = dbquery.get_usuario_by_firebase_uid(conn, hash_uid(usuario_uid))
 
             if not user:
@@ -421,7 +421,7 @@ def save_recepy(id):
 def perfil(uid):
     sql_id = session.get("sql_user_id")
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             shared = dbquery.get_user_shared_recepies_info(conn, sql_id)
             liked = dbquery.get_user_liked_recepies_info(conn, sql_id)
         return render_template('user_perfil.html', shared=shared, liked=liked)

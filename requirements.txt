@@ -61,6 +61,7 @@ proto-plus==1.27.2
 protobuf==6.33.6
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
+psycopg2-binary==2.9.12
 pycodestyle==2.14.0
 pycparser==3.0
 pydyf==0.12.1

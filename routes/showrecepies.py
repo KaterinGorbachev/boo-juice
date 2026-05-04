@@ -84,7 +84,7 @@ def show_all_heloween_recepies():
     try:
         offset = (page - 1) * PAGE_SIZE
 
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             visible_items, total = dbquery.get_recepies_page(conn, PAGE_SIZE, offset)
 
         has_more = (offset + PAGE_SIZE) < total
@@ -102,7 +102,7 @@ def load_more_recepies():
     page = request.args.get("page", 1, type=int)
     offset = (page - 1) * PAGE_SIZE
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             visible_items, total = dbquery.get_recepies_page(conn, PAGE_SIZE, offset)
         has_more = (offset + PAGE_SIZE) < total
         items_data = [
@@ -124,7 +124,7 @@ def receta(id):
     else: user_sql_id = ""
 
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             data = dbquery.get_receta_by_id(id, conn)
             for item in (data or {}).get('ingredientes', []):
                 if type(item['cantidad']) == float and (item['cantidad'] < 1 and item['cantidad'] > 0):
@@ -152,7 +152,7 @@ def receta(id):
 @limiter.limit("10 per minute")
 def recepy_pdf(id):
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             text_content = dbquery.get_receta_by_id(id, conn)
 
         if text_content and text_content.get('ingredientes'):
@@ -194,10 +194,10 @@ def edit_receta(id):
     user_sql_id = session.get("sql_user_id")
 
     try:
-        with dbquery.get_connection('recetas.db') as conn:
+        with dbquery.get_connection() as conn:
             # Check if user owns the recipe
             cursor = conn.cursor()
-            cursor.execute("SELECT usuario_id FROM recetas WHERE id = ?", (id,))
+            cursor.execute("SELECT usuario_id FROM recetas WHERE id = %s", (id,))
             result = cursor.fetchone()
             if not result or result[0] != user_sql_id:
                 abort(400)
