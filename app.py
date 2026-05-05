@@ -360,7 +360,7 @@ def get_new_recipe():
                 id_ingredient = dbquery.get_ingrediente(conn, item["nombre"])
                 if not id_ingredient:
                     id_ingredient = dbquery.insert_ingrediente(
-                        conn, item["nombre"], '', '', '', '', ''
+                        conn, item["nombre"], '', None, None, None, None
                     )
 
                 dbquery.insert_ingrediente_en_receta(
@@ -465,4 +465,4 @@ def internal_error(error):
 
 if __name__ == "__main__":
     
-    app.run(debug=False)
+    app.run(debug=True)

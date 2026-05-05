@@ -1,0 +1,240 @@
+[
+  {
+    "id": 10,
+    "receta_id": 9,
+    "ingrediente_id": 249,
+    "cantidad": 1.0,
+    "medida": "pieza"
+  },
+  {
+    "id": 11,
+    "receta_id": 9,
+    "ingrediente_id": 250,
+    "cantidad": 50.0,
+    "medida": "g"
+  },
+  {
+    "id": 12,
+    "receta_id": 9,
+    "ingrediente_id": 251,
+    "cantidad": 100.0,
+    "medida": "g"
+  },
+  {
+    "id": 13,
+    "receta_id": 9,
+    "ingrediente_id": 252,
+    "cantidad": 125.0,
+    "medida": "g"
+  },
+  {
+    "id": 14,
+    "receta_id": 9,
+    "ingrediente_id": 80,
+    "cantidad": 1.0,
+    "medida": "taza"
+  },
+  {
+    "id": 15,
+    "receta_id": 10,
+    "ingrediente_id": 253,
+    "cantidad": 30.0,
+    "medida": "ml"
+  },
+  {
+    "id": 16,
+    "receta_id": 10,
+    "ingrediente_id": 254,
+    "cantidad": 12.0,
+    "medida": "g"
+  },
+  {
+    "id": 17,
+    "receta_id": 10,
+    "ingrediente_id": 255,
+    "cantidad": 0.5,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 18,
+    "receta_id": 10,
+    "ingrediente_id": 256,
+    "cantidad": 0.3,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 19,
+    "receta_id": 10,
+    "ingrediente_id": 257,
+    "cantidad": 0.2,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 20,
+    "receta_id": 10,
+    "ingrediente_id": 258,
+    "cantidad": 0.2,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 21,
+    "receta_id": 10,
+    "ingrediente_id": 98,
+    "cantidad": 450.0,
+    "medida": "ml"
+  },
+  {
+    "id": 22,
+    "receta_id": 10,
+    "ingrediente_id": 223,
+    "cantidad": 70.0,
+    "medida": "ml"
+  },
+  {
+    "id": 23,
+    "receta_id": 10,
+    "ingrediente_id": 101,
+    "cantidad": 0.0,
+    "medida": "al gusto"
+  },
+  {
+    "id": 24,
+    "receta_id": 10,
+    "ingrediente_id": 255,
+    "cantidad": 0.0,
+    "medida": "pizca"
+  },
+  {
+    "id": 48,
+    "receta_id": 13,
+    "ingrediente_id": 269,
+    "cantidad": 12.0,
+    "medida": "pieza"
+  },
+  {
+    "id": 49,
+    "receta_id": 13,
+    "ingrediente_id": 270,
+    "cantidad": 250.0,
+    "medida": "g"
+  },
+  {
+    "id": 50,
+    "receta_id": 13,
+    "ingrediente_id": 260,
+    "cantidad": 1.0,
+    "medida": "pieza"
+  },
+  {
+    "id": 51,
+    "receta_id": 13,
+    "ingrediente_id": 271,
+    "cantidad": 0.0,
+    "medida": "al gusto"
+  },
+  {
+    "id": 52,
+    "receta_id": 13,
+    "ingrediente_id": 272,
+    "cantidad": 0.25,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 53,
+    "receta_id": 11,
+    "ingrediente_id": 191,
+    "cantidad": 300.0,
+    "medida": "g"
+  },
+  {
+    "id": 54,
+    "receta_id": 11,
+    "ingrediente_id": 252,
+    "cantidad": 225.0,
+    "medida": "g"
+  },
+  {
+    "id": 55,
+    "receta_id": 11,
+    "ingrediente_id": 259,
+    "cantidad": 300.0,
+    "medida": "g"
+  },
+  {
+    "id": 56,
+    "receta_id": 11,
+    "ingrediente_id": 260,
+    "cantidad": 5.0,
+    "medida": "pieza"
+  },
+  {
+    "id": 57,
+    "receta_id": 11,
+    "ingrediente_id": 203,
+    "cantidad": 125.0,
+    "medida": "g"
+  },
+  {
+    "id": 58,
+    "receta_id": 11,
+    "ingrediente_id": 261,
+    "cantidad": 3.0,
+    "medida": "cuchara"
+  },
+  {
+    "id": 59,
+    "receta_id": 11,
+    "ingrediente_id": 262,
+    "cantidad": 1.0,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 60,
+    "receta_id": 11,
+    "ingrediente_id": 263,
+    "cantidad": 1.0,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 119,
+    "receta_id": 14,
+    "ingrediente_id": 275,
+    "cantidad": 200.0,
+    "medida": "g"
+  },
+  {
+    "id": 120,
+    "receta_id": 14,
+    "ingrediente_id": 262,
+    "cantidad": 0.0,
+    "medida": "pizca"
+  },
+  {
+    "id": 121,
+    "receta_id": 14,
+    "ingrediente_id": 189,
+    "cantidad": 1.0,
+    "medida": "cucharadita"
+  },
+  {
+    "id": 122,
+    "receta_id": 14,
+    "ingrediente_id": 175,
+    "cantidad": 500.0,
+    "medida": "g"
+  },
+  {
+    "id": 123,
+    "receta_id": 14,
+    "ingrediente_id": 234,
+    "cantidad": 2.0,
+    "medida": "cuchara"
+  },
+  {
+    "id": 124,
+    "receta_id": 14,
+    "ingrediente_id": 276,
+    "cantidad": 4.0,
+    "medida": "pieza"
+  }
+]

@@ -91,6 +91,7 @@ def show_all_heloween_recepies():
 
     except Exception as e:
         logger.error(f"Error getting data: {e}")
+        print(e)
         abort(500)
 
     return render_template('allrecepies.html', data=visible_items, user=is_user, page=page,
@@ -301,9 +302,11 @@ def edit_receta(id):
 
 @recepy_page.errorhandler(500)
 def internal_error(error):
+    print(error)
     return render_template('500.html'), 500 
 
 @recepy_page.errorhandler(404)
 def not_found(error):
+    print(error)
     return render_template('404.html'), 404
 

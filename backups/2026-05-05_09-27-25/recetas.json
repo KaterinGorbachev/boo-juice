@@ -1,0 +1,62 @@
+[
+  {
+    "id": 9,
+    "usuario_id": null,
+    "nombre_receta": "dedos de bruja",
+    "descripcion": "La receta de las deliciosas galletas de dedos de bruja para Halloween. ¡Una receta fácil y que tiene una pinta increíble! ¡Es perfecta para una fiesta de Halloween entre amigos o en familia!",
+    "portada": null,
+    "video": null,
+    "tiempo_preparacion": 60,
+    "cantidad_porciones": 8,
+    "fecha_creacion": "2026-03-29T17:57:01.926335+00:00",
+    "fecha_modificacion": "2026-03-29T17:57:01+00:00"
+  },
+  {
+    "id": 10,
+    "usuario_id": null,
+    "nombre_receta": "pumpkin spice latte",
+    "descripcion": "La versión casera del famoso Pumpkin Spice Latte de Starbucks",
+    "portada": null,
+    "video": null,
+    "tiempo_preparacion": 15,
+    "cantidad_porciones": 2,
+    "fecha_creacion": "2026-04-13T14:11:45.925583+00:00",
+    "fecha_modificacion": "2026-04-13T14:11:45+00:00"
+  },
+  {
+    "id": 11,
+    "usuario_id": null,
+    "nombre_receta": "brownie",
+    "descripcion": "Esta receta es ideal para lograr una textura densa, húmeda y muy intensa.",
+    "portada": null,
+    "video": null,
+    "tiempo_preparacion": 60,
+    "cantidad_porciones": 10,
+    "fecha_creacion": "2026-04-13T14:22:29.436137+00:00",
+    "fecha_modificacion": "2026-04-19T16:34:25+00:00"
+  },
+  {
+    "id": 13,
+    "usuario_id": null,
+    "nombre_receta": "salchichas momia",
+    "descripcion": "Cómelos primero",
+    "portada": null,
+    "video": null,
+    "tiempo_preparacion": 30,
+    "cantidad_porciones": 12,
+    "fecha_creacion": "2026-04-13T16:41:00.323767+00:00",
+    "fecha_modificacion": "2026-04-13T16:41:00+00:00"
+  },
+  {
+    "id": 14,
+    "usuario_id": 3,
+    "nombre_receta": "onigiris de atún",
+    "descripcion": "La receta de la película El Viaje de Chichiro de Hayao Miyazaki: una comida  mágica, que dará fuerza y evitará que se transforme en una fantasma en el mundo de espíritus.",
+    "portada": null,
+    "video": "https://www.youtube.com/embed/VkJY83v07kA",
+    "tiempo_preparacion": 30,
+    "cantidad_porciones": 4,
+    "fecha_creacion": "2026-04-26T12:08:07.976647+00:00",
+    "fecha_modificacion": "2026-04-30T20:28:49+00:00"
+  }
+]

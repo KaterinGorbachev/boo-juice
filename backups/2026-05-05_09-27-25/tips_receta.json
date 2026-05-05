@@ -1,0 +1,17 @@
+[
+  {
+    "id": 7,
+    "receta_id": 11,
+    "descripcion": "Paciencia: Deja enfriar el brownie completamente en el molde (mínimo 1–2 horas). Durante este tiempo, la textura se asienta y se vuelve perfecta."
+  },
+  {
+    "id": 8,
+    "receta_id": 11,
+    "descripcion": "Toque extra: Puedes añadir 100 g de nueces troceadas para un toque crujiente."
+  },
+  {
+    "id": 9,
+    "receta_id": 11,
+    "descripcion": "Frío: Si guardas el brownie en la nevera un par de horas una vez frío, tendrá una textura más densa, similar a un trufa."
+  }
+]

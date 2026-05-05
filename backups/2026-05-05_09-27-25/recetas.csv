@@ -1,0 +1,6 @@
+id,usuario_id,nombre_receta,descripcion,portada,video,tiempo_preparacion,cantidad_porciones,fecha_creacion,fecha_modificacion
+9,,dedos de bruja,La receta de las deliciosas galletas de dedos de bruja para Halloween. ¡Una receta fácil y que tiene una pinta increíble! ¡Es perfecta para una fiesta de Halloween entre amigos o en familia!,,,60,8,2026-03-29T17:57:01.926335+00:00,2026-03-29T17:57:01+00:00
+10,,pumpkin spice latte,La versión casera del famoso Pumpkin Spice Latte de Starbucks,,,15,2,2026-04-13T14:11:45.925583+00:00,2026-04-13T14:11:45+00:00
+11,,brownie,"Esta receta es ideal para lograr una textura densa, húmeda y muy intensa.",,,60,10,2026-04-13T14:22:29.436137+00:00,2026-04-19T16:34:25+00:00
+13,,salchichas momia,Cómelos primero,,,30,12,2026-04-13T16:41:00.323767+00:00,2026-04-13T16:41:00+00:00
+14,3,onigiris de atún,"La receta de la película El Viaje de Chichiro de Hayao Miyazaki: una comida  mágica, que dará fuerza y evitará que se transforme en una fantasma en el mundo de espíritus.",,https://www.youtube.com/embed/VkJY83v07kA,30,4,2026-04-26T12:08:07.976647+00:00,2026-04-30T20:28:49+00:00

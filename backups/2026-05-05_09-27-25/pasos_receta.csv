@@ -1,0 +1,45 @@
+id,receta_id,numero_paso,descripcion,imagen
+9,9,1,"En un recipiente, mezclar el huevo, el azúcar, el azúcar vainilla y la margarina hasta obtener una masa homogénea.  Incorporar la harina y amasar hasta formar una bola. Dejar reposar en la nevera durante unos 15 minutos.",
+10,9,2,"Dar forma a la masa con la forma de dedos, dejando uno de los lados más fino y ligeramente afilado.",
+11,9,3,"Mezclar una yema de huevo con una cucharilla de leche. Untar cada galleta con la mezcla con la ayuda de un pincel. En el extremo de cada uno, colocar una almendra entera (hacer presión).",
+12,9,4,"Colocar todos los dedos en un recipiente, encima de papel de horno untado con margarina, en un soporte para el horno. Meter al horno durante 15 minutos a 150°C.",
+13,10,1,"Disponer el puré de calabaza en un cuenco y mezclar bien con el azúcar o edulcorante y las especias. Colocar con la leche o alternativa vegetal en un cazo y calentar sin que llegue a hervir, mezclando con unas varillas.",
+14,10,2,"Añadir el café fuerte recién hecho a la leche caliente y mezclar. Servir en dos tazas, usando un colador por si quedaran impurezas. Decorar con nata montada al gusto, mejor casera, y un poco de canela molida por encima. Servir recién hecho.",
+23,13,1,"Preparar la ""venda"" de la momia
+
+    Extiende la masa sobre una superficie ligeramente enharinada.
+    Corta tiras muy finas y largas (de unos 5 mm a 1 cm de ancho). No tienen que ser perfectas; eso le da un toque más realista.",
+24,13,2,"Envolver las salchichas
+
+    Seca bien las salchichas con papel de cocina para que la masa no se resbale.
+    Toma una tira de masa y empieza a enrollarla alrededor de la salchicha desde arriba hacia abajo.
+    ⚠️ Importante: Deja un pequeño espacio libre en la parte superior (cerca de un extremo) para colocar los ojos después.
+    Cruza las tiras de masa de forma irregular para que parezcan vendas de momia reales.",
+25,13,3,"Hornear
+
+    Precalienta el horno a 200°C.
+    Coloca las momias en una bandeja con papel de horno.
+    Pincela la masa con el huevo batido para que queden doradas y brillantes.
+    Hornea durante 12–15 minutos o hasta que la masa esté dorada y crujiente.",
+26,13,4,"El toque final: Los ojos
+
+    Saca las salchichas del horno y deja que templen un poco.
+    Con un palillo, pon dos puntitos de mostaza o mayonesa en el espacio que dejaste libre.
+    Si quieres más detalle, pega una semilla de sésamo o un trocito de aceituna negra sobre la salsa.",
+27,11,1,"Precalienta el horno a 180°C.
+Forra un molde cuadrado (aprox. 20x20 cm o 20x30 cm) con papel de horno (papel vegetal), dejando que sobresalga por los lados para desmoldar fácil.",
+28,11,2,"Trocea los 300 g de chocolate.
+Coloca el chocolate y la mantequilla en un bol resistente al calor.
+Derrite al baño maría o en el microondas (en intervalos de 30 segundos, mezclando cada vez). Deja que la mezcla temple un poco.",
+29,11,3,"En un bol aparte, bate los huevos con el azúcar durante 3–5 minutos.
+💡 El secreto: La mezcla debe volverse pálida, espumosa y doblar su volumen. Esto crea la famosa capa crujiente y brillante arriba.",
+30,11,4,"Vierte la mezcla de chocolate derretido sobre los huevos batidos, incorporando con una espátula.
+Tamiza (pasa por un colador) la harina, el cacao en polvo y la sal sobre el bol.
+Mezcla suavemente con movimientos envolventes hasta que no veas rastros de harina. No batas en exceso, o el brownie quedará como un bizcocho común.",
+31,11,5,"Vierte la masa en el molde y alisa la superficie.
+Hornea durante 25–30 minutos.
+✨ Importante: El brownie está listo cuando los bordes están firmes pero el centro todavía se mueve ligeramente. Al insertar un palillo, debe salir con migas húmedas, no con masa líquida.",
+76,14,1,"Lavar el arroz hasta que el agua salga limpia. Poner a cocer en una olla con agua a fuego alto (el volumen del agua debe rebasar al de arroz por la altura de media falange) y llevar a ebullición. Una vez comience a hervir, tapar la olla, bajar el fuego al mínimo y cocinar durante15 minutos.",
+77,14,2,Poner el atún en un bol y mezclar bien con mayonesa en una cantidad al gusto.,
+78,14,3,"Hacer 4 tortas de arroz con las manos humedecidas, extender sobre cada una de ellas una capa de atún, y luego cubrir con otra capa de arroz. Darles un poco de forma de bola y luego modelar las esquinas.",
+79,14,4,Humedecer las hojas de alga nori y pegarlas a la base de los onigiri.,

@@ -1,0 +1,135 @@
+[
+  {
+    "id": 9,
+    "receta_id": 9,
+    "numero_paso": 1,
+    "descripcion": "En un recipiente, mezclar el huevo, el azúcar, el azúcar vainilla y la margarina hasta obtener una masa homogénea.  Incorporar la harina y amasar hasta formar una bola. Dejar reposar en la nevera durante unos 15 minutos.",
+    "imagen": null
+  },
+  {
+    "id": 10,
+    "receta_id": 9,
+    "numero_paso": 2,
+    "descripcion": "Dar forma a la masa con la forma de dedos, dejando uno de los lados más fino y ligeramente afilado.",
+    "imagen": null
+  },
+  {
+    "id": 11,
+    "receta_id": 9,
+    "numero_paso": 3,
+    "descripcion": "Mezclar una yema de huevo con una cucharilla de leche. Untar cada galleta con la mezcla con la ayuda de un pincel. En el extremo de cada uno, colocar una almendra entera (hacer presión).",
+    "imagen": null
+  },
+  {
+    "id": 12,
+    "receta_id": 9,
+    "numero_paso": 4,
+    "descripcion": "Colocar todos los dedos en un recipiente, encima de papel de horno untado con margarina, en un soporte para el horno. Meter al horno durante 15 minutos a 150°C.",
+    "imagen": null
+  },
+  {
+    "id": 13,
+    "receta_id": 10,
+    "numero_paso": 1,
+    "descripcion": "Disponer el puré de calabaza en un cuenco y mezclar bien con el azúcar o edulcorante y las especias. Colocar con la leche o alternativa vegetal en un cazo y calentar sin que llegue a hervir, mezclando con unas varillas.",
+    "imagen": null
+  },
+  {
+    "id": 14,
+    "receta_id": 10,
+    "numero_paso": 2,
+    "descripcion": "Añadir el café fuerte recién hecho a la leche caliente y mezclar. Servir en dos tazas, usando un colador por si quedaran impurezas. Decorar con nata montada al gusto, mejor casera, y un poco de canela molida por encima. Servir recién hecho.",
+    "imagen": null
+  },
+  {
+    "id": 23,
+    "receta_id": 13,
+    "numero_paso": 1,
+    "descripcion": "Preparar la \"venda\" de la momia\n\n    Extiende la masa sobre una superficie ligeramente enharinada.\n    Corta tiras muy finas y largas (de unos 5 mm a 1 cm de ancho). No tienen que ser perfectas; eso le da un toque más realista.",
+    "imagen": null
+  },
+  {
+    "id": 24,
+    "receta_id": 13,
+    "numero_paso": 2,
+    "descripcion": "Envolver las salchichas\n\n    Seca bien las salchichas con papel de cocina para que la masa no se resbale.\n    Toma una tira de masa y empieza a enrollarla alrededor de la salchicha desde arriba hacia abajo.\n    ⚠️ Importante: Deja un pequeño espacio libre en la parte superior (cerca de un extremo) para colocar los ojos después.\n    Cruza las tiras de masa de forma irregular para que parezcan vendas de momia reales.",
+    "imagen": null
+  },
+  {
+    "id": 25,
+    "receta_id": 13,
+    "numero_paso": 3,
+    "descripcion": "Hornear\n\n    Precalienta el horno a 200°C.\n    Coloca las momias en una bandeja con papel de horno.\n    Pincela la masa con el huevo batido para que queden doradas y brillantes.\n    Hornea durante 12–15 minutos o hasta que la masa esté dorada y crujiente.",
+    "imagen": null
+  },
+  {
+    "id": 26,
+    "receta_id": 13,
+    "numero_paso": 4,
+    "descripcion": "El toque final: Los ojos\n\n    Saca las salchichas del horno y deja que templen un poco.\n    Con un palillo, pon dos puntitos de mostaza o mayonesa en el espacio que dejaste libre.\n    Si quieres más detalle, pega una semilla de sésamo o un trocito de aceituna negra sobre la salsa.",
+    "imagen": null
+  },
+  {
+    "id": 27,
+    "receta_id": 11,
+    "numero_paso": 1,
+    "descripcion": "Precalienta el horno a 180°C.\r\nForra un molde cuadrado (aprox. 20x20 cm o 20x30 cm) con papel de horno (papel vegetal), dejando que sobresalga por los lados para desmoldar fácil.",
+    "imagen": null
+  },
+  {
+    "id": 28,
+    "receta_id": 11,
+    "numero_paso": 2,
+    "descripcion": "Trocea los 300 g de chocolate.\r\nColoca el chocolate y la mantequilla en un bol resistente al calor.\r\nDerrite al baño maría o en el microondas (en intervalos de 30 segundos, mezclando cada vez). Deja que la mezcla temple un poco.",
+    "imagen": null
+  },
+  {
+    "id": 29,
+    "receta_id": 11,
+    "numero_paso": 3,
+    "descripcion": "En un bol aparte, bate los huevos con el azúcar durante 3–5 minutos.\r\n💡 El secreto: La mezcla debe volverse pálida, espumosa y doblar su volumen. Esto crea la famosa capa crujiente y brillante arriba.",
+    "imagen": null
+  },
+  {
+    "id": 30,
+    "receta_id": 11,
+    "numero_paso": 4,
+    "descripcion": "Vierte la mezcla de chocolate derretido sobre los huevos batidos, incorporando con una espátula.\r\nTamiza (pasa por un colador) la harina, el cacao en polvo y la sal sobre el bol.\r\nMezcla suavemente con movimientos envolventes hasta que no veas rastros de harina. No batas en exceso, o el brownie quedará como un bizcocho común.",
+    "imagen": null
+  },
+  {
+    "id": 31,
+    "receta_id": 11,
+    "numero_paso": 5,
+    "descripcion": "Vierte la masa en el molde y alisa la superficie.\r\nHornea durante 25–30 minutos.\r\n✨ Importante: El brownie está listo cuando los bordes están firmes pero el centro todavía se mueve ligeramente. Al insertar un palillo, debe salir con migas húmedas, no con masa líquida.",
+    "imagen": null
+  },
+  {
+    "id": 76,
+    "receta_id": 14,
+    "numero_paso": 1,
+    "descripcion": "Lavar el arroz hasta que el agua salga limpia. Poner a cocer en una olla con agua a fuego alto (el volumen del agua debe rebasar al de arroz por la altura de media falange) y llevar a ebullición. Una vez comience a hervir, tapar la olla, bajar el fuego al mínimo y cocinar durante15 minutos.",
+    "imagen": null
+  },
+  {
+    "id": 77,
+    "receta_id": 14,
+    "numero_paso": 2,
+    "descripcion": "Poner el atún en un bol y mezclar bien con mayonesa en una cantidad al gusto.",
+    "imagen": null
+  },
+  {
+    "id": 78,
+    "receta_id": 14,
+    "numero_paso": 3,
+    "descripcion": "Hacer 4 tortas de arroz con las manos humedecidas, extender sobre cada una de ellas una capa de atún, y luego cubrir con otra capa de arroz. Darles un poco de forma de bola y luego modelar las esquinas.",
+    "imagen": null
+  },
+  {
+    "id": 79,
+    "receta_id": 14,
+    "numero_paso": 4,
+    "descripcion": "Humedecer las hojas de alga nori y pegarlas a la base de los onigiri.",
+    "imagen": null
+  }
+]

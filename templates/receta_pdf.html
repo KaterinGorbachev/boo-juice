@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kablammo&display=swap" rel="stylesheet">
+
     <title>{{ data.nombre_receta }}</title>
 </head>
 <body style="font-family: 'Courier New', sans-serif; margin: 0; padding: 40px; color: #333; line-height: 1.5;">
 
     <!-- Header -->
     <header style="text-align: start; margin-bottom: 50px;">
-        <h1 style="font-family: 'Jokerman', cursive; font-size: 2.5em; margin: 0; color: #63419b;">🐈‍⬛ BOO-JUICE</h1>
+        <h1 style="font-family: 'Kablammo', system-ui; font-size: 2.5em; margin: 0; color: #63419b;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:middle;"><ellipse cx="50" cy="60" rx="38" ry="32"/><polygon points="12,45 20,10 38,42"/><polygon points="88,45 80,10 62,42"/><ellipse cx="37" cy="56" rx="7" ry="9" fill="white"/><ellipse cx="63" cy="56" rx="7" ry="9" fill="white"/><ellipse cx="37" cy="56" rx="4" ry="8" fill="rgba(0,0,0,0.5)"/><ellipse cx="63" cy="56" rx="4" ry="8" fill="rgba(0,0,0,0.5)"/><polygon points="46,70 50,75 54,70" fill="rgba(255,150,180,0.8)"/></svg> BOO-JUICE</h1>
         <p style="font-size: 0.9em; color: #777; margin-top: 5px;"><!-- dir de la pagina web --></p>
     </header>
 
     <!-- Recipe Title -->
     <main>
         <h2 style=" font-size: 1.5em; margin-bottom: 15px; color: #FF8C00;"> <strong>{{ data.nombre_receta.upper() }}</strong></h2>
-        <p style="margin: 5px 0; font-size: 1.1em;">⏰ Tiempo de preparación: {{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
+        <p style="margin: 5px 0; font-size: 1.1em;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="#FF8C00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em;"><circle cx="12" cy="13" r="8"/><polyline points="12 9 12 13 15 15"/><line x1="5" y1="3" x2="2.5" y2="5.5"/><line x1="19" y1="3" x2="21.5" y2="5.5"/></svg> Tiempo de preparación: {{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
 
         <hr style="margin: 25px 0; border: 0; border-top: 3px solid #ccc;">
 
         <!-- Ingredients Table -->
-        <h3 style="font-size: 1.8em; margin-bottom: 15px; color: #2B0125;">🛒 Ingredientes</h3>
-        <p style="margin-bottom: 15px;">🍽️ Para {{ data.cantidad_porciones }} raciones</p>
+        <h3 style="font-size: 2rem; margin-bottom: 15px; color: #2B0125;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="none" stroke="#2B0125" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Ingredientes</h3>
+        <p style="margin-bottom: 15px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="#FF8C00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em;"><circle cx="12" cy="13" r="9"/><circle cx="12" cy="13" r="5"/><line x1="12" y1="2" x2="12" y2="4"/></svg> Para {{ data.cantidad_porciones }} raciones</p>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
             <thead>
                 <tr>
@@ -45,7 +49,7 @@
         <hr style="margin: 25px 0; border: 0; border-top: 2px solid #ccc;">
 
         <!-- Steps Section -->
-        <h3 style="font-size: 1.8em; margin-bottom: 15px; color: #2B0125;">📍 Pasos de la receta</h3>
+        <h3 style="font-size: 2rem; margin-bottom: 15px; color: #2B0125;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" fill="none" stroke="#2B0125" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em;"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Pasos de la receta</h3>
         {% for item in data.pasos %}
         <div style="margin-bottom: 20px; padding: 15px 15px 15px 60px; position: relative; background-color: #fefefe; border-left: 5px solid #ffa23091; page-break-inside: avoid;">
             <div style="position: absolute; left: -45px; top: 15px; width: 40px; height: 40px; border-radius: 50%; background-color: #ffa23091; color: #8C1822; text-align: center; line-height: 40px; font-weight: bold; font-size: 1.2em;">
@@ -57,7 +61,7 @@
 
         {% if data.tips %}
         <div style="margin-top: 30px; page-break-inside: avoid;">
-            <h3 style="font-size: 1.8em; margin-bottom: 10px; color: #2B0125;">🎃 Consejos</h3>
+            <h3 style="font-size: 2rem; margin-bottom: 10px; color: #2B0125;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="25px" fill="none" stroke="#2B0125" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em;"><path d="M11 4c0-1 .5-2 1-2s1 1 1 2"/><path d="M8 6C4.5 6 3 9 3 12s1.5 7 5.5 8H15.5c4-1 5.5-5 5.5-8S19.5 6 16 6c-1.5 0-3 .5-4 .5S9.5 6 8 6z"/><path d="M9.5 11l1 2-1 2m5-4l-1 2 1 2"/><path d="M10 18.5c.5.5 1 .7 2 .7s1.5-.2 2-.7"/></svg> Consejos</h3>
             {% for item in data.tips %}
             <p style="margin: 5px 0; font-size: 1.1em;">- <i>{{ item.descripcion }}</i></p>
             {% endfor %}
