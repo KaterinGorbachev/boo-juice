@@ -38,6 +38,112 @@ function stateClose(){
 
 
 
+// ===== DRAFT PERSISTENCE =====
+const DRAFT_KEY = 'boo_juice_recipe_draft';
+let _saveDraftTimer;
+
+function saveFormDraft() {
+  clearTimeout(_saveDraftTimer);
+  _saveDraftTimer = setTimeout(() => {
+    const ingredientNames   = document.querySelectorAll('input[name="ingredients[]"]');
+    const ingredientAmounts = document.querySelectorAll('input[name="amounts[]"]');
+    const ingredientMeasures= document.querySelectorAll('select[name="measures[]"]');
+    const ingredients = [];
+    ingredientNames.forEach((el, i) => {
+      ingredients.push({
+        nombre:   el.value,
+        cantidad: ingredientAmounts[i]?.value  ?? '',
+        medida:   ingredientMeasures[i]?.value ?? ''
+      });
+    });
+
+    const steps = Array.from(document.querySelectorAll('textarea[name="steps[]"]')).map(t => t.value);
+    const tips  = Array.from(document.querySelectorAll('input[name="tips[]"]')).map(t => t.value);
+
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({
+      name:        document.getElementById("recipe_name")?.value        ?? '',
+      description: document.getElementById("recipe_description")?.value ?? '',
+      hours:       document.querySelector('input[name="hours"]')?.value  ?? '',
+      minutes:     document.querySelector('input[name="minutes"]')?.value ?? '',
+      servings:    document.getElementById("servings")?.value            ?? '',
+      video:       document.getElementById("recipe_video")?.value        ?? '',
+      ingredients,
+      steps,
+      tips
+    }));
+  }, 500);
+}
+
+function clearFormDraft() {
+  localStorage.removeItem(DRAFT_KEY);
+}
+
+function loadFormDraft() {
+  let draft;
+  try {
+    const saved = localStorage.getItem(DRAFT_KEY);
+    if (!saved) return;
+    draft = JSON.parse(saved);
+  } catch {
+    localStorage.removeItem(DRAFT_KEY);
+    return;
+  }
+
+  // basic fields
+  if (draft.name)        document.getElementById("recipe_name").value        = draft.name;
+  if (draft.description) document.getElementById("recipe_description").value = draft.description;
+  const hoursEl = document.querySelector('input[name="hours"]');
+  if (hoursEl   && draft.hours)    hoursEl.value   = draft.hours;
+  const minutesEl = document.querySelector('input[name="minutes"]');
+  if (minutesEl && draft.minutes)  minutesEl.value = draft.minutes;
+  if (draft.servings) document.getElementById("servings").value       = draft.servings;
+  if (draft.video)    document.getElementById("recipe_video").value   = draft.video;
+
+  // ingredients — fill first static row, then click-add the rest
+  if (draft.ingredients?.length) {
+    const allNames    = document.querySelectorAll('input[name="ingredients[]"]');
+    const allAmounts  = document.querySelectorAll('input[name="amounts[]"]');
+    const allMeasures = document.querySelectorAll('select[name="measures[]"]');
+    if (allNames[0])    allNames[0].value    = draft.ingredients[0].nombre;
+    if (allAmounts[0])  allAmounts[0].value  = draft.ingredients[0].cantidad;
+    if (allMeasures[0]) allMeasures[0].value = draft.ingredients[0].medida;
+
+    for (let i = 1; i < draft.ingredients.length; i++) {
+      document.getElementById("btn_add_ingredient").click();
+      const names    = document.querySelectorAll('input[name="ingredients[]"]');
+      const amounts  = document.querySelectorAll('input[name="amounts[]"]');
+      const measures = document.querySelectorAll('select[name="measures[]"]');
+      const last = names.length - 1;
+      names[last].value    = draft.ingredients[i].nombre;
+      amounts[last].value  = draft.ingredients[i].cantidad;
+      measures[last].value = draft.ingredients[i].medida;
+    }
+  }
+
+  // steps — fill first static textarea, then click-add the rest
+  if (draft.steps?.length) {
+    const firstStep = document.querySelector('textarea[name="steps[]"]');
+    if (firstStep) firstStep.value = draft.steps[0];
+    for (let i = 1; i < draft.steps.length; i++) {
+      document.getElementById("btn_add_paso").click();
+      const textareas = document.querySelectorAll('textarea[name="steps[]"]');
+      textareas[textareas.length - 1].value = draft.steps[i];
+    }
+  }
+
+  // tips — all are dynamically created
+  if (draft.tips?.length) {
+    for (const tip of draft.tips) {
+      document.getElementById("btn_add_tip").click();
+      const tipInputs = document.querySelectorAll('input[name="tips[]"]');
+      tipInputs[tipInputs.length - 1].value = tip;
+    }
+  }
+}
+// ===== END DRAFT PERSISTENCE =====
+
+
+
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 const sendRecipe = async (recipeData) => {
@@ -74,15 +180,15 @@ const sendRecipe = async (recipeData) => {
       throw new Error(`HTTP error ${response.status}`);
     }
 
-    if(response.status === 200){       
-      
+    if(response.status === 200){
+      clearFormDraft();
       document.querySelectorAll('input').forEach((input) => {
         input.value = ''
-    
+
       })
       document.querySelectorAll('textarea').forEach(input => input.value = '')
       document.querySelectorAll('select').forEach(input => input.value = '')
-      
+
     }
 
     
@@ -401,16 +507,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== SEND TO BACKEND =====
     try {
-      sendRecipe(recipeData)           
+      sendRecipe(recipeData)
     }
     catch (error) {
         console.error('After sending data', error);
-        
+
     }
-    
 
-})
 
-    
+  })
+
+  // save draft on any form input change
+  form.addEventListener("input", saveFormDraft);
+  form.addEventListener("change", saveFormDraft);
+
+  // restore draft after all listeners are set up so .click() handlers work
+  loadFormDraft();
+
 })
 
