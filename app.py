@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory, request, jsonify, render_template, session, g, redirect, Blueprint, flash, url_for, abort
+from werkzeug.middleware.proxy_fix import ProxyFix
 from functools import wraps
 import os
 import logging
@@ -9,7 +10,7 @@ from datetime import datetime, timezone
 import hashlib
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from extensions import limiter
 
 from routes.showrecepies import recepy_page
@@ -101,6 +102,9 @@ app.secret_key = secretkey
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SECURE'] = True
+
+# Trust Render's reverse proxy so rate-limiter sees real client IPs
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
 csrf = CSRFProtect(app)
 limiter.init_app(app)
@@ -451,11 +455,23 @@ def healthz():
 
 @app.errorhandler(404)
 def not_found(error):
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        return jsonify({"error": "Not found"}), 404
     return render_template('404.html'), 404
 
 @app.errorhandler(500)
 def internal_error(error):
+    if request.accept_mimetypes.accept_json and not request.accept_mimetypes.accept_html:
+        return jsonify({"error": "Internal server error"}), 500
     return render_template('500.html'), 500
+
+@app.errorhandler(CSRFError)
+def csrf_error(e):
+    return jsonify({"error": "CSRF validation failed. Refresh the page and try again."}), 400
+
+@app.errorhandler(429)
+def ratelimit_error(e):
+    return jsonify({"error": "Too many requests. Please wait a moment and try again."}), 429
 
 
 #----------------------------------------
