@@ -335,6 +335,8 @@ def get_usuario_by_firebase_uid(conn, firebase_uid):
 
 
 def check_receta_in_favoritos(conn, receta_id, user_id):
+    if not user_id:
+        return False
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute("""
         SELECT * FROM usuarios_recetas_favoritos WHERE receta_id = %s AND usuario_id = %s;

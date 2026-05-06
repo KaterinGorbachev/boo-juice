@@ -120,9 +120,10 @@ def receta(id):
     
     is_user = session.get('user_loggedin')
     
-    if is_user: 
+    if is_user:
         user_sql_id = session.get("sql_user_id")
-    else: user_sql_id = ""
+    else:
+        user_sql_id = None
 
     try:
         with dbquery.get_connection() as conn:
