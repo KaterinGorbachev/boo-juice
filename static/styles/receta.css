@@ -189,6 +189,7 @@ textarea {
 }
 #ingredientes_edit #ingredientes-container .ingrediente-item .cantidad__edit__form {
   width: 100%;
+  min-width: 0;
   background-color: #fef5ff;
 }
 @media (min-width: 993px) {
@@ -375,7 +376,12 @@ textarea {
   min-width: 0;
   position: relative;
   border-radius: 15px;
-  padding: 1.5em;
+  padding: 1em;
+}
+@media (min-width: 768px) {
+  .border__box {
+    padding: 1.5em;
+  }
 }
 
 .edit__container {
@@ -412,6 +418,7 @@ textarea {
   text-align: start;
   gap: 1rem;
   width: 100%;
+  min-width: 0;
 }
 .comon__info .cell {
   display: flex;
@@ -420,21 +427,24 @@ textarea {
   justify-content: center;
   text-align: start;
   position: relative;
-  height: 300px;
-  max-height: 500px;
+  min-height: 300px;
+  height: auto;
+  max-height: none;
   flex: 0 1;
   border-radius: 5px;
   width: 100%;
+  min-width: 0;
 }
 .comon__info .cell .img__box {
   width: 100%;
-  height: 100%;
+  height: 300px;
   overflow: hidden;
   background-color: #ededed;
   border-radius: 15px;
 }
 .comon__info .cell .img__box img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
@@ -446,11 +456,10 @@ textarea {
   text-align: start;
   gap: 1rem;
   padding: 1rem 0.45rem;
-  position: absolute;
+  position: relative;
   width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  min-width: 0;
+  margin-top: 1rem;
   z-index: 1;
   border-radius: 15px;
   background-color: #fefefe;
@@ -499,6 +508,8 @@ textarea {
   text-align: start;
   gap: 1rem;
   width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 .comon__info .preparation__info div {
   display: flex;
@@ -506,6 +517,8 @@ textarea {
   align-items: start;
   justify-content: center;
   text-align: start;
+  min-width: 0;
+  flex: 1 1 120px;
 }
 .comon__info .preparation__info hr {
   width: 0.7px;
@@ -523,6 +536,7 @@ textarea {
   gap: 1rem;
   padding: 1rem 0.45rem;
   width: 100%;
+  min-width: 0;
   position: relative;
   border-radius: 15px;
   background-color: #fefefe;
@@ -685,6 +699,7 @@ textarea {
   gap: 1rem;
   padding: 0.45rem 0.45rem;
   width: 100%;
+  min-width: 0;
   position: relative;
   border-radius: 15px;
   background-color: #fefefe;
@@ -948,6 +963,8 @@ textarea {
   background-color: #FCEBD9;
   border-radius: 15px;
   padding: 1rem;
+  width: 100%;
+  min-width: 0;
 }
 @media (min-width: 993px) {
   .wrapper-main {

@@ -126,6 +126,7 @@ textarea
         background-color: variables.$edit-input-bg
       .cantidad__edit__form
         width: 100%
+        min-width: 0
         background-color: variables.$edit-input-bg
       @include mix.responsive ($size: 'lg')
         @include mix.flexRow($horizontal: start, $vertical: center)
@@ -181,15 +182,15 @@ textarea
         min-width: 0
         @include mix.inputForm($accent: variables.$light-buttons-color, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
         background-color: variables.$edit-input-bg
-.measure_select 
+.measure_select
   @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:20%, $shadow-color: variables.$violet-glow)
   width: 100%
-  min-width: 0 
+  min-width: 0
   flex: 1 1 0
   cursor: pointer
   background-color: variables.$edit-input-bg
 
-.form-edit-recipe 
+.form-edit-recipe
   @include mix.flexColumn($horizontal: center)
   gap: clamp(2.5rem, 2vw, 3rem)
   width: 100%
@@ -203,7 +204,9 @@ textarea
   min-width: 0
   position: relative
   border-radius: variables.$radius
-  padding: 1.5em
+  padding: 1em
+  @include mix.responsive ($size: 'md')
+    padding: 1.5em
 
 .edit__container
   @include mix.flexColumn($horizontal: start, $vertical: start)
@@ -237,38 +240,41 @@ textarea
 .comon__info
   @include mix.flexColumn()
   gap: 1rem
-  width: 100% 
+  width: 100%
+  min-width: 0
 
   // recepy intro
-  .cell 
+  .cell
     @include mix.flexColumn()
     position: relative
-    height: 300px
-    max-height: 500px
+    min-height: 300px
+    height: auto
+    max-height: none
     flex: 0 1
     border-radius: 5px
     width: 100%
-    .img__box 
+    min-width: 0
+    .img__box
       width: 100%
-      height: 100%
+      height: 300px
       overflow: hidden
       background-color: variables.$hint-color
       border-radius: variables.$radius
-      img 
+      img
         width: 100%
-        object-fit: cover 
-        object-position: center      
+        height: 100%
+        object-fit: cover
+        object-position: center
 
-    .title__box 
+    .title__box
       @include mix.flexColumn($horizontal: start)
       gap: variables.$gap-min
       padding: 1rem 0.45rem
-      position: absolute
+      position: relative
       width: 100%
-      bottom: 0
-      left: 0
-      right: 0
-      z-index: 1          
+      min-width: 0
+      margin-top: 1rem
+      z-index: 1
       border-radius: variables.$radius
       background-color: variables.$light-text-background-color
       color: variables.$light-header-background-color
@@ -299,13 +305,17 @@ textarea
         width: 100%
         
 
-  // recepy prep info 
+  // recepy prep info
   .preparation__info
     @include mix.flexRow($horizontal: center)
     gap: variables.$gap-min
     width: 100%
+    min-width: 0
+    flex-wrap: wrap
     div
       @include mix.flexColumn($horizontal: start)
+      min-width: 0
+      flex: 1 1 120px
 
     hr
       width: 0.7px
@@ -318,6 +328,7 @@ textarea
   gap: variables.$gap-min
   padding: 1rem 0.45rem
   width: 100%
+  min-width: 0
   position: relative
   border-radius: variables.$radius
   background-color: variables.$light-text-background-color
@@ -465,6 +476,7 @@ textarea
   gap: variables.$gap-min
   padding: 0.45rem 0.45rem
   width: 100%
+  min-width: 0
   position: relative
   border-radius: variables.$radius
   background-color: variables.$light-text-background-color
@@ -673,7 +685,7 @@ textarea
   @include mix.flexColumn($horizontal: center)
   width: 100%
   min-width: 0
-  position: relative 
+  position: relative
 
   .content-inner
     @include mix.flexColumn($horizontal: center)
@@ -681,6 +693,8 @@ textarea
     background-color: variables.$light-primary-background-color
     border-radius: variables.$radius
     padding: 1rem
+    width: 100%
+    min-width: 0
 
 
   @include mix.responsive ($size: 'lg')
