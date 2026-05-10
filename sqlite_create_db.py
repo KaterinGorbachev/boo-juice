@@ -1,32 +1,32 @@
-import psycopg2  
-import os  
-from dotenv import load_dotenv  
+import psycopg2
+import os
+from dotenv import load_dotenv
 
-load_dotenv()  
+load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")  
-
-
-def create_connection():  
-    try:  
-        database_url = os.getenv("DATABASE_URL")  
-        conn = psycopg2.connect(database_url)  
-        return conn  
-    except Exception as e:  
-        print("Error connecting to database:", e)  
-        return None  
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
-def create_tables(conn) -> None:  
+def create_connection():
+    try:
+        database_url = os.getenv("DATABASE_URL")
+        conn = psycopg2.connect(database_url)
+        return conn
+    except Exception as e:
+        print("Error connecting to database:", e)
+        return None
+
+
+def create_tables(conn) -> None:
     """
     Creates all database tables.
     Existing tables are dropped first (with CASCADE) to allow clean recreation.
     """
-    cursor = conn.cursor()  
+    cursor = conn.cursor()
 
-    cursor.execute("DROP TABLE IF EXISTS usuarios CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS usuarios CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla usuarios que almacena la identidad de los usuarios registrados mediante Firebase Authentication
+    cursor.execute("""
     CREATE TABLE usuarios (
         id SERIAL PRIMARY KEY,
         nickname TEXT DEFAULT 'Fantasma',
@@ -34,11 +34,11 @@ def create_tables(conn) -> None:
         fecha_creacion TIMESTAMPTZ NOT NULL,
         fecha_modificacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
-    """)  
+    """)
 
-    cursor.execute("DROP TABLE IF EXISTS recetas CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS recetas CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla recetas como entidad central del dominio de la aplicación culinaria
+    cursor.execute("""
     CREATE TABLE recetas (
         id SERIAL PRIMARY KEY,
         usuario_id INTEGER NULL,
@@ -55,11 +55,11 @@ def create_tables(conn) -> None:
             REFERENCES usuarios(id)
             ON DELETE SET NULL
     );
-    """)  
+    """)
 
-    cursor.execute("DROP TABLE IF EXISTS usuarios_recetas_favoritos CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS usuarios_recetas_favoritos CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla de favoritos que implementa la relación muchos-a-muchos entre usuarios y recetas guardadas
+    cursor.execute("""
     CREATE TABLE usuarios_recetas_favoritos (
         id SERIAL PRIMARY KEY,
         receta_id INTEGER NOT NULL,
@@ -73,11 +73,11 @@ def create_tables(conn) -> None:
             REFERENCES usuarios(id)
             ON DELETE CASCADE
     );
-    """)  
+    """)
 
-    cursor.execute("DROP TABLE IF EXISTS ingredientes CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS ingredientes CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla ingredientes que almacena el catálogo de componentes culinarios con sus valores nutricionales para el cálculo de información dietética de las recetas
+    cursor.execute("""
     CREATE TABLE ingredientes (
         id SERIAL PRIMARY KEY,
         nombre_ingrediente_es TEXT NOT NULL,
@@ -89,11 +89,11 @@ def create_tables(conn) -> None:
         fecha_creacion TIMESTAMPTZ NOT NULL,
         fecha_modificacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
-    """)  
+    """)
 
-    cursor.execute("DROP TABLE IF EXISTS ingredientes_en_receta CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS ingredientes_en_receta CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla de relación ingredientes_en_receta que implementa la asociación muchos-a-muchos entre recetas e ingredientes con información de cantidad y unidad de medida
+    cursor.execute("""
     CREATE TABLE ingredientes_en_receta (
         id SERIAL PRIMARY KEY,
         receta_id INTEGER NOT NULL,
@@ -112,11 +112,11 @@ def create_tables(conn) -> None:
             REFERENCES ingredientes(id)
             ON DELETE CASCADE
     );
-    """)  
+    """)
 
-    cursor.execute("DROP TABLE IF EXISTS pasos_receta CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS pasos_receta CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla pasos_receta que almacena las instrucciones procedimentales ordenadas de elaboración de cada receta
+    cursor.execute("""
     CREATE TABLE pasos_receta (
         id SERIAL PRIMARY KEY,
         receta_id INTEGER NOT NULL,
@@ -128,11 +128,11 @@ def create_tables(conn) -> None:
             ON DELETE CASCADE,
         UNIQUE (receta_id, numero_paso)
     );
-    """)  
+    """)
 
-    cursor.execute("DROP TABLE IF EXISTS tips_receta CASCADE;")  
+    cursor.execute("DROP TABLE IF EXISTS tips_receta CASCADE;")
 
-    cursor.execute("""  # Se ejecuta la sentencia DDL de creación de la tabla tips_receta que almacena los consejos culinarios opcionales asociados a cada receta para enriquecer la experiencia del usuario
+    cursor.execute("""
     CREATE TABLE tips_receta (
         id SERIAL PRIMARY KEY,
         receta_id INTEGER NOT NULL,
@@ -141,22 +141,22 @@ def create_tables(conn) -> None:
             REFERENCES recetas(id)
             ON DELETE CASCADE
     );
-    """)  
+    """)
 
-    conn.commit()  
+    conn.commit()
 
 
-def main():  
+def main():
     """
     Main entry point:
     - Creates the database connection
     - Creates all tables
     """
-    conn = create_connection()  
-    create_tables(conn)  
-    conn.close()  
-    print("PostgreSQL database tables created successfully.")  
+    conn = create_connection()
+    create_tables(conn)
+    conn.close()
+    print("PostgreSQL database tables created successfully.")
 
 
-if __name__ == "__main__":  
-    main()  
+if __name__ == "__main__":
+    main()

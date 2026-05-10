@@ -84,13 +84,13 @@ def insert_rows(pg_conn, table, columns, rows):
 def reset_sequence(pg_conn, table):
     """After bulk-inserting with explicit IDs, advance the SERIAL sequence."""
     cur = pg_conn.cursor()
-    cur.execute(f"""  # Se ejecuta la función setval de PostgreSQL para avanzar la secuencia al valor máximo de id presente en la tabla
+    cur.execute(f"""
         SELECT setval(
             pg_get_serial_sequence('{table}', 'id'),
             COALESCE((SELECT MAX(id) FROM {table}), 0) + 1,
             false
         )
-    """)  # La función COALESCE garantiza un valor base de 1 cuando la tabla está vacía; el parámetro false indica que el próximo valor generado será exactamente el especificado
+    """)
 
 
 def main():
