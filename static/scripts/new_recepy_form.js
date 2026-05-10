@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!videoId) return ''
 
-        return `https://www.youtube.com/embed/${videoId}`
+        return `https://www.youtube-nocookie.com/embed/${videoId}`
       } catch (error) {
 
         console.error('Video link convert error:',error);

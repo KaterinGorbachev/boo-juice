@@ -265,7 +265,7 @@ The recipe detail page includes a step-by-step audio player in [static/scripts/p
 
 **Text chunking** — splits steps into ≤160-character chunks (on word boundaries) to work around browser limits on utterance length.
 
-**State machine** — tracks `idle`, `playing`, `paused` states and exposes `play(index)`, `pause()`, `resume()`, and `next()`.
+**State machine** — tracks `idle`, `playing`, `paused` states and exposes `play(index)` and `pause()`.
 
 ---
 
@@ -273,7 +273,7 @@ The recipe detail page includes a step-by-step audio player in [static/scripts/p
 
 PDF export is handled server-side in [pdf_generator.py](pdf_generator.py). The route `/receta/pdf/<id>` renders the recipe into the `receta_pdf.html` Jinja2 template and passes the HTML string to `generate_pdf()`, which calls `HTML(string=html).write_pdf()`.
 
-**Windows note:** WeasyPrint requires the GTK3 runtime on Windows. Without it the app starts normally but the PDF route returns a 500 with a clear error message pointing to the [installation guide](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases).
+**Error handling** — if WeasyPrint's system libraries are missing, the `ImportError` propagates as a `RuntimeError` at module load time, which crashes the gunicorn worker before Flask starts; the entire service appears down (Render shows a service-unavailable page). If the libraries are present but rendering fails at request time, the route catches the exception, logs the full traceback server-side, and returns a `500`.
 
 ---
 

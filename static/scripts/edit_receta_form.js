@@ -191,7 +191,7 @@ function convertToYouTubeEmbed(url) {
         }
 
         if (!videoId) return '';
-        return `https://www.youtube.com/embed/${videoId}`;
+        return `https://www.youtube-nocookie.com/embed/${videoId}`;
     } catch (e) {
         return '';
     }

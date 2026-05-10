@@ -13,7 +13,7 @@ textarea
   resize: none
   max-height: 200px
   height: 150px
-  overflow-y: scroll
+  overflow-y: auto
 
 .label
   color: variables.$light-header-background-color !important
@@ -90,7 +90,7 @@ textarea
   padding: 0.6rem 0.75rem 
   background-color: transparent
   cursor: pointer
-  border-radius: 15px
+  border-radius: variables.$radius
   outline: none
   border: solid 2px variables.$light-buttons-text
   font-family: variables.$font-text
@@ -118,7 +118,7 @@ textarea
       min-width: 0
       border: 1px solid variables.$light-buttons-color
       padding: 0.5em
-      border-radius: 15px
+      border-radius: variables.$radius
       .ingrediente__edit__form
         width: 100%
         min-width: 0
@@ -151,7 +151,7 @@ textarea
       min-width: 0
       border: 1px solid variables.$light-buttons-color
       padding: 0.5em
-      border-radius: 15px
+      border-radius: variables.$radius
       .step__edit__form
         width: 100%
         min-width: 0
@@ -175,7 +175,7 @@ textarea
       min-width: 0
       border: 1px solid variables.$light-buttons-color
       padding: 0.5em
-      border-radius: 15px
+      border-radius: variables.$radius
       .tip__edit__form
         width: 100%
         min-width: 0
@@ -202,7 +202,7 @@ textarea
   width: 100%
   min-width: 0
   position: relative
-  border-radius: 15px
+  border-radius: variables.$radius
   padding: 1.5em
 
 .edit__container
@@ -253,7 +253,7 @@ textarea
       height: 100%
       overflow: hidden
       background-color: variables.$hint-color
-      border-radius: 15px
+      border-radius: variables.$radius
       img 
         width: 100%
         object-fit: cover 
@@ -269,7 +269,7 @@ textarea
       left: 0
       right: 0
       z-index: 1          
-      border-radius: 15px
+      border-radius: variables.$radius
       background-color: variables.$light-text-background-color
       color: variables.$light-header-background-color
       box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
@@ -319,7 +319,7 @@ textarea
   padding: 1rem 0.45rem
   width: 100%
   position: relative
-  border-radius: 15px
+  border-radius: variables.$radius
   background-color: variables.$light-text-background-color
   color: variables.$light-header-background-color
   box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
@@ -424,7 +424,7 @@ textarea
     .btns__box
       @include mix.flexRow($horizontal: start)
       
-      border-radius: 15px
+      border-radius: variables.$radius
       overflow: hidden
       border: solid 2px variables.$outline-btn-color
       button
@@ -466,7 +466,7 @@ textarea
   padding: 0.45rem 0.45rem
   width: 100%
   position: relative
-  border-radius: 15px
+  border-radius: variables.$radius
   background-color: variables.$light-text-background-color
   color: variables.$light-header-background-color
   box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
@@ -478,10 +478,10 @@ textarea
     z-index: 9
     width: 100%
     border: solid 2px variables.$violet-glow
-    border-radius: 15px
+    border-radius: variables.$radius
     padding: 0.5rem
     backdrop-filter: blur(12px)
-    background: variables.$palyer-gradient
+    background: variables.$player-gradient
     @include  mix.flexColumn($vertical: center, $horizontal: center, $text-align: start)
     gap: variables.$gap-min
     
@@ -559,7 +559,7 @@ textarea
   padding: 1rem 0.45rem
   width: 100%
   position: relative
-  border-radius: 15px
+  border-radius: variables.$radius
   background-color: variables.$light-text-background-color
   box-shadow: 0 4px 4px 0 variables.$box-shadow-text-back
   padding: calc( variables.$gap-min /2 )
@@ -585,7 +585,7 @@ textarea
   border: solid 1px variables.$dark-buttons-color
   background: #000
   backdrop-filter: blur(9px)
-  border-radius: 15px
+  border-radius: variables.$radius
   overflow: hidden
 
 
@@ -624,7 +624,7 @@ textarea
   @include mix.flexColumn($horizontal: center)
   width: 100%
   height: max-content
-  border-radius: 15px
+  border-radius: variables.$radius
   border: solid 1px variables.$hint-color
   padding: 4px
   background: #ffffff57
@@ -679,7 +679,7 @@ textarea
     @include mix.flexColumn($horizontal: center)
     gap: variables.$gap-min*2
     background-color: variables.$light-primary-background-color
-    border-radius: 15px
+    border-radius: variables.$radius
     padding: 1rem
 
 

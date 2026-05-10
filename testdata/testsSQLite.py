@@ -1,6 +1,3 @@
-###
-# Test constants
-###
 
 MIN_NAME_LENGTH = 2
 MAX_NAME_LENGTH = 150
@@ -105,7 +102,6 @@ def validate_steps(steps):
         if not is_string(step.get("text")):
             errors.append(f"Step {index}: invalid text")
 
-        ## check for photo
 
     return errors
 

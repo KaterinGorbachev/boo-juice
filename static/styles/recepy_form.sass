@@ -1,6 +1,7 @@
 @use './_variables.sass' as variables
 @use './_mixins.sass' as mix
 @use 'sass:map'
+@use 'sass:math'
 @use "sass:color"
 
 //sass --watch recepy_form.sass recepy_form.css 
@@ -20,7 +21,7 @@
     background-color: variables.$light-buttons-color
     color: variables.$light-buttons-text
     cursor: pointer
-    border-radius: 15px
+    border-radius: variables.$radius
     outline: none
     border: none
     box-shadow: inset 0px -2px 0px 1.5px variables.$outline-btn-color
@@ -48,7 +49,7 @@
 .tip
     width: 100%
     @include mix.flexColumn($horizontal: start)
-    gap: variables.$gap-min/3
+    gap: math.div(variables.$gap-min, 3)
     flex: 1 1
 
 #tips_fieldset 
@@ -62,7 +63,7 @@
     background-color: transparent 
     color: variables.$light-title-h1-color    
     cursor: pointer
-    border-radius: 15px
+    border-radius: variables.$radius
     outline: none
     border: solid 2px variables.$light-title-h1-color
     font-family: variables.$font-text
@@ -80,7 +81,7 @@
     background-color: transparent
     color: variables.$outline-btn-color
     cursor: pointer
-    border-radius: 15px
+    border-radius: variables.$radius
     outline: none
     border: solid 2px variables.$outline-btn-color
     font-family: variables.$font-text
@@ -178,7 +179,7 @@
         resize: none
         max-height: 200px
         height: 150px
-        overflow-y: scroll
+        overflow-y: auto
 
 
 .form__recepy__container
@@ -188,7 +189,7 @@
     max-width: 800px
     background-color: variables.$light-primary-background-color
     padding: 1rem 1rem 3rem 1rem
-    border-radius: 15px
+    border-radius: variables.$radius
     box-shadow: 0 4px 8px variables.$violet-glow
     
 

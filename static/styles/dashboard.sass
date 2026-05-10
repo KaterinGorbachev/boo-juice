@@ -19,10 +19,10 @@
     text-decoration: underline
 
 .table-controls
-  background: variables.$palyer-gradient
+  background: variables.$player-gradient
   border: solid 2px variables.$violet-glow
   padding: 1em
-  border-radius: 15px
+  border-radius: variables.$radius
   @include mix.flexColumn($horizontal: start)
   gap: variables.$gap-min
   width: 100%
@@ -59,7 +59,7 @@
   width: 100%
   border-collapse: collapse
   background: transparent
-  border-radius: 15px
+  border-radius: variables.$radius
   box-shadow: 0 4px 12px rgba(0,0,0,0.05)
   
 
@@ -73,7 +73,7 @@
     @include mix.flexColumn($horizontal: space-between)
     background: white
     padding: 1rem
-    border-radius: 15px
+    border-radius: variables.$radius
     border: solid 2px variables.$violet-glow
     box-shadow: 0 4px 10px rgba(0,0,0,0.05)
     width: 100%

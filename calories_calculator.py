@@ -130,7 +130,7 @@ calories_json = {
     {"nombre": "Yogur enriquecido con nata", "calorias_por_100g": 65},
     {"nombre": "Yogur natural", "calorias_por_100g": 62},
     {"nombre": "Yogur natural con fruta", "calorias_por_100g": 100}
-  ], 
+  ],
     "CARNES_CAJA_Y_EMBUTIDOS": [
     {"nombre": "Bacon (Panceta ahumada)", "calorias_por_100g": 665},
     {"nombre": "Butifarra cocida", "calorias_por_100g": 390},
@@ -181,14 +181,14 @@ calories_json = {
     {"nombre": "Tira de asado", "calorias_por_100g": 401},
     {"nombre": "Tripas", "calorias_por_100g": 100},
     {"nombre": "Vacuno, Hígado", "calorias_por_100g": 129}
-  ], 
+  ],
    "PESCADOS_Y_MARISCOS": [
     {"nombre": "Atún fresco", "calorias_por_100g": 144},
     {"nombre": "Atún en conserva", "calorias_por_100g": 184},
     {"nombre": "Bacalao fresco", "calorias_por_100g": 82},
     {"nombre": "Bacalao salado", "calorias_por_100g": 290},
     {"nombre": "Calamares", "calorias_por_100g": 92},
-    {"nombre": "Camarón cocido", "calorias_por_100g": 99},
+    {"nombre": "Camarón cocido", "calorias_por_100g": 99},
     {"nombre": "Langosta", "calorias_por_100g": 77},
     {"nombre": "Mejillones", "calorias_por_100g": 86},
     {"nombre": "Merluza", "calorias_por_100g": 82},

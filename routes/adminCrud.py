@@ -15,10 +15,10 @@ ALLOWED_TABLES = {
 }
 
 
-# ------------------------- 
+# -------------------------
 # Loggers
-# ------------------------- 
-def makeLogger(): 
+# -------------------------
+def makeLogger():
     '''prepare console and file handlers'''
     logger = logging.getLogger(__name__)
     logger.setLevel('DEBUG')
@@ -26,12 +26,12 @@ def makeLogger():
 
 ###------------------------------------
 
-def formatLoggs(): 
+def formatLoggs():
     return logging.Formatter('{asctime} - {name} - {message}', datefmt='%d/%m/%Y %I:%M:%S %p', style='{')
 
 ###------------------------------------
 
-def getConsoleLogger(logger): 
+def getConsoleLogger(logger):
     console_handler = logging.StreamHandler()
     console_handler.setLevel('DEBUG')
     console_handler.setFormatter(formatLoggs())
@@ -39,21 +39,17 @@ def getConsoleLogger(logger):
 
 ###------------------------------------
 
-def getFileLogger(logger): 
+def getFileLogger(logger):
     file_handler = logging.FileHandler('access.log', mode='a', encoding='utf-8')
     file_handler.setLevel('INFO')
     file_handler.setFormatter(formatLoggs())
     logger.addHandler(file_handler)
 
 
-### Set loggs
 logger = makeLogger()
 getConsoleLogger(logger)
 
 
-#=======================================================================================
-# ROUTES
-#=======================================================================================
 dashboard_admin = Blueprint('dashboard_admin', __name__)
 
 
@@ -62,37 +58,36 @@ dashboard_admin = Blueprint('dashboard_admin', __name__)
 @dashboard_admin.route('/access', methods=['GET','POST'])
 def login_admin():
 
-    if request.method == 'POST': 
+    if request.method == 'POST':
         admin_key = request.form.get("password", "")
-        
-        if admin_key.strip() != '': 
-            if admin_key == ADMIN_PASS: 
+
+        if admin_key.strip() != '':
+            if admin_key == ADMIN_PASS:
                 session['admin_logged'] = True
                 return redirect("/dashboard")
-            
-            else: 
+
+            else:
                 flash("Contraseña incorrecta", "error")
                 return redirect(url_for("dashboard_admin.login_admin"))
-                
-            
-        else: 
-            flash("Contraseña vacia", "error")
-            return redirect(url_for("dashboard_admin.login_admin"))                  
 
-    
+
+        else:
+            flash("Contraseña vacia", "error")
+            return redirect(url_for("dashboard_admin.login_admin"))
+
+
     return render_template('dashboard_login.html')
-    
+
 
 @dashboard_admin.route('/dashboard', methods=['GET','POST'])
-def dashboard(): 
+def dashboard():
     if not session.get('admin_logged'):
         return redirect('/access')
-    
-    # Get selected table from query params (default to 'recetas')
+
     selected_table = request.args.get('table', 'recetas')
     if selected_table not in ALLOWED_TABLES:
         abort(400)
-        
+
 
     try:
         with dbquery.get_connection() as conn:
@@ -110,7 +105,7 @@ def dashboard():
 def delete_item(table, item_id):
     if not session.get('admin_logged'):
         return redirect('/access')
-    
+
     if table not in ALLOWED_TABLES:
         return jsonify({"error": "Invalid table"}), 400
 

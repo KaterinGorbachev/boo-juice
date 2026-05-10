@@ -24,7 +24,7 @@ $violet-glow: rgba(168, 85, 247, 0.25)
 $orange-glow: rgba(245, 158, 11, 0.25)
 $title-color: #ffcd45
 $magic-gradient: linear-gradient(135deg, #ffcd45, #ac5fff)
-$palyer-gradient: linear-gradient(135deg, #ffe7a688, #d2a9ff7a)
+$player-gradient: linear-gradient(135deg, #ffe7a688, #d2a9ff7a)
 $edit-input-bg: #fef5ff
 
 
@@ -89,27 +89,18 @@ $gap-min: 1rem
 
 
 
-@function set-text-color($background-color)
-  @if color.channel($background-color, "lightness", $space: hsl) > 40%
-    @return #000
-  @else
-    @return #fff
-
-
-
-// alternative WCAG-compliant version
 @function luminance($color)
   $rgb: (
-    red: color.red($color) / 255,
-    green: color.green($color) / 255,
-    blue: color.blue($color) / 255
+    red: math.div(color.channel($color, "red", $space: rgb), 255),
+    green: math.div(color.channel($color, "green", $space: rgb), 255),
+    blue: math.div(color.channel($color, "blue", $space: rgb), 255)
   )
 
   @each $name, $value in $rgb
     @if $value < 0.03928
-      $rgb: map.set($rgb, $name, $value / 12.92)
+      $rgb: map.set($rgb, $name, math.div($value, 12.92))
     @else
-      $rgb: map.set($rgb, $name, math.pow((($value + 0.055) / 1.055), 2.4))
+      $rgb: map.set($rgb, $name, math.pow(math.div($value + 0.055, 1.055), 2.4))
 
   @return (0.2126 * map.get($rgb, red)) +
           (0.7152 * map.get($rgb, green)) +
@@ -121,11 +112,11 @@ $gap-min: 1rem
   $dark-luminance: luminance(#000000)
   $bg-luminance: luminance($background)
 
-  $contrast-dark: ($bg-luminance + 0.05) / ($dark-luminance + 0.05)
-  $contrast-light: ($light-luminance + 0.05) / ($bg-luminance + 0.05)
+  $contrast-dark: math.div($bg-luminance + 0.05, $dark-luminance + 0.05)
+  $contrast-light: math.div($light-luminance + 0.05, $bg-luminance + 0.05)
 
   @if $contrast-dark > $contrast-light
-    @return $light-header-background-color // better contrast
+    @return $light-header-background-color
   @else
     @return $light-checkbox-color
 

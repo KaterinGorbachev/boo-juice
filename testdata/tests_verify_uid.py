@@ -12,9 +12,6 @@ from unittest.mock import patch, MagicMock
 import firebase_admin
 import firebase_admin.auth
 
-# --- Mock Firebase initialization BEFORE importing app ---
-# app.py calls firebase_admin.initialize_app() at module level,
-# so the patch must be active before the import happens.
 _patcher_init = patch('firebase_admin.initialize_app')
 _patcher_cert = patch('firebase_admin.credentials.Certificate')
 _patcher_init.start()
@@ -25,7 +22,7 @@ os.environ.setdefault('FIREBASE_SERVICE_ACCOUNT_PATH', 'fake.json')
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-import app as flask_app  # noqa: E402
+import app as flask_app
 
 
 # ─────────────────────────────────────────────

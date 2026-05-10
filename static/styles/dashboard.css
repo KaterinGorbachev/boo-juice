@@ -138,7 +138,6 @@
   justify-content: center;
 }
 
-/* ── Confirmation modal ────────────────────────────────────────────────────── */
 .confirm-overlay {
   position: fixed;
   inset: 0;
@@ -161,7 +160,7 @@
 }
 
 .confirm-modal {
-  background: #ffffffee;
+  background: rgba(255, 255, 255, 0.9333333333);
   border-radius: 15px;
   border: solid 2px rgba(168, 85, 247, 0.25);
   box-shadow: 0 8px 32px rgba(80, 40, 120, 0.18);

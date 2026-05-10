@@ -13,8 +13,8 @@
     .meta-chip
         border: solid 2px variables.$violet-glow
         padding: 0.5em 1em
-        border-radius: 15px
-        background: variables.$palyer-gradient
+        border-radius: variables.$radius
+        background: variables.$player-gradient
 
     @include mix.responsive($size: 'lg')
         @include mix.flexRow($horizontal: space-between, $vertical: center)
@@ -43,7 +43,7 @@
 
 .sidebar-nav
     background: variables.$light-primary-background-color    
-    border-radius: 15px
+    border-radius: variables.$radius
     padding: 1rem 
     box-shadow: variables.$shadow
 
@@ -69,14 +69,14 @@
 
         &:hover
             color: variables.$light-buttons-text
-            background: variables.$palyer-gradient
+            background: variables.$player-gradient
             border-left-color: variables.$violet-glow
 
 // ── MOBILE NAV ──
 .mobile-nav
     display: none
     background: variables.$light-primary-background-color
-    border-radius: 15px
+    border-radius: variables.$radius
     padding: 1rem
     margin-bottom: 1.5rem
     box-shadow: variables.$shadow
@@ -103,9 +103,9 @@
 
 // ── QUICK OVERVIEW ──
 .overview
-    background: variables.$palyer-gradient
+    background: variables.$player-gradient
     border: 1.5px solid variables.$violet-glow
-    border-radius: 15px
+    border-radius: variables.$radius
     padding: 1.6rem
     margin-bottom: 1.5rem
     box-shadow: variables.$shadow
@@ -120,7 +120,7 @@
 
 .ov-card
     background: color.mix(variables.$light-primary-background-color, transparent, 30%)
-    border-radius: 15px
+    border-radius: variables.$radius
     padding: 1.1rem
     text-align: center
 
@@ -187,7 +187,7 @@
     margin-bottom: .35rem
 
 .box-summary
-    background: variables.$palyer-gradient
+    background: variables.$player-gradient
     border: 1.5px solid variables.$violet-glow
     @include mix.flexColumn($horizontal: start, $vertical: start)
     gap: .6rem
@@ -292,7 +292,7 @@
             font-weight: 700
             font-size: .72rem
             text-transform: uppercase
-            color: var(--muted)
+            color: variables.$light-buttons-text
             flex-shrink: 0
             padding-top: .1rem
 
@@ -421,7 +421,7 @@
 
 // ── AEPD ──
 .aepd-box
-    background: variables.$palyer-gradient
+    background: variables.$player-gradient
     border: 1.5px solid variables.$violet-glow
     border-radius: variables.$radius
     padding: 1rem 1.2rem
@@ -432,7 +432,7 @@
 
 // ── CONTACT ──
 .contact-card
-    background: variables.$palyer-gradient
+    background: variables.$player-gradient
     border: 1.5px solid variables.$violet-glow
     border-radius: variables.$radius
     padding: 1.75rem
@@ -508,7 +508,7 @@ a
         text-decoration: underline
 
 strong
-    color: var(--primary)
+    color: variables.$outline-btn-color
 
 // ── EXTRA SMALL SCREENS (320px) ──
 @media (max-width: 400px)

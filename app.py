@@ -18,7 +18,7 @@ from routes.adminCrud import dashboard_admin
 
 """ from sys import path
 path.append('.') """
-from testdata import testsSQLite 
+from testdata import testsSQLite
 import sqlite_CRUD_script as dbquery
 
 load_dotenv()
@@ -28,12 +28,9 @@ if not _service_account_path:
     raise RuntimeError("FIREBASE_SERVICE_ACCOUNT_PATH environment variable is not set")
 firebase_admin.initialize_app(credentials.Certificate(_service_account_path))
 
-_SMART_QUOTE_CHARS = "\u201c\u201d\u00ab\u00bb\u201e\u2018\u2019"
+_SMART_QUOTE_CHARS = "“”«»„‘’"
 _SMART_QUOTE_RE = re.compile(r'(?<!\w)[' + _SMART_QUOTE_CHARS + r'](?!\w)')
 
-# Origins allowed to call CSRF-exempt JSON endpoints.
-# Set ALLOWED_ORIGINS=https://yourdomain.com in production.
-# Multiple values: comma-separated.  Falls back to same-host when unset (dev).
 _ALLOWED_ORIGINS: frozenset = frozenset(
     o.strip() for o in os.getenv("ALLOWED_ORIGINS", "").split(",") if o.strip()
 )
@@ -52,7 +49,7 @@ def _origin_allowed() -> bool:
 # -------------------------
 # Loggers
 # -------------------------
-def makeLogger(): 
+def makeLogger():
     '''prepare console and file handlers'''
     logger = logging.getLogger(__name__)
     logger.setLevel('DEBUG')
@@ -60,12 +57,12 @@ def makeLogger():
 
 ###------------------------------------
 
-def formatLoggs(): 
+def formatLoggs():
     return logging.Formatter('{asctime} - {name} - {message}', datefmt='%d/%m/%Y %I:%M:%S %p', style='{')
 
 ###------------------------------------
 
-def getConsoleLogger(logger): 
+def getConsoleLogger(logger):
     console_handler = logging.StreamHandler()
     console_handler.setLevel('DEBUG')
     console_handler.setFormatter(formatLoggs())
@@ -73,14 +70,13 @@ def getConsoleLogger(logger):
 
 ###------------------------------------
 
-def getFileLogger(logger): 
+def getFileLogger(logger):
     file_handler = logging.FileHandler('access.log', mode='a', encoding='utf-8')
     file_handler.setLevel('INFO')
     file_handler.setFormatter(formatLoggs())
     logger.addHandler(file_handler)
 
 
-### Set loggs
 logger = makeLogger()
 getConsoleLogger(logger)
 
@@ -89,7 +85,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app = Flask(
     __name__,
     static_folder=os.path.join(BASE_DIR, "static"),
-    static_url_path="/",              # 🔴 FORCE STATIC AT ROOT
+    static_url_path="/",
     template_folder=os.path.join(BASE_DIR, "templates"),
 )
 
@@ -103,7 +99,6 @@ app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SECURE'] = True
 
-# Trust Render's reverse proxy so rate-limiter sees real client IPs
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
 csrf = CSRFProtect(app)
@@ -157,7 +152,7 @@ def load_user_from_session():
             "email_verified": session.get("email_verified", False)
         }
     else:
-        g.user = None 
+        g.user = None
 
 
 
@@ -176,7 +171,6 @@ def api_user():
     uid = data.get("uid")
     email_verified = data.get("emailVerified", False)
 
-    # ---------- LOGOUT ----------
     if uid is None:
         session.pop("uid", None)
         session["email_verified"] = False
@@ -185,14 +179,13 @@ def api_user():
 
         return jsonify({"status": "logged_out"}), 200
 
-    # ---------- LOGIN ----------
     if not verify_firebase_uid(uid):
         abort(400)
 
     session["uid"] = uid
     session["email_verified"] = bool(email_verified)
     session["user_loggedin"] = True
-    
+
 
     try:
         with dbquery.get_connection() as conn:
@@ -208,12 +201,12 @@ def api_user():
     except Exception as e:
         dbquery.logger.error(f"Error inserting user: {e}")
         return jsonify({"error": "internal error"}), 500
-    
+
 
 # ---- login, register, logout functionality on the page ----
 @app.route("/")
 def vue_app():
-    
+
     return render_template("index.html")
 
 ## ruta protegida solo para usuarios con email verificado
@@ -231,105 +224,89 @@ def render_recepy_form():
 @app.route('/api/recipes', methods=['POST'])
 @limiter.limit("20 per hour")
 def get_new_recipe():
-    # only for "Content-Type": "application/json"
-    # does not handle files and images
     data = request.get_json()
 
 
     if not data:
         logger.debug('Did not receive JSON recepy form data from Front')
-        return jsonify({"error": "No JSON received"}), 400  
-        
-    # ==== is None checks ====
-    if "name" not in data.keys() or testsSQLite.value_is_none(data["name"]) : 
+        return jsonify({"error": "No JSON received"}), 400
+
+    if "name" not in data.keys() or testsSQLite.value_is_none(data["name"]):
         logger.debug('Did not receive recepy name')
         return jsonify({"error": "No recepy name in JSON received"}), 400
-    elif "description" not in data.keys() or testsSQLite.value_is_none(data["description"]) : 
+    elif "description" not in data.keys() or testsSQLite.value_is_none(data["description"]):
         logger.debug('Did not receive recepy description')
-        return jsonify({"error": "No recepy description in JSON received"}), 400 
-    elif "minutes" not in data.keys() or testsSQLite.value_is_none(data["minutes"]) : 
+        return jsonify({"error": "No recepy description in JSON received"}), 400
+    elif "minutes" not in data.keys() or testsSQLite.value_is_none(data["minutes"]):
         logger.debug('Did not receive recepy minutes')
         return jsonify({"error": "No recepy minutes in JSON received"}), 400
-    elif "ingredients" not in data.keys() or testsSQLite.value_is_none(data["ingredients"]) : 
+    elif "ingredients" not in data.keys() or testsSQLite.value_is_none(data["ingredients"]):
         logger.debug('Did not receive recepy ingredients')
         return jsonify({"error": "No recepy ingredients in JSON received"}), 400
-    elif "steps" not in data.keys() or testsSQLite.value_is_none(data["steps"]) : 
+    elif "steps" not in data.keys() or testsSQLite.value_is_none(data["steps"]):
         logger.debug('Did not receive recepy steps')
-        return jsonify({"error": "No recepy steps in JSON received"}), 400  
-    elif "servings" not in data.keys() or testsSQLite.value_is_none(data["servings"]) : 
+        return jsonify({"error": "No recepy steps in JSON received"}), 400
+    elif "servings" not in data.keys() or testsSQLite.value_is_none(data["servings"]):
         logger.debug('Did not receive recepy servings')
-        return jsonify({"error": "No recepy servings in JSON received"}), 400  
-    
-    # === data type checks ====    
-    elif  not isinstance(data["ingredients"], list):
+        return jsonify({"error": "No recepy servings in JSON received"}), 400
+
+    elif not isinstance(data["ingredients"], list):
         logger.debug('Did not receive recepy ingredients as a list')
         return jsonify({"error": "Recepy ingredients in JSON must be a list"}), 400
-    elif  not isinstance(data["steps"], list):
+    elif not isinstance(data["steps"], list):
         logger.debug('Did not receive recepy steps as a list')
         return jsonify({"error": "Recepy steps in JSON must be a list"}), 400
-    elif not testsSQLite.is_string(data["name"], 2, 150): 
+    elif not testsSQLite.is_string(data["name"], 2, 150):
         logger.debug('Invalid name')
         return jsonify({"error": "Invalid name in JSON received"}), 400
-    elif not testsSQLite.is_string(data["description"], 2, 500): 
+    elif not testsSQLite.is_string(data["description"], 2, 500):
         logger.debug('Invalid description')
         return jsonify({"error": "Invalid description in JSON received"}), 400
-    elif not testsSQLite.is_integer(data["minutes"]): 
+    elif not testsSQLite.is_integer(data["minutes"]):
         logger.debug('Invalid minutes')
         return jsonify({"error": "Invalid minutes in JSON received"}), 400
-    elif not testsSQLite.is_integer(data["servings"]): 
+    elif not testsSQLite.is_integer(data["servings"]):
         logger.debug('Invalid servings')
         return jsonify({"error": "Invalid servings in JSON received"}), 400
-    
-    # === data existence for list checks ===
-    elif len(data["ingredients"]) < 1: 
+
+    elif len(data["ingredients"]) < 1:
         logger.debug('No hay ingredients')
         return jsonify({"error": "No hay ingredients in JSON received"}), 400
-    elif len(data["steps"]) < 1: 
+    elif len(data["steps"]) < 1:
         logger.debug('No hay steps')
         return jsonify({"error": "No hay steps in JSON received"}), 400
-    
-    # === data type inside list checks ===    
+
     ingredients_errors = testsSQLite.validate_ingredients(data["ingredients"])
-    if len(ingredients_errors)>0: 
+    if len(ingredients_errors) > 0:
         logger.debug(ingredients_errors)
         return jsonify({"error": "Errors in ingredients data in JSON received"}), 400
-             
+
     steps_errors = testsSQLite.validate_steps(data["steps"])
-    if len(steps_errors)>0: 
+    if len(steps_errors) > 0:
         logger.debug(steps_errors)
         return jsonify({"error": "Errors in steps data in JSON received"}), 400
-        
+
     tips = data.get("tips", [])
     if isinstance(tips, list) and len(tips) >= 1:
         for item in tips:
             if not testsSQLite.is_string(item, 0, 200):
                 logger.debug('Invalid tip type, not a string')
                 return jsonify({"error": "Invalid tip type, not a string, in JSON received"}), 400
-            
-    ## ?? max numero of pasos y of tips ??
-            
-    # === checks for images and files ==== 
-    ###########  missing  ######################
- 
+
+
+
     ingredients = data["ingredients"]
     steps = data["steps"]
-    
 
-    # === get user from dataBase === 
-    
+
+
     is_user = session.get('user_loggedin')
 
-    # think about checks for user uid
-    # from what page to send user uid
-    # how long session saves uid
 
     if not is_user:
         logger.debug('No user logged in session')
         return jsonify({"error": "No user logged in session"}), 403
-      
-    # === insert recepy into dataBase ===
-    # Insert the recipe into the database using user_uid
-    # get user id based on uid from table
+
     try:
         user_uid = session.get("uid")
         with dbquery.get_connection() as conn:
@@ -388,8 +365,8 @@ def get_new_recipe():
 
 
 @app.route('/tablacalorias/from_receta/<int:id>')
-def calorias(id): 
-    return render_template('tabla_calorias.html', data = id)
+def calorias(id):
+    return render_template('tabla_calorias.html', data=id)
 
 
 @app.route('/saverecepy/<int:id>')
@@ -435,13 +412,8 @@ def perfil(uid):
 
 
 @app.route('/privacy')
-def data_privacy(): 
+def data_privacy():
     return render_template('privacy.html')
-
-
-
-
-
 
 
 @app.route('/healthz')
@@ -474,11 +446,8 @@ def ratelimit_error(e):
     return jsonify({"error": "Too many requests. Please wait a moment and try again."}), 429
 
 
-#----------------------------------------
-# App termination request
-#----------------------------------------
 
 
 if __name__ == "__main__":
-    
+
     app.run(debug=True)

@@ -221,17 +221,17 @@
             </div>
             <div class="resp-tr">
               <div class="resp-td" data-label="Dato">Apodo (nickname)</div>
-              <div class="resp-td" data-label="Dónde se almacena">Base de datos SQLite en Render (Oregon, EE.UU.)</div>
+              <div class="resp-td" data-label="Dónde se almacena">Base de datos PostgreSQL en Render (Oregon, EE.UU.)</div>
               <div class="resp-td" data-label="Observaciones">Valor por defecto: «Fantasma». El UID de Firebase se almacena <strong>hasheado</strong> para desvincular identidades</div>
             </div>
             <div class="resp-tr">
               <div class="resp-td" data-label="Dato">Recetas creadas</div>
-              <div class="resp-td" data-label="Dónde se almacena">Base de datos SQLite en Render (Oregon, EE.UU.)</div>
+              <div class="resp-td" data-label="Dónde se almacena">Base de datos PostgreSQL en Render (Oregon, EE.UU.)</div>
               <div class="resp-td" data-label="Observaciones">Nombre, descripción, ingredientes, pasos, imagen de portada y vídeo (opcionales)</div>
             </div>
             <div class="resp-tr">
               <div class="resp-td" data-label="Dato">Recetas marcadas como favoritas</div>
-              <div class="resp-td" data-label="Dónde se almacena">Base de datos SQLite en Render (Oregon, EE.UU.)</div>
+              <div class="resp-td" data-label="Dónde se almacena">Base de datos PostgreSQL en Render (Oregon, EE.UU.)</div>
               <div class="resp-td" data-label="Observaciones">Listado de recetas guardadas con marca de tiempo</div>
             </div>
           </div>
@@ -338,19 +338,11 @@
       <p class="text">Google Analytics también opera bajo infraestructura de Google LLC en EE.UU. Las mismas garantías del apartado 5.1 son de aplicación (EU-US DPF + SCCs).</p>
 
       <h3 class="label">5.3. Render, Inc. — Hospedaje del servicio y base de datos</h3>
-      <p class="text">Render es la plataforma de hospedaje con servidores en <strong>Oregon (EE.UU.)</strong> que aloja el servidor de aplicaciones Flask y la base de datos SQLite con todos los datos de la aplicación.</p>
+      <p class="text">Render es la plataforma de hospedaje con servidores en <strong>Oregon (EE.UU.)</strong> que aloja el servidor de aplicaciones Flask y la base de datos PostgreSQL con todos los datos de la aplicación.</p>
       <ul>
         <li class="text"><span class="badge b-scc">📄 Cláusulas Contractuales Tipo (SCC)</span> — Render, Inc. ofrece un Acuerdo de Tratamiento de Datos (DPA) con SCCs para transferencias desde el EEE.</li>
       </ul>
 
-      <div class="box box-warn">
-        <span class="label">⚠️ Aviso: Plan gratuito de Render y almacenamiento efímero</span>
-        <span class="text">
-            Este sitio web se aloja en el <strong>plan gratuito de Render</strong>. En este plan: (1) el servicio puede suspenderse temporalmente tras períodos de inactividad; (2) la base de datos SQLite se almacena en un <strong>sistema de archivos efímero</strong> que puede perderse ante reinicios o redespliegues del servicio. El responsable no garantiza la persistencia indefinida de datos de recetas y favoritos en el plan gratuito. Se recomienda al usuario que guarde copias de los contenidos que considere importantes.
-
-        </span>
-        
-      </div>
 
     </section>
 
@@ -417,10 +409,10 @@
         </div>
         <div class="provider-body">
           <div class="prow"><span class="plabel">Datos tratados:</span><span>Todos los datos de aplicación: apodo, recetas, ingredientes, pasos, favoritos, UID hasheado</span></div>
-          <div class="prow"><span class="plabel">Finalidad:</span><span>Hospedaje del servidor de aplicaciones (Flask) y base de datos (SQLite)</span></div>
+          <div class="prow"><span class="plabel">Finalidad:</span><span>Hospedaje del servidor de aplicaciones (Flask) y base de datos (PostgreSQL)</span></div>
           <div class="prow"><span class="plabel">Ubicación:</span><span><span class="badge b-us">🇺🇸 Oregon, EE.UU.</span></span></div>
           <div class="prow"><span class="plabel">Garantías:</span><span><span class="badge b-scc">SCCs</span></span></div>
-          <div class="prow"><span class="plabel">Plan:</span><span>Gratuito — almacenamiento efímero (ver aviso en sección 5.3)</span></div>
+          <div class="prow"><span class="plabel">Plan:</span><span>De pago — base de datos PostgreSQL con persistencia garantizada</span></div>
           <div class="prow"><span class="plabel">Política:</span><span><a href="https://render.com/privacy" target="_blank" rel="noopener noreferrer">render.com/privacy</a></span></div>
         </div>
       </div>
@@ -478,7 +470,7 @@
             <div class="resp-tr">
               <div class="resp-td" data-label="Tipo de dato">Recetas, ingredientes, pasos, favoritos, apodo</div>
               <div class="resp-td" data-label="Período">Mientras la cuenta esté activa o hasta solicitud de supresión</div>
-              <div class="resp-td" data-label="Responsable">Render, Inc. (sujeto a condiciones del plan gratuito)</div>
+              <div class="resp-td" data-label="Responsable">Render, Inc.</div>
             </div>
             <div class="resp-tr">
               <div class="resp-td" data-label="Tipo de dato">Datos de Google Analytics</div>
@@ -703,7 +695,7 @@
           <div class="resp-thead"><div class="resp-tr"><div class="resp-th">Versión</div><div class="resp-th">Fecha</div><div class="resp-th">Cambios principales</div></div></div>
           <div class="resp-tbody">
             <div class="resp-tr"><div class="resp-td" data-label="Versión"><strong>v2.1</strong></div><div class="resp-td" data-label="Fecha">03/05/2026</div><div class="resp-td" data-label="Cambios">Añadida información sobre cookies de terceros de YouTube (VISITOR_INFO1_LIVE, YSC, PREF, GPS), proveedor YouTube/Google LLC en encargados del tratamiento, subsección sobre vídeos incrustados, aclaración sobre consentimiento en el registro, CMP banner activo (estado de conformidad actualizado)</div></div>
-            <div class="resp-tr"><div class="resp-td" data-label="Versión">v2.0</div><div class="resp-td" data-label="Fecha">01/05/2026</div><div class="resp-td" data-label="Cambios">Revisión completa: integración Firebase Auth (EE.UU.), Google Analytics, Render (plan gratuito, almacenamiento efímero), transferencias internacionales con EU-US DPF y SCCs, rediseño con Legal Design</div></div>
+            <div class="resp-tr"><div class="resp-td" data-label="Versión">v2.0</div><div class="resp-td" data-label="Fecha">01/05/2026</div><div class="resp-td" data-label="Cambios">Revisión completa: integración Firebase Auth (EE.UU.), Google Analytics, Render, transferencias internacionales con EU-US DPF y SCCs, rediseño con Legal Design</div></div>
             <div class="resp-tr"><div class="resp-td" data-label="Versión">v1.0</div><div class="resp-td" data-label="Fecha">22/12/2024</div><div class="resp-td" data-label="Cambios">Versión inicial</div></div>
           </div>
         </div>

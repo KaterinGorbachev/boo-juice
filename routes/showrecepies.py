@@ -1,4 +1,7 @@
-from flask import Flask, Blueprint, session, url_for, redirect, render_template, jsonify, make_response, g, request, current_app, flash, abort
+from flask import (
+    Blueprint, session, url_for, redirect, render_template,
+    jsonify, make_response, request, current_app, flash, abort,
+)
 import logging
 import sqlite_CRUD_script as dbquery
 from testdata import testsSQLite
@@ -9,7 +12,6 @@ from fractions import Fraction
 from werkzeug.utils import secure_filename
 from urllib.parse import urlparse
 
-## for pdf generation
 from pdf_generator import generate_pdf
 import traceback
 
@@ -19,9 +21,17 @@ secret_api = os.environ.get('API_SECRET')
 
 ALLOWED_IMAGE_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
+# -------------------------
+# Helpers
+# -------------------------
+
+
+# allowed_image: checks that a filename has a permitted image extension
 def allowed_image(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS
 
+
+# safe_video_url: validates that a URL has an http/https scheme and a netloc; returns None otherwise
 def safe_video_url(url):
     if not url:
         return None
@@ -32,54 +42,68 @@ def safe_video_url(url):
         return None
     return url
 
+
 # -------------------------
 # Loggers
 # -------------------------
-def makeLogger(): 
-    '''prepare console and file handlers'''
+
+
+# makeLogger: creates and returns the module-level logger
+def makeLogger():
     logger = logging.getLogger(__name__)
     logger.setLevel('DEBUG')
     return logger
 
-###------------------------------------
 
-def formatLoggs(): 
-    return logging.Formatter('{asctime} - {name} - {message}', datefmt='%d/%m/%Y %I:%M:%S %p', style='{')
+# formatLoggs: returns the standard log formatter for this module
+def formatLoggs():
+    return logging.Formatter(
+        '{asctime} - {name} - {message}',
+        datefmt='%d/%m/%Y %I:%M:%S %p',
+        style='{',
+    )
 
-###------------------------------------
 
-def getConsoleLogger(logger): 
+# getConsoleLogger: attaches a DEBUG-level console handler to the given logger
+def getConsoleLogger(logger):
     console_handler = logging.StreamHandler()
     console_handler.setLevel('DEBUG')
     console_handler.setFormatter(formatLoggs())
     logger.addHandler(console_handler)
 
-###------------------------------------
 
-def getFileLogger(logger): 
+# getFileLogger: attaches an INFO-level file handler (access.log) to the given logger
+def getFileLogger(logger):
     file_handler = logging.FileHandler('access.log', mode='a', encoding='utf-8')
     file_handler.setLevel('INFO')
     file_handler.setFormatter(formatLoggs())
     logger.addHandler(file_handler)
 
 
-### Set loggs
 logger = makeLogger()
 getConsoleLogger(logger)
 
-#=======================================================================================
-# ROUTES
-#=======================================================================================
 recepy_page = Blueprint('recepy_page', __name__)
 
 PAGE_SIZE = 8
 
+
+def _format_cantidad(item):
+    """Set item['cantidad_str'] based on the numeric value of item['cantidad']."""
+    cantidad = item['cantidad']
+    if isinstance(cantidad, float) and 0 < cantidad < 1:
+        item['cantidad_str'] = str(Fraction(cantidad).limit_denominator(10))
+    elif isinstance(cantidad, float) and cantidad >= 1:
+        item['cantidad_str'] = f"{cantidad:g}"
+    else:
+        item['cantidad_str'] = ''
+
+
+# show_all_heloween_recepies: renders the paginated recipe list page
 @recepy_page.route('/recetas')
 def show_all_heloween_recepies():
     page = request.args.get("page", 1, type=int)
     is_user = session.get('user_loggedin')
-    if is_user:
-        user_uid = session.get("uid")
 
     try:
         offset = (page - 1) * PAGE_SIZE
@@ -91,13 +115,18 @@ def show_all_heloween_recepies():
 
     except Exception as e:
         logger.error(f"Error getting data: {e}")
-        print(e)
         abort(500)
 
-    return render_template('allrecepies.html', data=visible_items, user=is_user, page=page,
-        has_more=has_more)
+    return render_template(
+        'allrecepies.html',
+        data=visible_items,
+        user=is_user,
+        page=page,
+        has_more=has_more,
+    )
 
 
+# load_more_recepies: returns the next page of recipes as JSON for AJAX infinite scroll
 @recepy_page.route('/recetas/more')
 def load_more_recepies():
     page = request.args.get("page", 1, type=int)
@@ -115,27 +144,18 @@ def load_more_recepies():
         logger.error(f"Error getting data: {e}")
         abort(500)
 
-@recepy_page.route('/receta/<int:id>') 
-def receta(id): 
-    
+
+# receta: renders the full detail page for a single recipe by id
+@recepy_page.route('/receta/<int:id>')
+def receta(id):
     is_user = session.get('user_loggedin')
-    
-    if is_user:
-        user_sql_id = session.get("sql_user_id")
-    else:
-        user_sql_id = None
+    user_sql_id = session.get("sql_user_id") if is_user else None
 
     try:
         with dbquery.get_connection() as conn:
             data = dbquery.get_receta_by_id(id, conn)
             for item in (data or {}).get('ingredientes', []):
-                if type(item['cantidad']) == float and (item['cantidad'] < 1 and item['cantidad'] > 0):
-                    frac = Fraction(item['cantidad']).limit_denominator(10)
-                    item['cantidad_str'] = str(frac)
-                elif type(item['cantidad']) == float and item['cantidad'] >= 1:
-                    item['cantidad_str'] = f"{item['cantidad']:g}"
-                else:
-                    item['cantidad_str'] = ''
+                _format_cantidad(item)
 
             receta_in_favoritos = dbquery.check_receta_in_favoritos(conn, id, user_sql_id)
             can_save = bool(is_user and not receta_in_favoritos)
@@ -150,6 +170,7 @@ def receta(id):
     return render_template('receta.html', data=data, user=is_user, can_save=can_save)
 
 
+# recepy_pdf: generates and returns a PDF document for the recipe with the given id
 @recepy_page.route("/receta/pdf/<int:id>")
 @limiter.limit("10 per minute")
 def recepy_pdf(id):
@@ -166,27 +187,26 @@ def recepy_pdf(id):
                     cantidad_val = 0
 
                 if 0 < cantidad_val < 1:
-                    frac = Fraction(cantidad_val).limit_denominator(10)
-                    item['cantidad_str'] = str(frac)
+                    item['cantidad_str'] = str(Fraction(cantidad_val).limit_denominator(10))
                 elif cantidad_val >= 1:
                     item['cantidad_str'] = f"{cantidad_val:g}"
                 else:
                     item['cantidad_str'] = ''
 
         rendered_html = render_template("receta_pdf.html", data=text_content)
-        pdf = generate_pdf(rendered_html)
+        pdf = generate_pdf(rendered_html, base_url=request.url_root)
 
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = 'inline; filename=document.pdf'
         return response
 
-    except Exception as e:
+    except Exception:
         print("PDF Generation Error:", traceback.format_exc())
         abort(500)
-    
 
-## edit recepy
+
+# edit_receta: handles GET (load form) and POST (validate and save) for editing an existing recipe
 @recepy_page.route("/edit_receta/<int:id>", methods=['GET', 'POST'])
 def edit_receta(id):
     is_user = session.get('user_loggedin')
@@ -197,7 +217,6 @@ def edit_receta(id):
 
     try:
         with dbquery.get_connection() as conn:
-            # Check if user owns the recipe
             cursor = conn.cursor()
             cursor.execute("SELECT usuario_id FROM recetas WHERE id = %s", (id,))
             result = cursor.fetchone()
@@ -243,7 +262,7 @@ def edit_receta(id):
                     ingredientes.append({
                         'nombre': nombre.strip(),
                         'cantidad': cantidad_val,
-                        'medida': medidas[i] if i < len(medidas) else ''
+                        'medida': medidas[i] if i < len(medidas) else '',
                     })
 
                 if len(ingredientes) < 1:
@@ -271,11 +290,16 @@ def edit_receta(id):
                     file = request.files['portada']
                     if file and file.filename and allowed_image(file.filename):
                         filename = f"recipe_{id}_{secure_filename(file.filename)}"
-                        file_path = os.path.join(current_app.root_path, 'static', 'assets', 'images', filename)
+                        file_path = os.path.join(
+                            current_app.root_path, 'static', 'assets', 'images', filename,
+                        )
                         file.save(file_path)
                         portada = f"/static/assets/images/{filename}"
 
-                dbquery.update_receta(conn, id, nombre_receta, descripcion, portada, video, tiempo_preparacion, cantidad_porciones)
+                dbquery.update_receta(
+                    conn, id, nombre_receta, descripcion, portada,
+                    video, tiempo_preparacion, cantidad_porciones,
+                )
                 dbquery.update_ingredientes_receta(conn, id, ingredientes)
                 dbquery.update_pasos_receta(conn, id, pasos)
                 dbquery.update_tips_receta(conn, id, tips)
@@ -286,28 +310,29 @@ def edit_receta(id):
             else:
                 data = dbquery.get_receta_by_id(id, conn)
                 for item in data['ingredientes']:
-                    if type(item['cantidad']) == float and (item['cantidad'] < 1 and item['cantidad'] > 0):
-                        frac = Fraction(item['cantidad']).limit_denominator(10)
-                        item['cantidad_str'] = str(frac)
-                    elif type(item['cantidad']) == float and item['cantidad'] >= 1:
-                        item['cantidad_str'] = f"{item['cantidad']:g}"
-                    else:
-                        item['cantidad_str'] = ''
+                    _format_cantidad(item)
 
-                return render_template('edit_receta.html', data=data, user=is_user, user_uid=session.get("uid", ""))
+                return render_template(
+                    'edit_receta.html',
+                    data=data,
+                    user=is_user,
+                    user_uid=session.get("uid", ""),
+                )
 
-    except Exception as e:
+    except Exception:
         flash('Ha habido un problema en conexión. Intenta más tarde.', '❌Error')
         return redirect(url_for('vue_app'))
 
 
+# internal_error: renders the 500 error page for this Blueprint
 @recepy_page.errorhandler(500)
 def internal_error(error):
     print(error)
-    return render_template('500.html'), 500 
+    return render_template('500.html'), 500
 
+
+# not_found: renders the 404 error page for this Blueprint
 @recepy_page.errorhandler(404)
 def not_found(error):
     print(error)
     return render_template('404.html'), 404
-
