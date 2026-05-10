@@ -725,6 +725,20 @@ textarea {
   gap: 1rem;
 }
 .steps .player-box .player {
+  gap: calc(1rem + 6px);
+  min-height: 60px;
+  display: none;
+}
+@media (min-width: 993px) {
+  .steps .player-box .player {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: start;
+  }
+}
+.steps .player-box .player-mobile {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -732,6 +746,11 @@ textarea {
   text-align: start;
   gap: calc(1rem + 6px);
   min-height: 60px;
+}
+@media (min-width: 993px) {
+  .steps .player-box .player-mobile {
+    display: none;
+  }
 }
 .steps .player-box .step-box {
   display: flex;

@@ -498,10 +498,20 @@ textarea
     gap: variables.$gap-min
     
 
-    .player 
-      @include mix.flexRow()
+    .player       
       gap: calc(  variables.$gap-min + 6px)      
       min-height: 60px
+      display: none
+      @include mix.responsive ($size: 'lg')
+        @include mix.flexRow()
+    
+    .player-mobile
+      @include mix.flexRow()       
+      gap: calc(  variables.$gap-min + 6px)      
+      min-height: 60px      
+      @include mix.responsive ($size: 'lg')
+        display: none
+        
       
     .step-box
       @include  mix.flexRow($vertical: center, $horizontal: center, $text-align: start)
