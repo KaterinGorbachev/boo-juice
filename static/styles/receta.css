@@ -697,7 +697,7 @@ textarea {
   justify-content: center;
   text-align: start;
   gap: 1rem;
-  padding: 0.45rem 0.45rem;
+  padding: 2rem 0.45rem;
   width: 100%;
   min-width: 0;
   position: relative;
@@ -709,7 +709,8 @@ textarea {
 }
 .steps .player-box {
   position: sticky;
-  top: 15vh;
+  scroll-margin-top: 20vh;
+  top: 20vh;
   z-index: 9;
   width: 100%;
   border: solid 2px rgba(168, 85, 247, 0.25);

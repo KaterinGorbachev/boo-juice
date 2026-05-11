@@ -1,3 +1,36 @@
+let _editStateTimeout;
+function statePopup(message, title = 'Error', icon = '🐈‍⬛', duration = 4000, colorElementsBorder = '#cc3c3c', colorElementsBack = '#ff4b4b') {
+    const overlay = document.getElementById('state-popup-overlay');
+    const timerBar = document.getElementById('state-timer');
+    if (!overlay) { alert(message); return; }
+
+    clearTimeout(_editStateTimeout);
+
+    document.getElementById('state-icon').innerText = icon;
+    document.getElementById('state-title').innerText = title;
+    document.getElementById('state-message').innerText = message;
+    const btn = document.getElementById('state-btn');
+    if (btn) {
+        btn.style.background = colorElementsBack;
+        btn.style.boxShadow = `0 4px 0 ${colorElementsBorder}`;
+    }
+
+    overlay.classList.remove('hidden');
+
+    if (timerBar) {
+        timerBar.style.transition = 'none';
+        timerBar.style.width = '100%';
+        setTimeout(() => {
+            timerBar.style.transition = `width ${duration}ms linear`;
+            timerBar.style.width = '0%';
+        }, 50);
+    }
+
+    _editStateTimeout = setTimeout(() => {
+        overlay.classList.add('hidden');
+    }, duration);
+}
+
 let ingredienteCount = document.querySelectorAll('#ingredientes-container .ingrediente-item').length;
 let pasoCount = document.querySelectorAll('.step').length;
 let tipCount = document.querySelectorAll('#tips-container .tip-item').length;
@@ -236,14 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         submitEdit();
     });
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-    if (submitBtn) {
-        submitBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            submitEdit();
-        });
-    }
 });
 
 function submitEdit() {

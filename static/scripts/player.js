@@ -105,24 +105,24 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateUI(state) {
 
         if (state === "playing") {
-            play_btn_mobile.classList.add("hidden");
-            stop_btn_mobile.classList.remove("hidden");
-            pause_btn.classList.remove("hidden");
-            resume_btn.classList.add("hidden");
-            play_btn.classList.add("hidden");
+            play_btn_mobile?.classList.add("hidden");
+            stop_btn_mobile?.classList.remove("hidden");
+            pause_btn?.classList.remove("hidden");
+            resume_btn?.classList.add("hidden");
+            play_btn?.classList.add("hidden");
         }
         if (state === "paused") {
-            play_btn_mobile.classList.remove("hidden");
-            stop_btn_mobile.classList.add("hidden");
-            pause_btn.classList.add("hidden");
-            resume_btn.classList.remove("hidden");
+            play_btn_mobile?.classList.remove("hidden");
+            stop_btn_mobile?.classList.add("hidden");
+            pause_btn?.classList.add("hidden");
+            resume_btn?.classList.remove("hidden");
         }
         if (state === "idle") {
-            play_btn_mobile.classList.remove("hidden");
-            stop_btn_mobile.classList.add("hidden");
-            pause_btn.classList.add("hidden");
-            resume_btn.classList.add("hidden");
-            play_btn.classList.remove("hidden");
+            play_btn_mobile?.classList.remove("hidden");
+            stop_btn_mobile?.classList.add("hidden");
+            pause_btn?.classList.add("hidden");
+            resume_btn?.classList.add("hidden");
+            play_btn?.classList.remove("hidden");
         }
 
         
