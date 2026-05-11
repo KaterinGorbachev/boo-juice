@@ -857,6 +857,13 @@ textarea {
   padding: 5px;
 }
 
+#video_display {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
 /* Container around the video */
 #video-resizer-wrapper {
   position: relative;
