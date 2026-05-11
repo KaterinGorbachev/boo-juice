@@ -315,11 +315,11 @@ textarea
   .preparation__info
     @include mix.flexRow($horizontal: center)
     gap: variables.$gap-min
-    width: 100%
+    max-width: 100%
     min-width: 0
     flex-wrap: wrap
     div
-      @include mix.flexColumn($horizontal: start)
+      @include mix.flexColumn($horizontal: center)
       min-width: 0
       flex: 1 1 120px
 
@@ -531,6 +531,9 @@ textarea
     background: variables.$player-gradient
     @include  mix.flexColumn($vertical: center, $horizontal: center, $text-align: start)
     gap: variables.$gap-min
+    @include mix.responsive ($size: 'lg')
+      top: 15vh
+      scroll-margin-top: 15vh
     
 
     .player       
