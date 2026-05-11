@@ -61,7 +61,6 @@ function toggleEditSection(sectionName, btn) {
 }
 
 function cancelarEdicion() {
-    // Restore all simple field inputs and show display elements (edit sections are hidden)
     ['nombre_receta', 'descripcion', 'tiempo_preparacion', 'cantidad_porciones', 'video'].forEach(function(f) {
         const input = document.getElementById(f + '_input');
         const display = document.getElementById(f + '_display');
@@ -72,7 +71,6 @@ function cancelarEdicion() {
         if (label) label.style.display = 'none';
     });
 
-    // Show all display sections, hide edit sections
     ['ingredientes', 'pasos', 'tips'].forEach(function(s) {
         const display = document.getElementById(s + '_display');
         const edit = document.getElementById(s + '_edit');
@@ -82,7 +80,6 @@ function cancelarEdicion() {
     const playerBox = document.getElementById('player-box');
     if (playerBox) playerBox.style.display = '';
 
-    // Restore dynamic containers to their original state
     document.getElementById('ingredientes-container').innerHTML = _origIngredientesHTML;
     document.getElementById('pasos-container').innerHTML = _origPasosHTML;
     const tc = document.getElementById('tips-container');
@@ -92,7 +89,6 @@ function cancelarEdicion() {
     pasoCount = document.querySelectorAll('#pasos-container .step__edit').length;
     tipCount = tc ? tc.querySelectorAll('.tip-item').length : 0;
 
-    // Reveal all editar buttons
     document.querySelectorAll('.editar-btn').forEach(function(btn) {
         btn.style.display = '';
     });
@@ -197,20 +193,137 @@ function convertToYouTubeEmbed(url) {
     }
 }
 
-document.querySelector('.form-edit-recipe').addEventListener('submit', function() {
-    const videoInput = document.getElementById('video_input');
-    if (videoInput) {
-        videoInput.value = convertToYouTubeEmbed(videoInput.value.trim());
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+async function sendRecipeUpdate(recetaId, recipeData) {
+    try {
+        const response = await fetch(`/api/recipes/${recetaId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+            body: JSON.stringify(recipeData)
+        });
+
+        let data = {};
+        try {
+            data = await response.json();
+        } catch {
+            throw new Error(`Server returned ${response.status} (non-JSON response)`);
+        }
+
+        if (response.status === 400) {
+            statePopup((data.error ? data.error : 'Datos inválidos'), '❕');
+            return;
+        }
+
+        if (!response.ok) {
+            statePopup((data.error || response.status || 'HTTP error'), '❌');
+            throw new Error(`HTTP error ${response.status}`);
+        }
+
+        statePopup('Receta actualizada con éxito', '¡Yupi!', '🫰', 1500, '#a1d44f', '#036310');
+        setTimeout(() => { window.location.href = `/receta/${recetaId}`; }, 1500);
+    } catch (error) {
+        statePopup(String(error), 'Error actualizando receta');
+        console.error('Error updating recipe:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('editRecipeForm');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitEdit();
+    });
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            submitEdit();
+        });
     }
 });
 
-document.getElementById('portada-input').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('current-image').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+function submitEdit() {
+    const form = document.getElementById('editRecipeForm');
+    const recetaId = form.dataset.recetaId;
+
+    const name = document.getElementById('nombre_receta_input').value.trim();
+    const description = document.getElementById('descripcion_input').value.trim();
+    const minutes = Number(document.getElementById('tiempo_preparacion_input').value);
+    const servings = Number(document.getElementById('cantidad_porciones_input').value);
+    const video = convertToYouTubeEmbed(document.getElementById('video_input').value.trim());
+
+    if (!name || name.length < 2 || name.length > 150) {
+        statePopup('Nombre de receta inválido (2-150 caracteres)', '❕');
+        return;
     }
-});
+    if (!description || description.length < 2 || description.length > 500) {
+        statePopup('Descripción inválida (2-500 caracteres)', '❕');
+        return;
+    }
+    if (!Number.isInteger(minutes) || minutes < 1) {
+        statePopup('Tiempo de preparación debe ser mayor que 0', '❕');
+        return;
+    }
+    if (!Number.isInteger(servings) || servings < 1) {
+        statePopup('Cantidad de porciones debe ser mayor que 0', '❕');
+        return;
+    }
+
+    const nombreInputs = document.querySelectorAll('#ingredientes-container input[name="ingrediente_nombre[]"]');
+    const cantidadInputs = document.querySelectorAll('#ingredientes-container input[name="ingrediente_cantidad[]"]');
+    const medidaInputs = document.querySelectorAll('#ingredientes-container select[name="ingrediente_medida[]"]');
+    const ingredients = [];
+    nombreInputs.forEach((input, i) => {
+        const nombre = input.value.trim();
+        const cantidad = Number(cantidadInputs[i]?.value) || 0;
+        const medida = medidaInputs[i]?.value;
+        if (nombre && !isNaN(cantidad) && medida) {
+            ingredients.push({ nombre, cantidad, medida });
+        }
+    });
+    if (ingredients.length < 1) {
+        statePopup('Introduce al menos un ingrediente', '❕');
+        return;
+    }
+
+    const stepTextareas = document.querySelectorAll('#pasos-container textarea[name="paso_descripcion[]"]');
+    const steps = [];
+    stepTextareas.forEach((textarea, i) => {
+        const text = textarea.value.trim();
+        if (text) steps.push({ id: i + 1, text });
+    });
+    if (steps.length < 1) {
+        statePopup('Introduce al menos un paso de preparación', '❕');
+        return;
+    }
+
+    const tipInputs = document.querySelectorAll('#tips-container textarea[name="tips[]"]');
+    const tips = [];
+    tipInputs.forEach((input) => {
+        const tip = input.value.trim();
+        if (tip) {
+            if (tip.length > 200) {
+                statePopup('Cada tip debe tener máximo 200 caracteres', '❕');
+                throw new Error('tip too long');
+            }
+            tips.push(tip);
+        }
+    });
+
+    const recipeData = {
+        name,
+        description,
+        video,
+        minutes,
+        servings,
+        ingredients,
+        steps,
+        tips
+    };
+
+    sendRecipeUpdate(recetaId, recipeData);
+}

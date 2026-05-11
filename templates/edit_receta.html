@@ -13,8 +13,7 @@
 {% block content %}
 <div class="wrapper-main">
     <div class="content-inner">
-        <form method="POST" enctype="multipart/form-data" class="form-edit-recipe">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <form id="editRecipeForm" data-receta-id="{{ data.id }}" class="form-edit-recipe">
             <section class="comon__info">
                 <div class="cell">
                         <div class="img__box">
@@ -29,8 +28,6 @@
                                 alt="{{ data.nombre_receta }}"
                                 id="current-image"
                             >
-                            <input type="file" name="portada" accept="image/*" id="portada-input" style="display: none;">
-                            <button type="button" onclick="document.getElementById('portada-input').click()">Cambiar imagen</button>
                         </div>
 
                         <div class="title__box">

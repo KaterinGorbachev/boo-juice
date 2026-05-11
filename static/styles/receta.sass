@@ -474,7 +474,7 @@ textarea
 .steps
   @include mix.flexColumn($horizontal: center)
   gap: variables.$gap-min
-  padding: 0.45rem 0.45rem
+  padding: 2rem 0.45rem
   width: 100%
   min-width: 0
   position: relative
@@ -486,7 +486,8 @@ textarea
 
   .player-box
     position: sticky
-    top: 15vh
+    scroll-margin-top: 20vh
+    top: 20vh
     z-index: 9
     width: 100%
     border: solid 2px variables.$violet-glow

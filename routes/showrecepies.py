@@ -1,6 +1,6 @@
 from flask import (
     Blueprint, session, url_for, redirect, render_template,
-    jsonify, make_response, request, current_app, flash, abort,
+    jsonify, make_response, request, flash, abort,
 )
 import logging
 import sqlite_CRUD_script as dbquery
@@ -9,7 +9,6 @@ from extensions import limiter
 import os
 from dotenv import load_dotenv
 from fractions import Fraction
-from werkzeug.utils import secure_filename
 from urllib.parse import urlparse
 
 from pdf_generator import generate_pdf
@@ -19,16 +18,9 @@ load_dotenv()
 
 secret_api = os.environ.get('API_SECRET')
 
-ALLOWED_IMAGE_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
-
 # -------------------------
 # Helpers
 # -------------------------
-
-
-# allowed_image: checks that a filename has a permitted image extension
-def allowed_image(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS
 
 
 # safe_video_url: validates that a URL has an http/https scheme and a netloc; returns None otherwise
@@ -206,8 +198,8 @@ def recepy_pdf(id):
         abort(500)
 
 
-# edit_receta: handles GET (load form) and POST (validate and save) for editing an existing recipe
-@recepy_page.route("/edit_receta/<int:id>", methods=['GET', 'POST'])
+# edit_receta: renders the edit form for an existing recipe (GET only). Submission is handled by api_update_receta.
+@recepy_page.route("/edit_receta/<int:id>", methods=['GET'])
 def edit_receta(id):
     is_user = session.get('user_loggedin')
     if not is_user:
@@ -223,105 +215,115 @@ def edit_receta(id):
             if not result or result[0] != user_sql_id:
                 abort(400)
 
-            if request.method == 'POST':
-                nombre_receta = request.form.get('nombre_receta', '').strip()
-                descripcion = request.form.get('descripcion', '').strip()
-                video = safe_video_url(request.form.get('video', '').strip())
+            data = dbquery.get_receta_by_id(id, conn)
+            for item in data['ingredientes']:
+                _format_cantidad(item)
 
-                errors = []
-
-                if not testsSQLite.is_string(nombre_receta, 2, 150):
-                    errors.append('Nombre de receta inválido (2-150 caracteres).')
-                if not testsSQLite.is_string(descripcion, 2, 500):
-                    errors.append('Descripción inválida (2-500 caracteres).')
-
-                try:
-                    tiempo_preparacion = int(request.form.get('tiempo_preparacion', ''))
-                    cantidad_porciones = int(request.form.get('cantidad_porciones', ''))
-                except (ValueError, TypeError):
-                    errors.append('Tiempo y porciones deben ser números enteros.')
-                    tiempo_preparacion = cantidad_porciones = None
-
-                if tiempo_preparacion is not None and not testsSQLite.is_integer(tiempo_preparacion, min=1):
-                    errors.append('Tiempo de preparación debe ser mayor que 0.')
-                if cantidad_porciones is not None and not testsSQLite.is_integer(cantidad_porciones, min=1):
-                    errors.append('Cantidad de porciones debe ser mayor que 0.')
-
-                nombres = request.form.getlist('ingrediente_nombre[]')
-                cantidades_raw = request.form.getlist('ingrediente_cantidad[]')
-                medidas = request.form.getlist('ingrediente_medida[]')
-                ingredientes = []
-                for i, nombre in enumerate(nombres):
-                    if not nombre.strip():
-                        continue
-                    try:
-                        cantidad_val = float(cantidades_raw[i])
-                    except (ValueError, IndexError):
-                        errors.append(f'Cantidad del ingrediente {i + 1} inválida.')
-                        continue
-                    ingredientes.append({
-                        'nombre': nombre.strip(),
-                        'cantidad': cantidad_val,
-                        'medida': medidas[i] if i < len(medidas) else '',
-                    })
-
-                if len(ingredientes) < 1:
-                    errors.append('Debes incluir al menos un ingrediente.')
-                elif testsSQLite.validate_ingredients(ingredientes):
-                    errors.append('Datos de ingredientes inválidos.')
-
-                pasos = [p.strip() for p in request.form.getlist('paso_descripcion[]') if p.strip()]
-                if len(pasos) < 1:
-                    errors.append('Debes incluir al menos un paso.')
-
-                tips = [t.strip() for t in request.form.getlist('tips[]') if t.strip()]
-                for tip in tips:
-                    if not testsSQLite.is_string(tip, 0, 200):
-                        errors.append('Cada tip debe tener máximo 200 caracteres.')
-                        break
-
-                if errors:
-                    for msg in errors:
-                        flash(msg, 'error')
-                    return redirect(url_for('recepy_page.edit_receta', id=id))
-
-                portada = None
-                if 'portada' in request.files:
-                    file = request.files['portada']
-                    if file and file.filename and allowed_image(file.filename):
-                        filename = f"recipe_{id}_{secure_filename(file.filename)}"
-                        file_path = os.path.join(
-                            current_app.root_path, 'static', 'assets', 'images', filename,
-                        )
-                        file.save(file_path)
-                        portada = f"/static/assets/images/{filename}"
-
-                dbquery.update_receta(
-                    conn, id, nombre_receta, descripcion, portada,
-                    video, tiempo_preparacion, cantidad_porciones,
-                )
-                dbquery.update_ingredientes_receta(conn, id, ingredientes)
-                dbquery.update_pasos_receta(conn, id, pasos)
-                dbquery.update_tips_receta(conn, id, tips)
-
-                flash('Receta actualizada de forma correcta', 'success')
-                return redirect(url_for('recepy_page.receta', id=id))
-
-            else:
-                data = dbquery.get_receta_by_id(id, conn)
-                for item in data['ingredientes']:
-                    _format_cantidad(item)
-
-                return render_template(
-                    'edit_receta.html',
-                    data=data,
-                    user=is_user,
-                    user_uid=session.get("uid", ""),
-                )
+            return render_template(
+                'edit_receta.html',
+                data=data,
+                user=is_user,
+                user_uid=session.get("uid", ""),
+            )
 
     except Exception:
         flash('Ha habido un problema en conexión. Intenta más tarde.', '❌Error')
         return redirect(url_for('vue_app'))
+
+
+# api_update_receta: JSON endpoint to update an existing recipe. Mirrors the validation in /api/recipes.
+@recepy_page.route("/api/recipes/<int:id>", methods=['PUT'])
+@limiter.limit("20 per hour")
+def api_update_receta(id):
+    is_user = session.get('user_loggedin')
+    if not is_user:
+        return jsonify({"error": "No user logged in session"}), 403
+
+    user_sql_id = session.get("sql_user_id")
+
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"error": "No JSON received"}), 400
+
+    required = ("name", "description", "minutes", "servings", "ingredients", "steps")
+    for key in required:
+        if key not in data or testsSQLite.value_is_none(data[key]):
+            return jsonify({"error": f"Missing field: {key}"}), 400
+
+    if not isinstance(data["ingredients"], list):
+        return jsonify({"error": "ingredients must be a list"}), 400
+    if not isinstance(data["steps"], list):
+        return jsonify({"error": "steps must be a list"}), 400
+    if not testsSQLite.is_string(data["name"], 2, 150):
+        return jsonify({"error": "Invalid name (2-150 chars)"}), 400
+    if not testsSQLite.is_string(data["description"], 2, 500):
+        return jsonify({"error": "Invalid description (2-500 chars)"}), 400
+    if not testsSQLite.is_integer(data["minutes"], min=1):
+        return jsonify({"error": "Invalid minutes"}), 400
+    if not testsSQLite.is_integer(data["servings"], min=1):
+        return jsonify({"error": "Invalid servings"}), 400
+    if len(data["ingredients"]) < 1:
+        return jsonify({"error": "At least one ingredient required"}), 400
+    if len(data["steps"]) < 1:
+        return jsonify({"error": "At least one step required"}), 400
+
+    if testsSQLite.validate_ingredients(data["ingredients"]):
+        return jsonify({"error": "Invalid ingredients"}), 400
+
+    tips = data.get("tips", []) or []
+    if not isinstance(tips, list):
+        return jsonify({"error": "tips must be a list"}), 400
+    for tip in tips:
+        if not testsSQLite.is_string(tip, 0, 200):
+            return jsonify({"error": "Each tip must be a string up to 200 chars"}), 400
+
+    pasos = []
+    for i, step in enumerate(data["steps"]):
+        if isinstance(step, dict):
+            text = step.get("text", "")
+        else:
+            text = step
+        if not testsSQLite.is_string(text, 1, None):
+            return jsonify({"error": f"Invalid step {i + 1}"}), 400
+        pasos.append(str(text).strip())
+
+    video = safe_video_url((data.get("video") or "").strip())
+
+    try:
+        with dbquery.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT usuario_id FROM recetas WHERE id = %s", (id,))
+            result = cursor.fetchone()
+            if not result or result[0] != user_sql_id:
+                return jsonify({"error": "Not allowed"}), 403
+
+            ingredientes = [
+                {
+                    'nombre': str(ing["nombre"]).strip(),
+                    'cantidad': float(ing["cantidad"]),
+                    'medida': ing["medida"],
+                }
+                for ing in data["ingredients"]
+            ]
+
+            dbquery.update_receta(
+                conn, id,
+                str(data["name"]).strip(),
+                str(data["description"]).strip(),
+                None,
+                video,
+                int(data["minutes"]),
+                int(data["servings"]),
+            )
+            dbquery.update_ingredientes_receta(conn, id, ingredientes)
+            dbquery.update_pasos_receta(conn, id, pasos)
+            dbquery.update_tips_receta(conn, id, [t.strip() for t in tips if t.strip()])
+
+    except Exception as e:
+        logger.error(f"Error updating recipe {id}: {e}")
+        return jsonify({"error": "Error updating recipe"}), 500
+
+    return jsonify({"status": "ok"}), 200
 
 
 # internal_error: renders the 500 error page for this Blueprint
