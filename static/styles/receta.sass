@@ -339,18 +339,23 @@ textarea
       @include mix.flexColumn($horizontal: start)
       min-width: 0
       flex: 1 1 120px
+      .tiempo_preparacion_input
+        width: 100%
+        min-width: 0
+        @include mix.flexColumn($horizontal: start)
+        gap: variables.$gap-min
+        .input__left_label 
+          @include mix.flexRow($horizontal: start, $vertical: center)
+          gap: 4px
 
     hr
-      width: 0.7px
-      height: 40px
-      background-color: variables.$light-buttons-text
-      border: none
+      display: none
     
     @include mix.responsive ($size: 'md')
       @include mix.flexRow($horizontal: start)
       div
         flex: 0 1 auto
-        
+
 
 .ingredientes
   @include mix.flexColumn($horizontal: start)

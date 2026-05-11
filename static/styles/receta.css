@@ -554,11 +554,26 @@ textarea {
   min-width: 0;
   flex: 1 1 120px;
 }
+.comon__info .preparation__info--edit div .tiempo_preparacion_input {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  text-align: start;
+  gap: 1rem;
+}
+.comon__info .preparation__info--edit div .tiempo_preparacion_input .input__left_label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  text-align: start;
+  gap: 4px;
+}
 .comon__info .preparation__info--edit hr {
-  width: 0.7px;
-  height: 40px;
-  background-color: #2B0125;
-  border: none;
+  display: none;
 }
 @media (min-width: 768px) {
   .comon__info .preparation__info--edit {
