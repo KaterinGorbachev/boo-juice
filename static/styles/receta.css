@@ -788,8 +788,8 @@ textarea {
 }
 @media (min-width: 993px) {
   .steps .player-box {
-    top: 15vh;
-    scroll-margin-top: 15vh;
+    top: 12vh;
+    scroll-margin-top: 12vh;
   }
 }
 .steps .player-box .player {
