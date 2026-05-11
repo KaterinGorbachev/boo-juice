@@ -508,7 +508,33 @@ textarea {
   gap: 1rem;
   width: 100%;
 }
-.comon__info .preparation__info, .comon__info .preparation__info--edit {
+.comon__info .preparation__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  gap: 1rem;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.comon__info .preparation__info div {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  text-align: start;
+  min-width: 0;
+  flex: 1 1 120px;
+}
+.comon__info .preparation__info hr {
+  width: 0.7px;
+  height: 40px;
+  background-color: #2B0125;
+  border: none;
+}
+.comon__info .preparation__info--edit {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -519,7 +545,7 @@ textarea {
   min-width: 0;
   flex-wrap: wrap;
 }
-.comon__info .preparation__info div, .comon__info .preparation__info--edit div {
+.comon__info .preparation__info--edit div {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -528,7 +554,7 @@ textarea {
   min-width: 0;
   flex: 1 1 120px;
 }
-.comon__info .preparation__info hr, .comon__info .preparation__info--edit hr {
+.comon__info .preparation__info--edit hr {
   width: 0.7px;
   height: 40px;
   background-color: #2B0125;
