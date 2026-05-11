@@ -174,8 +174,16 @@ function removeIngrediente(button) {
     button.parentElement.remove();
 }
 
+function renumberPasos() {
+    const items = document.querySelectorAll('#pasos-container .step__edit');
+    items.forEach((item, i) => {
+        const span = item.querySelector('.step_num span');
+        if (span) span.textContent = i + 1;
+    });
+    pasoCount = items.length;
+}
+
 function addPaso() {
-    pasoCount++;
     const container = document.getElementById('pasos-container');
     const div = document.createElement('div');
     div.className = 'step__edit';
@@ -184,16 +192,18 @@ function addPaso() {
     div.style.border = '1px solid #ccc';
     div.innerHTML = `
         <div class="step_num">
-            <span>${pasoCount}</span>
+            <span></span>
         </div>
         <textarea name="paso_descripcion[]" rows="3" style="width: 100%;"></textarea>
         <button type="button" onclick="removePaso(this)" class="outline-button-danger">Eliminar paso</button>
     `;
     container.appendChild(div);
+    renumberPasos();
 }
 
 function removePaso(button) {
-    button.parentElement.remove();
+    button.closest('.step__edit').remove();
+    renumberPasos();
 }
 
 function addTip() {

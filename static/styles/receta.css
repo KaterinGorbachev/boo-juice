@@ -502,8 +502,8 @@ textarea {
 }
 .comon__info .preparation__info {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
   justify-content: center;
   text-align: start;
   gap: 1rem;
@@ -525,6 +525,18 @@ textarea {
   height: 40px;
   background-color: #2B0125;
   border: none;
+}
+@media (min-width: 768px) {
+  .comon__info .preparation__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    text-align: start;
+  }
+  .comon__info .preparation__info div {
+    flex: 0 1 auto;
+  }
 }
 
 .ingredientes {
