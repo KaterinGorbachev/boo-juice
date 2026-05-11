@@ -357,6 +357,14 @@ textarea {
   background-color: #fef5ff;
 }
 
+@media (max-width: 767px) {
+  .num_input {
+    width: 80%;
+    min-width: 0;
+    flex: 0 0 80%;
+  }
+}
+
 .form-edit-recipe {
   display: flex;
   flex-direction: column;
@@ -500,7 +508,7 @@ textarea {
   gap: 1rem;
   width: 100%;
 }
-.comon__info .preparation__info {
+.comon__info .preparation__info, .comon__info .preparation__info--edit {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -511,7 +519,7 @@ textarea {
   min-width: 0;
   flex-wrap: wrap;
 }
-.comon__info .preparation__info div {
+.comon__info .preparation__info div, .comon__info .preparation__info--edit div {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -520,21 +528,21 @@ textarea {
   min-width: 0;
   flex: 1 1 120px;
 }
-.comon__info .preparation__info hr {
+.comon__info .preparation__info hr, .comon__info .preparation__info--edit hr {
   width: 0.7px;
   height: 40px;
   background-color: #2B0125;
   border: none;
 }
 @media (min-width: 768px) {
-  .comon__info .preparation__info {
+  .comon__info .preparation__info--edit {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: start;
     text-align: start;
   }
-  .comon__info .preparation__info div {
+  .comon__info .preparation__info--edit div {
     flex: 0 1 auto;
   }
 }

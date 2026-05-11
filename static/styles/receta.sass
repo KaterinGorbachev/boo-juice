@@ -190,6 +190,12 @@ textarea
   cursor: pointer
   background-color: variables.$edit-input-bg
 
+.num_input
+  @include mix.responsive($size: 'sm')
+    width: 80%
+    min-width: 0
+    flex: 0 0 80%
+
 .form-edit-recipe
   @include mix.flexColumn($horizontal: center)
   gap: clamp(2.5rem, 2vw, 3rem)
@@ -306,7 +312,7 @@ textarea
         
 
   // recepy prep info
-  .preparation__info
+  .preparation__info, .preparation__info--edit
     @include mix.flexColumn($horizontal: start)
     gap: variables.$gap-min
     width: 100%
@@ -323,6 +329,7 @@ textarea
       background-color: variables.$light-buttons-text
       border: none
 
+  .preparation__info--edit
     @include mix.responsive ($size: 'md')
       @include mix.flexRow($horizontal: start)
       div
