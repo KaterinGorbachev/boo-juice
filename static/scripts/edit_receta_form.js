@@ -41,10 +41,15 @@ let _origPasosHTML = '';
 let _origTipsHTML = '';
 
 (function captureOriginals() {
-    ['nombre_receta', 'descripcion', 'tiempo_preparacion', 'cantidad_porciones', 'video'].forEach(function(f) {
+    ['nombre_receta', 'descripcion', 'cantidad_porciones', 'video'].forEach(function(f) {
         const el = document.getElementById(f + '_input');
         if (el) _origInputValues[f] = el.value;
     });
+    const hoursEl = document.getElementById('tiempo_preparacion_hours');
+    const minutesEl = document.getElementById('tiempo_preparacion_minutes');
+    if (hoursEl) _origInputValues['tiempo_preparacion_hours'] = hoursEl.value;
+    if (minutesEl) _origInputValues['tiempo_preparacion_minutes'] = minutesEl.value;
+
     _origIngredientesHTML = document.getElementById('ingredientes-container').innerHTML;
     _origPasosHTML = document.getElementById('pasos-container').innerHTML;
     const tc = document.getElementById('tips-container');
@@ -61,8 +66,9 @@ function toggleEdit(fieldName, btn) {
         input.style.display = 'none';
         if (label) label.style.display = 'none';
         if (fieldName === 'tiempo_preparacion') {
-            const minutes = parseInt(input.value);
-            display.textContent = Math.floor(minutes / 60) + 'h ' + (minutes % 60) + 'min';
+            const hours = parseInt(document.getElementById('tiempo_preparacion_hours').value) || 0;
+            const minutes = parseInt(document.getElementById('tiempo_preparacion_minutes').value) || 0;
+            display.textContent = hours + 'h ' + minutes + 'min';
         } else if (fieldName === 'video') {
             display.textContent = input.value || 'No hay video';
         } else {
@@ -94,7 +100,7 @@ function toggleEditSection(sectionName, btn) {
 }
 
 function cancelarEdicion() {
-    ['nombre_receta', 'descripcion', 'tiempo_preparacion', 'cantidad_porciones', 'video'].forEach(function(f) {
+    ['nombre_receta', 'descripcion', 'cantidad_porciones', 'video'].forEach(function(f) {
         const input = document.getElementById(f + '_input');
         const display = document.getElementById(f + '_display');
         const label = document.getElementById(f + '_label');
@@ -103,6 +109,15 @@ function cancelarEdicion() {
         if (input) input.style.display = 'none';
         if (label) label.style.display = 'none';
     });
+
+    const hoursEl = document.getElementById('tiempo_preparacion_hours');
+    const minutesEl = document.getElementById('tiempo_preparacion_minutes');
+    if (hoursEl) hoursEl.value = _origInputValues['tiempo_preparacion_hours'] ?? '';
+    if (minutesEl) minutesEl.value = _origInputValues['tiempo_preparacion_minutes'] ?? '';
+    const tiempoInput = document.getElementById('tiempo_preparacion_input');
+    const tiempoDisplay = document.getElementById('tiempo_preparacion_display');
+    if (tiempoInput) tiempoInput.style.display = 'none';
+    if (tiempoDisplay) tiempoDisplay.style.display = '';
 
     ['ingredientes', 'pasos', 'tips'].forEach(function(s) {
         const display = document.getElementById(s + '_display');
@@ -277,7 +292,9 @@ function submitEdit() {
 
     const name = document.getElementById('nombre_receta_input').value.trim();
     const description = document.getElementById('descripcion_input').value.trim();
-    const minutes = Number(document.getElementById('tiempo_preparacion_input').value);
+    const hours = Number(document.getElementById('tiempo_preparacion_hours').value) || 0;
+    const minutesPart = Number(document.getElementById('tiempo_preparacion_minutes').value) || 0;
+    const minutes = hours * 60 + minutesPart;
     const servings = Number(document.getElementById('cantidad_porciones_input').value);
     const video = convertToYouTubeEmbed(document.getElementById('video_input').value.trim());
 

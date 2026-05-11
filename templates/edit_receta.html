@@ -58,7 +58,16 @@
                         
                             <h3 class="label">Cocinando:</h3>
                             <p id="tiempo_preparacion_display">{{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
-                            <input type="number" name="tiempo_preparacion" id="tiempo_preparacion_input" value="{{ data.tiempo_preparacion }}" min="1" required style="display: none;">
+                            <div id="tiempo_preparacion_input" style="display: none;">
+                                <div class="input__left_label">
+                                    <input type="number" name="hours" id="tiempo_preparacion_hours" value="{{ data.tiempo_preparacion//60 }}" min="0" class="num_input">
+                                    <label for="tiempo_preparacion_hours" class="text">h</label>
+                                </div>
+                                <div class="input__left_label">
+                                    <input type="number" name="minutes" id="tiempo_preparacion_minutes" value="{{ data.tiempo_preparacion%60 }}" min="0" max="59" class="num_input">
+                                    <label for="tiempo_preparacion_minutes" class="text">min</label>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div>
