@@ -441,60 +441,76 @@ body
   @include mix.flexColumn()
 
 
-header        
-    width: 100vw
-    position: sticky
-    z-index: 100
-    top: 0
-    left: 0
-    background: variables.$light-header-background-color
-    flex-wrap: nowrap
-    border: none
-    outline: none
+header
     .header__box
-        @include mix.flexRow($horizontal: end, $text-align:start)
+        @include mix.flexRow($horizontal: start, $text-align: start)
         width: 100%
+        position: fixed
+        z-index: 10
+        top: 0
+        left: 0
+        background: variables.$light-header-background-color
+        flex-wrap: nowrap
+        border: none
+        outline: none
+        height: 10vh
         padding: 2rem
-        
 
-        .logo
+        .logo__box
+            position: relative
             width: 80px
-            object-fit: contain
-            position: absolute
-            top: 0.5rem
-            left: 42vw
-            img
-                width: 100%
+            display: flex
+            items-align: center
+            justify-content: center
 
-        
+
+            .logo
+                @include mix.flexRow($horizontal: start, $text-align: start)
+                width: 60px
+                object-fit: contain
+                position: fixed
+                top: 1rem
+                left: 1rem
+                z-index: 11
+                img
+                    width: 100%
+
+                @include mix.responsive($size: 'md')
+                    width: 80px
 
         .burger__box
-            isolation: isolate
             position: relative
+            margin-left: auto
 
             .menu-btn
-                position: relative
-                z-index: 11
-                right: 2rem
-                top: 0
-                height: 20px
-                width: 28px
+                position: absolute
+                z-index: 13
+                right: -4px
+                top: -10px
+                height: 40px
+                width: 36px
+                padding: 10px 4px
+                background: transparent
+                border: none
                 cursor: pointer
+                touch-action: manipulation
                 @include mix.transition-ease
 
                 &__burger
                     position: absolute
-                    right: 0
-                    top: 0.9rem
+                    right: 4px
+                    top: 10px
                     width: 28px
                     height: 3px
                     background: variables.set-text-color(variables.$light-header-background-color)
+                    pointer-events: none
                     @include mix.transition-ease
 
                     &::before
                         content: ''
                         position: absolute
                         top: -8px
+                        right: 0
                         width: 28px
                         height: 3px
                         background: variables.set-text-color(variables.$light-header-background-color)
@@ -504,6 +520,7 @@ header
                         content: ''
                         position: absolute
                         top: 8px
+                        left: 0
                         width: 20px
                         height: 3px
                         background: variables.set-text-color(variables.$light-header-background-color)
@@ -519,6 +536,8 @@ header
 
                         &::after
                             width: 28px
+                            left: auto
+                            right: 0
                             background: variables.set-text-color(variables.$light-primary-background-color)
                             transform: rotate(-45deg) translate(3px, -7px)
 
@@ -527,6 +546,7 @@ header
                 top: 0
                 left: 0
                 width: 100vw
+                z-index: 12
                 opacity: 0.98
                 visibility: hidden
 
@@ -570,20 +590,20 @@ header
                         font-family: variables.$font-h3
 
                         &:hover
-                            color: variables.$light-hover-color
+                            color: variables.$footer-background-color
+                            text-decoration: underline
 
                     @for $i from 1 through 6
                         .menu-nav__item:nth-child(#{$i})
                             transition-delay: ($i *0.1s) + 0.15s
 
-
-    @include mix.responsive($size: 'md')
-    .header__box
-        .logo
+        @include mix.responsive($size: 'md')
+            .logo
                 left: 2rem
 
 main
-    padding: 1rem 
+    padding: 1rem
+    padding-top: calc(10vh + 1rem)
     position: relative
     width: 100%
     @include mix.flexColumn($vertical: space-between, $horizontal: center)
