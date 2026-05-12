@@ -606,9 +606,9 @@ main
     padding-top: calc(10vh + 1rem)
     position: relative
     width: 100%
-    @include mix.flexColumn($vertical: space-between, $horizontal: center)
+    @include mix.flexColumn($vertical: start, $horizontal: center)
     gap: variables.$gap-min*2
-    min-height: 50vh
+    min-height: 90vh
 
     .layout-wrapper
         width: 100%
@@ -618,6 +618,7 @@ main
 
     @include mix.responsive($size: 'md')
         padding: 1rem 2rem
+        padding-top: calc(10vh + 1rem)
 
     
             

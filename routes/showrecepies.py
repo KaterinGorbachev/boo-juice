@@ -2,6 +2,7 @@ from flask import (
     Blueprint, session, url_for, redirect, render_template,
     jsonify, make_response, request, flash, abort,
 )
+from werkzeug.exceptions import HTTPException
 import logging
 import sqlite_CRUD_script as dbquery
 from testdata import testsSQLite
@@ -205,7 +206,7 @@ def edit_receta(id):
     if not is_user:
         return redirect('/')
 
-    user_sql_id = session.get("sql_user_id")
+    user_sql_id = session.get("sql_user_id", False)
 
     try:
         with dbquery.get_connection() as conn:
@@ -226,6 +227,8 @@ def edit_receta(id):
                 user_uid=session.get("uid", ""),
             )
 
+    except HTTPException:
+        raise
     except Exception:
         flash('Ha habido un problema en conexión. Intenta más tarde.', '❌Error')
         return redirect(url_for('vue_app'))
@@ -338,3 +341,10 @@ def internal_error(error):
 def not_found(error):
     print(error)
     return render_template('404.html'), 404
+
+# denied access
+@recepy_page.errorhandler(400)
+def forbidden(error):
+    print(error)
+    return render_template('400.html'), 400
+

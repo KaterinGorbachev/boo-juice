@@ -189,6 +189,26 @@ const sendRecipe = async (recipeData) => {
       document.querySelectorAll('textarea').forEach(input => input.value = '')
       document.querySelectorAll('select').forEach(input => input.value = '')
 
+      const ingredientsFieldset = document.getElementById("ingredients_fieldset");
+      if (ingredientsFieldset) {
+        const ingBlocks = ingredientsFieldset.querySelectorAll(".ingredient__input");
+        ingBlocks.forEach((block, i) => { if (i > 0) block.remove(); });
+        ingBlocks[0]?.querySelectorAll(".btn_remove_ingredient").forEach(b => b.style.display = "none");
+      }
+
+      const pasosFieldset = document.getElementById("pasos_fieldset");
+      if (pasosFieldset) {
+        const stepBlocks = pasosFieldset.querySelectorAll(".step__input");
+        stepBlocks.forEach((block, i) => { if (i > 0) block.remove(); });
+        const firstLabel = pasosFieldset.querySelector(".step__input .step_label_num");
+        if (firstLabel) firstLabel.textContent = "Paso 1";
+        pasosFieldset.querySelectorAll(".step__input .btn_remove_paso").forEach(b => b.style.display = "none");
+      }
+
+      document.querySelectorAll('#tips_fieldset .tip').forEach((tipBlock, i) => {
+        if (i > 0) tipBlock.remove();
+      });
+
     }
 
     
@@ -206,8 +226,6 @@ const sendRecipe = async (recipeData) => {
   }
 };
 
-let num_paso = 1
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("recipeForm");
 
@@ -218,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const ingredientsFieldset = document.getElementById("ingredients_fieldset");
   const addIngredients = document.getElementById("btn_add_ingredient");
-  
+
   const pasosFieldset = document.getElementById("pasos_fieldset");
   const addPasos = document.getElementById("btn_add_paso");
 
@@ -227,20 +245,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const pasos_btns = document.getElementById('pasos_btns')
 
+  function updateIngredientRemoveButtons() {
+    const blocks = ingredientsFieldset.querySelectorAll(".ingredient__input");
+    const show = blocks.length > 1;
+    blocks.forEach(block => {
+      const btn = block.querySelector(".btn_remove_ingredient");
+      if (btn) btn.style.display = show ? "" : "none";
+    });
+  }
+
+  function renumberPasos() {
+    const blocks = pasosFieldset.querySelectorAll(".step__input");
+    blocks.forEach((block, i) => {
+      const label = block.querySelector(".step_label_num");
+      if (label) label.textContent = `Paso ${i + 1}`;
+    });
+    const show = blocks.length > 1;
+    blocks.forEach(block => {
+      const btn = block.querySelector(".btn_remove_paso");
+      if (btn) btn.style.display = show ? "" : "none";
+    });
+  }
+
+  // wire up the static first ingredient's remove button
+  ingredientsFieldset.querySelectorAll(".ingredient__input").forEach(block => {
+    const btn = block.querySelector(".btn_remove_ingredient");
+    if (btn && !btn.dataset.wired) {
+      btn.dataset.wired = "1";
+      btn.addEventListener("click", () => {
+        block.remove();
+        updateIngredientRemoveButtons();
+        saveFormDraft();
+      });
+    }
+  });
+
+  // wire up the static first step's remove button
+  pasosFieldset.querySelectorAll(".step__input").forEach(block => {
+    const btn = block.querySelector(".btn_remove_paso");
+    if (btn && !btn.dataset.wired) {
+      btn.dataset.wired = "1";
+      btn.addEventListener("click", () => {
+        block.remove();
+        renumberPasos();
+        saveFormDraft();
+      });
+    }
+  });
+
 
   // add tips
   addTip.addEventListener("click", () => {
 
     const container = document.createElement("div");
-    container.classList.add("tip"); 
+    container.classList.add("tip");
     container.classList.add("input-message-box");
 
-    
+
     container.innerHTML = `
-      
+
       <input type="text" name="tips[]" maxlength="200" placeholder="Tu secreto para cocinar delicioso y rápido" class="text">
       <small class="small_input ">0/200 caracteres</small>
-      
+
     `
     // a remove button for this block
     const removeButton = document.createElement("button");
@@ -260,57 +326,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // add steps
   addPasos.addEventListener("click", () => {
-
-    num_paso ++    
-
-    // Create a container div for the new inputs
     const container = document.createElement("div");
     container.classList.add("step__input");
     container.innerHTML = `
-
-        <label class="small-title">Paso ${num_paso}</label>
+        <label class="small-title step_label_num"></label>
         <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" class="step_description"></textarea>
+    `;
 
-    `
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("outline-button-danger", "btn_remove_paso");
+    removeButton.type = "button";
+    removeButton.textContent = "- Eliminar paso";
+    removeButton.addEventListener("click", () => {
+      container.remove();
+      renumberPasos();
+      saveFormDraft();
+    });
+    container.appendChild(removeButton);
 
     pasosFieldset.insertBefore(container, pasos_btns);
-
-    const btn_remove_exists = document.getElementById('btn_remove_paso')
-
-    if(!btn_remove_exists){
-        // remove the last step
-        const removeButton = document.createElement("button");
-        removeButton.classList.add("outline-button-danger")
-        removeButton.type = "button";
-        removeButton.id = "btn_remove_paso"
-        removeButton.textContent = "- Eliminar ultimo paso";
-        removeButton.addEventListener("click", () => {
-            const pasosBlocks = pasosFieldset.querySelectorAll(".step__input");
-            if (pasosBlocks.length <= 1) return;
-
-            pasosBlocks[pasosBlocks.length - 1].remove();
-            num_paso--;
-
-            if (pasosFieldset.querySelectorAll(".step__input").length <= 1) {
-                removeButton.remove();
-            }
-        });
-
-        pasos_btns.appendChild(removeButton)
-
-    }
-
-  })
+    renumberPasos();
+  });
 
   // add ingredients
   addIngredients.addEventListener("click", () => {
-    // Create a container div for the new inputs
     const container = document.createElement("div");
-    container.classList.add("ingredient__input"); 
+    container.classList.add("ingredient__input");
 
     container.innerHTML = `
       <input type="text" name="ingredients[]" placeholder="Ingrediente" required class="ingredient" list="ingredientes-list">
-        
+
         <div class="input__left_label">
           <input type="number" name="amounts[]" step="0.125" min="0" placeholder="Cantidad"  class="num_input">
           <select name="measures[]" required class="measure_select">
@@ -325,28 +370,25 @@ document.addEventListener("DOMContentLoaded", () => {
             <option value="l">l</option>
             <option value="al gusto">al gusto</option>
             <option value="pizca">pizca</option>
-            
+
           </select>
 
-        </div>   
+        </div>
+    `;
 
-    
-    `
-    
-    // a remove button for this block
     const removeButton = document.createElement("button");
-    removeButton.classList.add("outline-button-danger"); 
+    removeButton.classList.add("outline-button-danger", "btn_remove_ingredient");
     removeButton.type = "button";
     removeButton.textContent = "- Eliminar ingrediente";
     removeButton.addEventListener("click", () => {
       container.remove();
+      updateIngredientRemoveButtons();
+      saveFormDraft();
     });
-
-    // Appendremove button to the container    
     container.appendChild(removeButton);
 
-    // Insert the new container before the Add button
     ingredientsFieldset.insertBefore(container, addIngredients);
+    updateIngredientRemoveButtons();
   });
 
   form.addEventListener("submit", async (e) => {
@@ -523,6 +565,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // restore draft after all listeners are set up so .click() handlers work
   loadFormDraft();
+
+  // refresh remove-button visibility and step numbers after draft restore
+  updateIngredientRemoveButtons();
+  renumberPasos();
 
 })
 

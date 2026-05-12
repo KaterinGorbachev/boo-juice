@@ -758,10 +758,10 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   text-align: start;
   gap: 2rem;
-  min-height: 50vh;
+  min-height: 90vh;
 }
 main .layout-wrapper {
   width: 100%;
@@ -776,6 +776,7 @@ main .layout-wrapper {
 @media (min-width: 768px) {
   main {
     padding: 1rem 2rem;
+    padding-top: calc(10vh + 1rem);
   }
 }
 

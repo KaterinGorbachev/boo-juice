@@ -127,13 +127,14 @@
             <option value="l">l</option>
             <option value="al gusto">al gusto</option>
             <option value="pizca">pizca</option>
-            
+
           </select>
 
-        </div>   
+        </div>
+        <button type="button" class="outline-button-danger btn_remove_ingredient" style="display: none;">- Eliminar ingrediente</button>
 
       </div>
-      
+
       <button type="button" id="btn_add_ingredient" class="outline-button-neutral">+ Añadir ingrediente</button>
     </fieldset>
     <br><br>
@@ -142,12 +143,13 @@
       <legend class="medium-title">Pasos de preparación *</legend>
 
       <div class="step__input">
-        <label class="small-title">Paso 1</label>
+        <label class="small-title step_label_num">Paso 1</label>
         <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" required class="step_description"></textarea>
+        <button type="button" class="outline-button-danger btn_remove_paso" style="display: none;">- Eliminar paso</button>
 
       </div>
 
-      
+
       <!-- <input type="file" name="step_photos[]" accept="image/*"> -->
        <div id="pasos_btns">
 
@@ -155,7 +157,7 @@
 
        </div>
 
-      
+
     </fieldset>
 
     <fieldset id="tips_fieldset" class="input__labeled">
