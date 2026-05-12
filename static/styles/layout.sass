@@ -208,10 +208,12 @@
     .input__left_label
         @include mix.flexRow($horizontal: start)
         flex-wrap: wrap
-        gap: 0.25rem        
+        gap: 0.25rem
+        width: 100%
         .num_input
             @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:30%)
             min-width: 100px
+            flex: 1 1 0
 @include mix.responsive($size: 'md')
     .input-time
         @include mix.flexRow($horizontal: stretch)

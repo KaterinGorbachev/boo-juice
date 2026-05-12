@@ -293,6 +293,7 @@
   text-align: start;
   flex-wrap: wrap;
   gap: 0.25rem;
+  width: 100%;
 }
 .input-time .input__left_label .num_input {
   font-size: 0.95rem;
@@ -317,6 +318,7 @@
 }
 .input-time .input__left_label .num_input {
   min-width: 100px;
+  flex: 1 1 0;
 }
 
 @media (min-width: 768px) {
