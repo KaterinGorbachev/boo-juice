@@ -61,10 +61,10 @@ function toggleEdit(fieldName, btn) {
     const input = document.getElementById(fieldName + '_input');
     const label = document.getElementById(fieldName + '_label');
 
-    if (display.style.display === 'none') {
-        display.style.display = '';
-        input.style.display = 'none';
-        if (label) label.style.display = 'none';
+    if (display.classList.contains('hidden')) {
+        display.classList.remove('hidden');
+        input.classList.add('hidden');
+        if (label) label.classList.add('hidden');
         if (fieldName === 'tiempo_preparacion') {
             const hours = parseInt(document.getElementById('tiempo_preparacion_hours').value) || 0;
             const minutes = parseInt(document.getElementById('tiempo_preparacion_minutes').value) || 0;
@@ -75,10 +75,10 @@ function toggleEdit(fieldName, btn) {
             display.textContent = input.value;
         }
     } else {
-        display.style.display = 'none';
-        input.style.display = 'block';
-        if (label) label.style.display = 'block';
-        if (btn) btn.style.display = 'none';
+        display.classList.add('hidden');
+        input.classList.remove('hidden');
+        if (label) label.classList.remove('hidden');
+        if (btn) btn.classList.add('hidden');
     }
 }
 
@@ -87,15 +87,15 @@ function toggleEditSection(sectionName, btn) {
     const edit = document.getElementById(sectionName + '_edit');
     const playerBox = sectionName === 'pasos' ? document.getElementById('player-box') : null;
 
-    if (display.style.display === 'none') {
-        display.style.display = '';
-        edit.style.display = 'none';
-        if (playerBox) playerBox.style.display = '';
+    if (display.classList.contains('hidden')) {
+        display.classList.remove('hidden');
+        edit.classList.add('hidden');
+        if (playerBox) playerBox.classList.remove('hidden');
     } else {
-        display.style.display = 'none';
-        edit.style.display = 'block';
-        if (playerBox) playerBox.style.display = 'none';
-        if (btn) btn.style.display = 'none';
+        display.classList.add('hidden');
+        edit.classList.remove('hidden');
+        if (playerBox) playerBox.classList.add('hidden');
+        if (btn) btn.classList.add('hidden');
     }
 }
 
@@ -105,9 +105,9 @@ function cancelarEdicion() {
         const display = document.getElementById(f + '_display');
         const label = document.getElementById(f + '_label');
         if (input) input.value = _origInputValues[f] !== undefined ? _origInputValues[f] : '';
-        if (display) display.style.display = '';
-        if (input) input.style.display = 'none';
-        if (label) label.style.display = 'none';
+        if (display) display.classList.remove('hidden');
+        if (input) input.classList.add('hidden');
+        if (label) label.classList.add('hidden');
     });
 
     const hoursEl = document.getElementById('tiempo_preparacion_hours');
@@ -116,17 +116,17 @@ function cancelarEdicion() {
     if (minutesEl) minutesEl.value = _origInputValues['tiempo_preparacion_minutes'] ?? '';
     const tiempoInput = document.getElementById('tiempo_preparacion_input');
     const tiempoDisplay = document.getElementById('tiempo_preparacion_display');
-    if (tiempoInput) tiempoInput.style.display = 'none';
-    if (tiempoDisplay) tiempoDisplay.style.display = '';
+    if (tiempoInput) tiempoInput.classList.add('hidden');
+    if (tiempoDisplay) tiempoDisplay.classList.remove('hidden');
 
     ['ingredientes', 'pasos', 'tips'].forEach(function(s) {
         const display = document.getElementById(s + '_display');
         const edit = document.getElementById(s + '_edit');
-        if (display) display.style.display = '';
-        if (edit) edit.style.display = 'none';
+        if (display) display.classList.remove('hidden');
+        if (edit) edit.classList.add('hidden');
     });
     const playerBox = document.getElementById('player-box');
-    if (playerBox) playerBox.style.display = '';
+    if (playerBox) playerBox.classList.remove('hidden');
 
     document.getElementById('ingredientes-container').innerHTML = _origIngredientesHTML;
     document.getElementById('pasos-container').innerHTML = _origPasosHTML;
@@ -138,7 +138,7 @@ function cancelarEdicion() {
     tipCount = tc ? tc.querySelectorAll('.tip-item').length : 0;
 
     document.querySelectorAll('.editar-btn').forEach(function(btn) {
-        btn.style.display = '';
+        btn.classList.remove('hidden');
     });
 }
 

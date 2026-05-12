@@ -131,7 +131,7 @@
           </select>
 
         </div>
-        <button type="button" class="outline-button-danger btn_remove_ingredient" style="display: none;">- Eliminar ingrediente</button>
+        <button type="button" class="outline-button-danger btn_remove_ingredient hidden">- Eliminar ingrediente</button>
 
       </div>
 
@@ -145,7 +145,7 @@
       <div class="step__input">
         <label class="small-title step_label_num">Paso 1</label>
         <textarea name="steps[]" placeholder="Ejemplo: recoger polvo de estrellas" required class="step_description"></textarea>
-        <button type="button" class="outline-button-danger btn_remove_paso" style="display: none;">- Eliminar paso</button>
+        <button type="button" class="outline-button-danger btn_remove_paso hidden">- Eliminar paso</button>
 
       </div>
 
@@ -162,14 +162,15 @@
 
     <fieldset id="tips_fieldset" class="input__labeled">
       <legend class="label">Tips</legend>
-      
+
       <div class="input-message-box tip">
         <input type="text" name="tips[]" maxlength="200" placeholder="Tu secreto para cocinar delicioso y rápido" class="text">
         <small class="small_input">0/200 caracteres</small>
-      </div>       
+        <button type="button" class="outline-button-danger btn_remove_tip hidden">- Eliminar tip</button>
+      </div>
 
-      
-      
+
+
       <button type="button" id="btn_add_tip" class="outline-button-neutral">+ Añadir tip</button>
     </fieldset>
 

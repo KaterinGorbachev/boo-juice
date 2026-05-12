@@ -35,14 +35,14 @@
                                 <div class="edit__container">
                                     
                                     <h1 id="nombre_receta_display">{{ data.nombre_receta }}</h1>
-                                    <input type="text" name="nombre_receta" id="nombre_receta_input" value="{{ data.nombre_receta }}" required style="font-size: 1.5em; width: 100%; margin-bottom: 10px; display: none;">
+                                    <input type="text" name="nombre_receta" id="nombre_receta_input" value="{{ data.nombre_receta }}" required class="hidden" style="font-size: 1.5em; width: 100%; margin-bottom: 10px;">
                                     
 
                                 </div>
                                 <div class="edit__container"> 
                                     
                                     <p id="descripcion_display">{{ data.descripcion }}</p>
-                                    <textarea name="descripcion" id="descripcion_input" rows="3" style="width: 100%; display: none;">{{ data.descripcion }}</textarea>
+                                    <textarea name="descripcion" id="descripcion_input" rows="3" class="hidden" style="width: 100%;">{{ data.descripcion }}</textarea>
                                     
                                 </div>
                                 <button type="button" onclick="toggleEdit('nombre_receta', this); toggleEdit('descripcion');" class="outline-button-neutral editar-btn">Editar</button>
@@ -58,7 +58,7 @@
                         
                             <h3 class="label">Cocinando:</h3>
                             <p id="tiempo_preparacion_display">{{ data.tiempo_preparacion//60 }}h {{ data.tiempo_preparacion%60 }}min</p>
-                            <div id="tiempo_preparacion_input" style="display: none;">
+                            <div id="tiempo_preparacion_input" class="hidden">
                                 <div class="input__left_label">
                                     <input type="number" name="hours" id="tiempo_preparacion_hours" value="{{ data.tiempo_preparacion//60 }}" min="0" class="num_input">
                                     <label for="tiempo_preparacion_hours" class="text">h</label>
@@ -74,7 +74,7 @@
                             
                             <h3 class="label">Raciones:</h3>
                             <p id="cantidad_porciones_display">{{ data.cantidad_porciones }}</p>
-                            <input type="number" name="cantidad_porciones" id="cantidad_porciones_input" value="{{ data.cantidad_porciones }}" min="1" required style="display: none;">
+                            <input type="number" name="cantidad_porciones" id="cantidad_porciones_input" value="{{ data.cantidad_porciones }}" min="1" required class="hidden">
                         </div>
 
                     </div>
@@ -85,9 +85,9 @@
                 
                 <div class="edit__container border__box">
                     
-                    <label for="video" id="video_label" style="display: none;" class="label">YouTube link del video (opcional):</label>
+                    <label for="video" id="video_label" class="label hidden">YouTube link del video (opcional):</label>
                     <p class="label" id="video_display">{{ data.video or 'No hay video' }}</p>
-                    <input type="url" name="video" id="video_input" value="{{ data.video or '' }}" style="width: 100%; display: none;">
+                    <input type="url" name="video" id="video_input" value="{{ data.video or '' }}" class="hidden" style="width: 100%;">
                     <button type="button" onclick="toggleEdit('video', this);" class="outline-button-neutral editar-btn">Editar</button>
                 </div>
             </section>
@@ -129,7 +129,7 @@
                         >{{ item.cantidad_str }} {{ item.medida }} - {{ item.nombre_ingrediente_es }}</li>
                         {% endfor %}
                     </ul>
-                    <div id="ingredientes_edit" style="display: none;">
+                    <div id="ingredientes_edit" class="hidden">
                         <div id="ingredientes-container">
                             {% for item in data.ingredientes %}
                             <div class="ingrediente-item" >
@@ -220,7 +220,7 @@
                         {% endfor %}
                     </div>
 
-                    <div id="pasos_edit" style="display: none;">
+                    <div id="pasos_edit" class="hidden">
                         <div id="pasos-container">
                             {% for item in data.pasos %}
                             <div class="step__edit" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc;">
@@ -249,7 +249,7 @@
                             {% endfor %}
                         </div>
 
-                        <div id="tips_edit" style="display: none;">
+                        <div id="tips_edit" class="hidden">
                             <div id="tips-container">
                                 {% for item in data.tips %}
                                 <div class="tip-item" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
@@ -268,7 +268,7 @@
                             
                         </div>                       
 
-                        <div id="tips_edit" style="display: none;">
+                        <div id="tips_edit" class="hidden">
                             <div id="tips-container">
                                 <!-- No existing tips -->
                             </div>

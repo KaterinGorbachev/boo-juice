@@ -193,7 +193,7 @@ const sendRecipe = async (recipeData) => {
       if (ingredientsFieldset) {
         const ingBlocks = ingredientsFieldset.querySelectorAll(".ingredient__input");
         ingBlocks.forEach((block, i) => { if (i > 0) block.remove(); });
-        ingBlocks[0]?.querySelectorAll(".btn_remove_ingredient").forEach(b => b.style.display = "none");
+        ingBlocks[0]?.querySelectorAll(".btn_remove_ingredient").forEach(b => b.classList.add("hidden"));
       }
 
       const pasosFieldset = document.getElementById("pasos_fieldset");
@@ -202,12 +202,15 @@ const sendRecipe = async (recipeData) => {
         stepBlocks.forEach((block, i) => { if (i > 0) block.remove(); });
         const firstLabel = pasosFieldset.querySelector(".step__input .step_label_num");
         if (firstLabel) firstLabel.textContent = "Paso 1";
-        pasosFieldset.querySelectorAll(".step__input .btn_remove_paso").forEach(b => b.style.display = "none");
+        pasosFieldset.querySelectorAll(".step__input .btn_remove_paso").forEach(b => b.classList.add("hidden"));
       }
 
-      document.querySelectorAll('#tips_fieldset .tip').forEach((tipBlock, i) => {
-        if (i > 0) tipBlock.remove();
-      });
+      const tipsFieldset = document.getElementById("tips_fieldset");
+      if (tipsFieldset) {
+        const tipBlocks = tipsFieldset.querySelectorAll(".tip");
+        tipBlocks.forEach((block, i) => { if (i > 0) block.remove(); });
+        tipsFieldset.querySelectorAll(".tip .btn_remove_tip").forEach(b => b.classList.add("hidden"));
+      }
 
     }
 
@@ -250,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const show = blocks.length > 1;
     blocks.forEach(block => {
       const btn = block.querySelector(".btn_remove_ingredient");
-      if (btn) btn.style.display = show ? "" : "none";
+      if (btn) btn.classList.toggle("hidden", !show);
     });
   }
 
@@ -263,7 +266,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const show = blocks.length > 1;
     blocks.forEach(block => {
       const btn = block.querySelector(".btn_remove_paso");
-      if (btn) btn.style.display = show ? "" : "none";
+      if (btn) btn.classList.toggle("hidden", !show);
+    });
+  }
+
+  function updateTipRemoveButtons() {
+    const blocks = tipsFieldset.querySelectorAll(".tip");
+    const show = blocks.length > 1;
+    blocks.forEach(block => {
+      const btn = block.querySelector(".btn_remove_tip");
+      if (btn) btn.classList.toggle("hidden", !show);
     });
   }
 
@@ -293,6 +305,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // wire up the static first tip's remove button
+  tipsFieldset.querySelectorAll(".tip").forEach(block => {
+    const btn = block.querySelector(".btn_remove_tip");
+    if (btn && !btn.dataset.wired) {
+      btn.dataset.wired = "1";
+      btn.addEventListener("click", () => {
+        block.remove();
+        updateTipRemoveButtons();
+        saveFormDraft();
+      });
+    }
+  });
+
 
   // add tips
   addTip.addEventListener("click", () => {
@@ -308,18 +333,20 @@ document.addEventListener("DOMContentLoaded", () => {
       <small class="small_input ">0/200 caracteres</small>
 
     `
-    // a remove button for this block
     const removeButton = document.createElement("button");
-    removeButton.classList.add("outline-button-danger")
+    removeButton.classList.add("outline-button-danger", "btn_remove_tip");
     removeButton.type = "button";
     removeButton.textContent = "- Eliminar tip";
     removeButton.addEventListener("click", () => {
       container.remove();
+      updateTipRemoveButtons();
+      saveFormDraft();
     });
 
     container.appendChild(removeButton);
 
     tipsFieldset.insertBefore(container, addTip);
+    updateTipRemoveButtons();
 
 
   })
@@ -569,6 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // refresh remove-button visibility and step numbers after draft restore
   updateIngredientRemoveButtons();
   renumberPasos();
+  updateTipRemoveButtons();
 
 })
 
