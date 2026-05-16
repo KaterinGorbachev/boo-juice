@@ -19,8 +19,8 @@ textarea
   color: variables.$light-header-background-color !important
 
 
-.hidden 
-  display: none 
+.hidden
+  display: none !important
   
 
 ///======================================
@@ -318,10 +318,26 @@ textarea
     max-width: 100%
     min-width: 0
     flex-wrap: wrap
-    div
+    width: 100%
+    .info__box
       @include mix.flexColumn($horizontal: center)
       min-width: 0
       flex: 1 1 120px
+      gap: variables.$gap-min
+      
+      #tiempo_preparacion_input
+        @include mix.flexColumn($horizontal: start)
+        gap: 2rem
+        width: 100%
+        .input__left_label
+          @include mix.flexRow($horizontal: start)
+          gap: 0.5rem
+          width: 100%           
+
+          .num_input
+            min-width: 0 
+            flex: 1 1 0
+              
 
     hr
       width: 0.7px
@@ -329,32 +345,8 @@ textarea
       background-color: variables.$light-buttons-text
       border: none
 
-  .preparation__info--edit
-    @include mix.flexColumn($horizontal: start)
-    gap: variables.$gap-min
-    width: 100%
-    min-width: 0
-    flex-wrap: wrap
-    div
-      @include mix.flexColumn($horizontal: start)
-      min-width: 0
-      flex: 1 1 120px
-      .tiempo_preparacion_input
-        width: 100%
-        min-width: 0
-        @include mix.flexColumn($horizontal: start)
-        gap: variables.$gap-min
-        .input__left_label 
-          @include mix.flexRow($horizontal: start, $vertical: center)
-          gap: 4px
 
-    hr
-      display: none
-    
-    @include mix.responsive ($size: 'md')
-      @include mix.flexRow($horizontal: start)
-      div
-        flex: 0 1 auto
+  
 
 
 .ingredientes

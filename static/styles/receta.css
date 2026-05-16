@@ -57,7 +57,7 @@ textarea {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .like__heart {
@@ -518,8 +518,9 @@ textarea {
   max-width: 100%;
   min-width: 0;
   flex-wrap: wrap;
+  width: 100%;
 }
-.comon__info .preparation__info div {
+.comon__info .preparation__info .info__box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -527,65 +528,35 @@ textarea {
   text-align: start;
   min-width: 0;
   flex: 1 1 120px;
+  gap: 1rem;
+}
+.comon__info .preparation__info .info__box #tiempo_preparacion_input {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  text-align: start;
+  gap: 2rem;
+  width: 100%;
+}
+.comon__info .preparation__info .info__box #tiempo_preparacion_input .input__left_label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  text-align: start;
+  gap: 0.5rem;
+  width: 100%;
+}
+.comon__info .preparation__info .info__box #tiempo_preparacion_input .input__left_label .num_input {
+  min-width: 0;
+  flex: 1 1 0;
 }
 .comon__info .preparation__info hr {
   width: 0.7px;
   height: 40px;
   background-color: #2B0125;
   border: none;
-}
-.comon__info .preparation__info--edit {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  text-align: start;
-  gap: 1rem;
-  width: 100%;
-  min-width: 0;
-  flex-wrap: wrap;
-}
-.comon__info .preparation__info--edit div {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  text-align: start;
-  min-width: 0;
-  flex: 1 1 120px;
-}
-.comon__info .preparation__info--edit div .tiempo_preparacion_input {
-  width: 100%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  text-align: start;
-  gap: 1rem;
-}
-.comon__info .preparation__info--edit div .tiempo_preparacion_input .input__left_label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-  text-align: start;
-  gap: 4px;
-}
-.comon__info .preparation__info--edit hr {
-  display: none;
-}
-@media (min-width: 768px) {
-  .comon__info .preparation__info--edit {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    text-align: start;
-  }
-  .comon__info .preparation__info--edit div {
-    flex: 0 1 auto;
-  }
 }
 
 .ingredientes {
