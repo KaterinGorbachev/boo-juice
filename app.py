@@ -11,7 +11,7 @@ import hashlib
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from extensions import limiter
+from extensions import limiter, user_or_ip_key
 
 from routes.showrecepies import recepy_page
 from routes.adminCrud import dashboard_admin
@@ -162,7 +162,7 @@ def load_user_from_session():
 ## ------------ GET UID from front and save user in SQLite
 @app.route("/api/user", methods=["POST"])
 @csrf.exempt
-@limiter.limit("10 per minute; 50 per hour")
+@limiter.limit("60 per minute; 300 per hour", key_func=user_or_ip_key)
 def api_user():
     if not _origin_allowed():
         abort(403)
@@ -178,6 +178,14 @@ def api_user():
         session["sql_user_id"] = None
 
         return jsonify({"status": "logged_out"}), 200
+
+    if (
+        session.get("user_loggedin")
+        and session.get("uid") == uid
+        and session.get("sql_user_id")
+        and session.get("email_verified") == bool(email_verified)
+    ):
+        return jsonify({"status": "logged_in"}), 200
 
     if not verify_firebase_uid(uid):
         abort(400)
@@ -383,7 +391,8 @@ def save_recepy(id):
                 user = dbquery.insert_usuario(conn, hash_uid(usuario_uid))
 
             if dbquery.check_receta_in_favoritos(conn, id, user):
-                flash("La receta ya está en favoritos", "I")
+                dbquery.delete_usuarios_recetas_favoritos(conn, id, user)
+                flash("Receta eliminada de favoritos", "success")
                 return redirect(url_for("recepy_page.receta", id=id))
 
             dbquery.insert_usuarios_recetas_favoritos(conn, id, user, fecha)
@@ -395,6 +404,30 @@ def save_recepy(id):
         dbquery.logger.error(f"Error guardando favoritos: {e}")
         flash("Ha habido un problema. Intenta más tarde", "error")
         return redirect(url_for("recepy_page.receta", id=id))
+
+
+@app.route('/api/favorites/<int:id>/toggle', methods=['POST'])
+@limiter.limit("60 per minute", key_func=user_or_ip_key)
+def api_toggle_favorite(id):
+    if not session.get('user_loggedin'):
+        return jsonify({"error": "not_logged_in"}), 403
+
+    user = session.get("sql_user_id")
+    if not user:
+        return jsonify({"error": "not_logged_in"}), 403
+
+    try:
+        with dbquery.get_connection() as conn:
+            if dbquery.check_receta_in_favoritos(conn, id, user):
+                dbquery.delete_usuarios_recetas_favoritos(conn, id, user)
+                return jsonify({"status": "ok", "is_saved": False}), 200
+
+            dbquery.insert_usuarios_recetas_favoritos(conn, id, user, datetime.now(timezone.utc))
+            return jsonify({"status": "ok", "is_saved": True}), 200
+
+    except Exception as e:
+        dbquery.logger.error(f"Error toggling favoritos {id}: {e}")
+        return jsonify({"error": "internal_error"}), 500
 
 
 @app.route('/perfil/<uid>')

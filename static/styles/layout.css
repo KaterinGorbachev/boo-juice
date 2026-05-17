@@ -1,3 +1,7 @@
+a, button {
+  outline: none;
+}
+
 .volver-button {
   padding: 0.5rem 1rem;
   background-color: rgb(225.25, 160.25, 188.2);
@@ -400,6 +404,37 @@
   backdrop-filter: blur(4px);
 }
 
+.page-spinner-overlay {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  background: #FCEBD9;
+  border-radius: 50%;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25), -6px -6px 16px rgba(255, 255, 255, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.page-spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 5px solid rgba(245, 158, 11, 0.25);
+  border-top-color: #ffcd45;
+  border-right-color: #9d00ff;
+  animation: pageSpin 0.9s linear infinite;
+}
+
+@keyframes pageSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .hidden {
   display: none;
 }
@@ -540,6 +575,20 @@
   background-color: #6A8A36;
   box-shadow: inset 0px -2px 0px 1.5px #133A3C;
   color: #fefefe;
+}
+
+.perfil-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  gap: 1rem;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 15px;
+  background-color: #FCEBD9;
+  border: solid 1px rgb(252.6, 221, 173.6);
 }
 
 * {
@@ -783,7 +832,7 @@ main .layout-wrapper {
 }
 
 footer {
-  width: 100vw;
+  width: 100%;
   position: relative;
   padding-top: 4rem;
 }

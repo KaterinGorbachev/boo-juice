@@ -611,5 +611,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     //=================================================
 
-   
+    //=============================================
+    // toggle favorite (optimistic UI, AJAX)
+    //=================================================
+    const favButtons = document.querySelectorAll('.save-receta-heart-toggle');
+    if (favButtons.length) {
+        const tokenEl = document.querySelector('meta[name="csrf-token"]');
+        const csrfToken = tokenEl ? tokenEl.getAttribute('content') : '';
+
+        const setSaved = (btn, saved) => {
+            btn.dataset.saved = saved ? 'true' : 'false';
+            btn.setAttribute('aria-pressed', saved ? 'true' : 'false');
+            btn.title = saved ? 'Eliminar de favoritos' : 'Guardar receta';
+        };
+
+        favButtons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (btn.disabled) return;
+
+                const id = btn.dataset.recetaId;
+                const previousSaved = btn.dataset.saved === 'true';
+                const optimisticSaved = !previousSaved;
+
+                // optimistic toggle — flip every twin button for this receta
+                const twins = document.querySelectorAll(
+                    `.save-receta-heart-toggle[data-receta-id="${id}"]`
+                );
+                twins.forEach(b => { setSaved(b, optimisticSaved); b.disabled = true; });
+
+                try {
+                    const res = await fetch(`/api/favorites/${id}/toggle`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+                        credentials: 'same-origin',
+                    });
+
+                    if (!res.ok) throw new Error('request_failed');
+                    const json = await res.json();
+                    const serverSaved = !!json.is_saved;
+                    twins.forEach(b => setSaved(b, serverSaved));
+                } catch (err) {
+                    twins.forEach(b => setSaved(b, previousSaved));
+                    if (typeof statePopup === 'function') {
+                        statePopup(
+                            'No se pudo guardar la receta. Intenta de nuevo.',
+                            '¡Ups!', '🐈‍⬛', 2500, '#cc3c3c', '#ff4b4b'
+                        );
+                    }
+                } finally {
+                    twins.forEach(b => { b.disabled = false; });
+                }
+            });
+        });
+    }
+    //=================================================
+
+
 })

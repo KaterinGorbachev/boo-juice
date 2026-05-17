@@ -131,6 +131,9 @@
         @include mix.flexColumn($horizontal: start)
         width: 100%
         gap: calc(variables.$gap-min / 2)
+        border: 1px solid variables.$light-hover-color
+        padding: 0.5rem
+        border-radius: variables.$radius
         .ingredient
             @include mix.inputForm($accent: variables.$light-buttons-color, $minwidth:30%)
             width: 100%

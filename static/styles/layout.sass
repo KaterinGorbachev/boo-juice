@@ -5,6 +5,8 @@
 
 // sass --watch layout.sass layout.css
 
+a, button 
+    outline: none
 //-------------------------
 // button styles
 //-------------------------
@@ -250,7 +252,7 @@
   gap: variables.$gap-min         
 
 // state pop up styles 
-.state-overlay 
+.state-overlay
   position: fixed
   inset: 0
   background: variables.$bg-overlay
@@ -261,7 +263,36 @@
   backdrop-filter: blur(4px)
 
 
-.hidden 
+.page-spinner-overlay
+  position: fixed
+  top: 1rem
+  left: 50%
+  transform: translateX(-50%)
+  width: 80px
+  height: 80px
+  background: variables.$light-primary-background-color
+  border-radius: 50%
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25), -6px -6px 16px rgba(255, 255, 255, 0.15)
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 10000
+
+.page-spinner
+  width: 48px
+  height: 48px
+  border-radius: 50%
+  border: 5px solid variables.$orange-glow
+  border-top-color: variables.$title-color
+  border-right-color: variables.$dark-h3-color
+  animation: pageSpin 0.9s linear infinite
+
+@keyframes pageSpin
+  to
+    transform: rotate(360deg)
+
+
+.hidden
   display: none
 
 
@@ -427,7 +458,14 @@
         box-shadow: inset 0px -2px 0px 1.5px variables.$dark-primary-background-color
         color: variables.$light-text-background-color
 
-
+.perfil-empty
+    @include mix.flexColumn($horizontal: center)
+    gap: 1rem
+    width: 100%
+    padding: 2rem
+    border-radius: variables.$radius
+    background-color: variables.$light-primary-background-color
+    border: solid 1px color.mix(variables.$light-primary-background-color, orange, 80%)
 
 *
   margin: 0
@@ -629,7 +667,7 @@ main
 
       
 footer
-    width: 100vw
+    width: 100%
     position: relative
     padding-top: 4rem
 

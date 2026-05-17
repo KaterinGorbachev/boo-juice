@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block volver_button %}
-    <a href="{{ url_for('recepy_page.receta', id=data) }}" class="volver-button">Volver </a>
+    <a href="{{ url_for('recepy_page.receta', id=data) }}" onclick="if (document.referrer.includes('boo-juice')) { history.back(); return false; } return true;" class="volver-button">Volver </a>
 
 {% endblock %}
 

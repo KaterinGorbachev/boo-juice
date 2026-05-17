@@ -66,6 +66,10 @@
         </div>
     </header>
     <main>
+        <div id="page-spinner-overlay" class="page-spinner-overlay hidden">
+            <div class="page-spinner"></div>
+        </div>
+
         <div id="state-popup-overlay" class="state-overlay hidden">
             <div class="state-popup">
                 <div id="state-icon">🐈‍⬛</div>
@@ -152,6 +156,7 @@
     </footer>
 
     <script src="{{ url_for('static', filename='scripts/menu_burger.js')}}"></script>
+    <script src="{{ url_for('static', filename='scripts/page_spinner.js')}}"></script>
 
     {% block scripts %}
 

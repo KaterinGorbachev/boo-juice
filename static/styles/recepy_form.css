@@ -158,6 +158,9 @@
   text-align: start;
   width: 100%;
   gap: 0.5rem;
+  border: 1px solid rgba(255, 162, 48, 0.568627451);
+  padding: 0.5rem;
+  border-radius: 15px;
 }
 .input__multiple .ingredient__input .ingredient {
   font-size: 0.95rem;

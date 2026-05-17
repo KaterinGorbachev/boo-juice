@@ -20,13 +20,16 @@
 <body>
     <header>
         <div class="header__box">
+          <div class="logo__box">
             <a class="logo" href="/">
                 <img src="{{ url_for('static', filename='assets/logo3dTransparent-CJMqu4lS.png')}}" alt="Boo-Juice logo – gato cocinero" />
                 
             </a>
+          </div>
+            
 
           <div class="volver-button-wrapper">
-            <a href="/" class="volver-button">Volver </a> 
+            <a href="/" onclick="if (document.referrer.includes('boo-juice')) { history.back(); return false; } return true;" class="volver-button">Volver </a> 
             
           </div>
 

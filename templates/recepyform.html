@@ -8,7 +8,7 @@
 {% block title %}Boo-Juice Nueva Receta{% endblock %}
 
 {% block volver_button %}
-    <a href="/" class="volver-button">Volver </a>
+    <a href="/" onclick="if (document.referrer.includes('boo-juice')) { history.back(); return false; } return true;" class="volver-button">Volver </a>
 
 {% endblock %}
 

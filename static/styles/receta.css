@@ -68,6 +68,19 @@ textarea {
   transform: scale(1.2);
 }
 
+.save-receta-heart-toggle {
+  outline: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+.save-receta-heart-toggle .heart-outline { display: inline-block; }
+.save-receta-heart-toggle .heart-filled { display: none; }
+.save-receta-heart-toggle[data-saved="true"] .heart-outline { display: none; }
+.save-receta-heart-toggle[data-saved="true"] .heart-filled { display: inline-block; }
+.save-receta-heart-toggle[disabled] { opacity: 0.6; pointer-events: none; }
+
 .play_svg {
   width: 22px;
   height: 20px;
@@ -975,7 +988,7 @@ textarea {
   align-items: center;
   justify-content: center;
   text-align: start;
-  gap: 1rem;
+  gap: 0;
   padding: 1rem 0.45rem;
   width: 100%;
 }

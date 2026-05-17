@@ -278,8 +278,8 @@ async function sendRecipeUpdate(recetaId, recipeData) {
             throw new Error(`HTTP error ${response.status}`);
         }
 
-        statePopup('Receta actualizada con éxito', '¡Yupi!', '🫰', 1500, '#a1d44f', '#036310');
-        setTimeout(() => { window.location.reload(); }, 1500);
+        statePopup('Receta actualizada con éxito', '¡Yupi!', '🫰', 1500, '#036310', '#a1d44f');
+        setTimeout(() => { window.location.assign(`/receta/${recetaId}`); }, 1500);
     } catch (error) {
         statePopup(String(error), 'Error actualizando receta');
         console.error('Error updating recipe:', error);

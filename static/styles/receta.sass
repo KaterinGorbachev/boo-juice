@@ -4,6 +4,7 @@
 @use "sass:color"
 
 
+  
 input
   @include mix.inputForm($accent: variables.$violet-glow, $maxwidth: 100%, $shadow-color: variables.$violet-glow)
   background-color: variables.$edit-input-bg
@@ -701,7 +702,7 @@ textarea
 
 .nutricion 
   @include mix.flexColumn($horizontal: center)
-  gap: variables.$gap-min
+  gap: 0
   padding: 1rem 0.45rem
   width: 100%
 

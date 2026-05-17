@@ -152,6 +152,7 @@ def receta(id):
 
             receta_in_favoritos = dbquery.check_receta_in_favoritos(conn, id, user_sql_id)
             can_save = bool(is_user and not receta_in_favoritos)
+            is_saved = bool(is_user and receta_in_favoritos)
 
     except Exception as e:
         logger.error(f"Error getting data: {e}")
@@ -160,7 +161,7 @@ def receta(id):
     if not data:
         abort(404)
 
-    return render_template('receta.html', data=data, user=is_user, can_save=can_save)
+    return render_template('receta.html', data=data, user=is_user, can_save=can_save, is_saved=is_saved)
 
 
 # recepy_pdf: generates and returns a PDF document for the recipe with the given id

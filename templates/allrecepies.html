@@ -10,7 +10,7 @@
 {% block title %}Boo-Juice Recetas para Helloween{% endblock %}
 
 {% block volver_button %}
-    <a href="/" class="volver-button">Volver </a>
+    <a href="/" onclick="if (document.referrer.includes('boo-juice')) { history.back(); return false; } return true;" class="volver-button">Volver </a>
 
 {% endblock %}
 
@@ -29,7 +29,7 @@
     
     {% endif %}
     {% for item in data %}
-    <div class="cell" id="{{ 'receta_id_' + item.id|string }}">
+    <a class="cell" id="{{ 'receta_id_' + item.id|string }}" href="{{ url_for('recepy_page.receta', id=item.id) }}">
         <div class="img-box">
             <img
                 src="{{ item.portada or [
@@ -47,12 +47,11 @@
                 >
 
         </div>
-        <a class="title-box" href="{{ url_for('recepy_page.receta', id=item.id) }}">
+        <div class="title-box">
             <h2>{{ item.nombre_receta }}</h2>
+        </div>
 
-        </a>
-
-    </div>
+    </a>
 
     {% endfor %}
 

@@ -274,6 +274,15 @@ def delete_ingrediente(conn, ingrediente_id):
     logger.debug('Datos eliminados de forma correcta')
 
 
+def delete_usuarios_recetas_favoritos(conn, receta_id, usuario_id):
+    cursor = conn.cursor()
+    cursor.execute("""
+        DELETE FROM usuarios_recetas_favoritos
+        WHERE receta_id = %s AND usuario_id = %s;
+    """, (receta_id, usuario_id))
+    logger.debug('Favorito eliminado de forma correcta')
+
+
 def delete_receta(conn, receta_id):
     """
     This will automatically delete:
