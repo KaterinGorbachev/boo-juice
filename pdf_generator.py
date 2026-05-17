@@ -15,9 +15,9 @@ except OSError:
 #-----------------------------------------
 
 def generate_pdf(html_content, base_url=None):
-    if not _weasyprint_available:
-        raise RuntimeError(
-            "WeasyPrint requires the GTK3 runtime on Windows. "
-            "Install it from: https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases"
-        )
+    # if not _weasyprint_available:
+    #     raise RuntimeError(
+    #         "WeasyPrint requires the GTK3 runtime on Windows. "
+    #         "Install it from: https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases"
+    #     )
     return HTML(string=html_content, base_url=base_url).write_pdf()
