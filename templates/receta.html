@@ -24,11 +24,16 @@
                     <div class="img__box">
                         <img
                             src="{{ data.portada or [
-                                url_for('static', filename='assets/images/shopping.jpg'),
-                                url_for('static', filename='assets/images/pattern2.jpg'),
-                                url_for('static', filename='assets/images/pattern3.jpg'), 
-                                url_for('static', filename='assets/images/pattern_boo_1.jpg'), 
-                                url_for('static', filename='assets/images/iconPimpkinIdea.jpg')
+                                
+                                url_for('static', filename='assets/images/ChatGPT-May17202603_39_57-cat-bg.png'),
+                                url_for('static', filename='assets/images/copilot-bg-4caracters.png'),
+                                url_for('static', filename='assets/images/copilot-bg-17-05.png'),
+                                url_for('static', filename='assets/images/copilot-bg-pumpkin.png'),
+                                url_for('static', filename='assets/images/copilot-converted-bg.png'),
+                                url_for('static', filename='assets/images/Gemini_Generated_Image_bg.png'),
+                                url_for('static', filename='assets/images/gemini-bg.jpeg'),
+                                url_for('static', filename='assets/images/gpt-bg-4.png'),
+                                url_for('static', filename='assets/images/gpt-cat-bg-3.png'),
                             ] | random }}"
                             alt="{{ data.nombre_receta }}"
                             >
