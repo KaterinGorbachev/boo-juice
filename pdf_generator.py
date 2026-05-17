@@ -1,17 +1,17 @@
-# try:
-#     from weasyprint import HTML
-# except (ImportError, OSError) as e:
-#     raise RuntimeError(
-#         "WeasyPrint failed to load — system libraries missing. "
-#         "On Debian/Ubuntu run: apt-get install libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b"
-#     ) from e
+try:
+    from weasyprint import HTML
+except (ImportError, OSError) as e:
+    raise RuntimeError(
+        "WeasyPrint failed to load — system libraries missing. "
+        "On Debian/Ubuntu run: apt-get install libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b"
+    ) from e
 
 ## testing version--------------------
-try:
+""" try:
     from weasyprint import HTML
     _weasyprint_available = True
 except OSError:
-    _weasyprint_available = False
+    _weasyprint_available = False """
 #-----------------------------------------
 
 def generate_pdf(html_content, base_url=None):
